@@ -1,0 +1,64 @@
+html {
+  &, * {
+    box-sizing: border-box;
+  }
+}
+
+html, body {
+  position: relative;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  background-color: #6abac7;
+  color: #fff;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+.App {
+  max-width: 768px;
+  margin: auto;
+  padding: 2em 0;
+}
+
+.App-titile {
+  margin: 30px 0;
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.App-subtitle {
+  font-size: 24px;
+}
+
+.Demo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2em 0;
+}
+
+.Toggler {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 3px;
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: transparent;
+  font-size: 20px;
+  outline: none;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, .2);
+  }
+
+  &:active {
+    background-color: rgba(0, 0, 0, .097);
+  }
+}
