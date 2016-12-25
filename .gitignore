@@ -1,0 +1,4 @@
+node_modules
+npm.log*
+demo/dist
+lib/
