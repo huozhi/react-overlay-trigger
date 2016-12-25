@@ -1,5 +1,9 @@
-import React, {Component} from 'react'
-import {findDOMNode} from 'react-dom'
+import React, {Component, createElement, cloneElement} from 'react'
+import {
+  findDOMNode,
+  unmountComponentAtNode,
+  unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
+} from 'react-dom'
 import cx from 'classnames'
 import Portal from './Portal'
 import './index.css'
@@ -17,9 +21,30 @@ const handleMouseOverOut = (handler, e) => {
   }
 }
 
+const Overlay = ({children, show}) => {
+  return show ? children : null
+}
+
 export default class Tooltip extends Component {
   state = {
     show: false
+  }
+
+  overlay = null
+  mountDom = null
+
+  componentDidMount() {
+    this.mountDom = document.createElement('div')
+    this.renderOverlay()
+  }
+
+  componentDidUpdate() {
+    this.renderOverlay()
+  }
+
+  componentWillUnmount() {
+    unmountComponentAtNode(this.mountDom)
+    this.mountDom = null
   }
 
   handleMouseEnter = (e) => {
@@ -39,16 +64,30 @@ export default class Tooltip extends Component {
   }
 
   getOffset = (node) => {
-    if (node) {
-      const dom = typeof node === 'function' ? findDOMNode(node) : node
-      return dom.getBoundingClientRect()
-    }
-    return {}
+    return (node && node.getBoundingClientRect) ? node.getBoundingClientRect() : {}
+  }
+
+  makeOverlay = () => {
+    const {position, tooltip} = this.props
+    const style = this.getPositionStyle(position)
+    return (
+      <Overlay show={this.state.show}>
+        <Portal className={cx('Tooltip', `Tooltip--${position}`)} style={style}>
+          <div className="Tooltip-content" ref={(node) => { this.tooltip = node }}>
+            {tooltip}
+          </div>
+        </Portal>
+      </Overlay>
+    )
+  }
+
+  renderOverlay = () => {
+    renderSubtreeIntoContainer(this, this.overlay, this.mountDom)
   }
 
   getPositionStyle = (position) => {
-    const bodyRect = document.body.getBoundingClientRect()
     const targetOffset = this.getOffset(this.target)
+    const bodyRect = document.body.getBoundingClientRect()
 
     const style = {}
 
@@ -83,30 +122,26 @@ export default class Tooltip extends Component {
   }
 
   render() {
-    const {children, component: Component='span', position, tooltip, ...rest} = this.props
+    const {children, ...rest} = this.props
     const triggerProps = {
-      // onMouseOver: this.handleMouseEnter,
-      // onMouseOut: this.handleMouseLeave,
+      onMouseOver: this.handleMouseEnter,
+      onMouseOut: this.handleMouseLeave,
       onClick: this.handleClick,
     }
 
-    const style = this.getPositionStyle(position)
+    this.overlay = this.makeOverlay()
 
-    return (
-      <Component
-        {...rest}
-        {...triggerProps}
-      >
-        {React.cloneElement(children, {ref: (node) => { this.target = node } })}
-        {this.state.show &&
-          <Portal className={cx('Tooltip', `Tooltip--${position}`)} style={style}>
-            <div className="Tooltip-content" ref={(node) => { this.tooltip = node }}>
-              {tooltip}
-            </div>
-          </Portal>
-        }
-      </Component>
-    )
+    // TODO: children type is component
+
+    if (typeof children === 'string') {
+      return createElement(children, rest)
+    } else if (typeof children === 'object') {
+      return cloneElement(children, {
+        ...triggerProps,
+        ref: (node) => { this.target = node },
+      })
+    }
+    return null
   }
 }
 

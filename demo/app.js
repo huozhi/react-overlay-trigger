@@ -3,8 +3,6 @@ import {render} from 'react-dom'
 import Tooltip from 'reactip'
 import './app.css'
 
-const color = '#4197ff'
-
 const App = () => {
   return (
     <div className="App">
