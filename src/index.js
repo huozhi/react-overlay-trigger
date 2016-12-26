@@ -1,4 +1,4 @@
-import React, {Component, createElement, cloneElement} from 'react'
+import React, {Component, cloneElement} from 'react'
 import {
   findDOMNode,
   unmountComponentAtNode,
@@ -33,12 +33,12 @@ export default class Tooltip extends Component {
   componentDidMount() {
     this.mountDom = document.createElement('div')
     this.renderOverlay()
-    this.targetOffset = this.getOffset(this.target)
+    this.targetOffset = this.getOffset()
   }
 
   componentDidUpdate() {
     this.renderOverlay()
-    this.targetOffset = this.getOffset(this.target)
+    this.targetOffset = this.getOffset()
   }
 
   componentWillUnmount() {
@@ -62,12 +62,8 @@ export default class Tooltip extends Component {
     this.setState({show: !this.state.show})
   }
 
-  getOffset = (node) => {
-    if (node) {
-      const dom = node instanceof HTMLElement ? node : findDOMNode(node)
-      return dom.getBoundingClientRect()
-    }
-    return {}
+  getOffset = () => {
+    return findDOMNode(this).getBoundingClientRect()
   }
 
   makeOverlay = () => {
@@ -126,7 +122,6 @@ export default class Tooltip extends Component {
   }
 
   render() {
-    const {children, ...rest} = this.props
     const triggerProps = {
       onMouseOver: this.handleMouseEnter,
       onMouseOut: this.handleMouseLeave,
@@ -134,18 +129,7 @@ export default class Tooltip extends Component {
     }
 
     this.overlay = this.makeOverlay()
-
-    if (typeof children === 'string') {
-      return createElement(children, rest)
-    } else if (typeof children === 'object') {
-      return cloneElement(children, {
-        ...triggerProps,
-        ref: (node) => {
-          this.target = node
-        },
-      })
-    }
-    return null
+    return cloneElement(this.props.children, triggerProps)
   }
 }
 
