@@ -21,10 +21,6 @@ const handleMouseOverOut = (handler, e) => {
   }
 }
 
-const Overlay = ({children, show}) => {
-  return show ? children : null
-}
-
 export default class Tooltip extends Component {
   state = {
     show: false
@@ -71,13 +67,15 @@ export default class Tooltip extends Component {
     const {position, tooltip} = this.props
     const style = this.getPositionStyle(position)
     return (
-      <Overlay show={this.state.show}>
-        <Portal className={cx('Tooltip', `Tooltip--${position}`)} style={style}>
-          <div className="Tooltip-content" ref={(node) => { this.tooltip = node }}>
-            {tooltip}
+      <Portal>
+        {this.state.show &&
+          <div className={cx('Tooltip', `Tooltip--${position}`)} style={style}>
+            <div className="Tooltip-content" ref={(node) => { this.tooltip = node }}>
+              {tooltip}
+            </div>
           </div>
-        </Portal>
-      </Overlay>
+        }
+      </Portal>
     )
   }
 
