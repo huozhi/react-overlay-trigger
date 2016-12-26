@@ -20,7 +20,7 @@ class Portal extends Component {
     document.body.removeChild(this.element)
   }
 
-  renderPortal = ({domRef, ...rest}) => {
+  renderPortal({domRef, ...rest}) {
     renderSubtreeIntoContainer(this, <div ref={domRef} {...rest} />, this.element)
   }
 
