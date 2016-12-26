@@ -28,14 +28,17 @@ export default class Tooltip extends Component {
 
   overlay = null
   mountDom = null
+  targetOffset = {}
 
   componentDidMount() {
     this.mountDom = document.createElement('div')
     this.renderOverlay()
+    this.targetOffset = this.getOffset(this.target)
   }
 
   componentDidUpdate() {
     this.renderOverlay()
+    this.targetOffset = this.getOffset(this.target)
   }
 
   componentWillUnmount() {
@@ -60,7 +63,11 @@ export default class Tooltip extends Component {
   }
 
   getOffset = (node) => {
-    return (node && node.getBoundingClientRect) ? node.getBoundingClientRect() : {}
+    if (node) {
+      const dom = node instanceof HTMLElement ? node : findDOMNode(node)
+      return dom.getBoundingClientRect()
+    }
+    return {}
   }
 
   makeOverlay = () => {
@@ -84,10 +91,9 @@ export default class Tooltip extends Component {
   }
 
   getPositionStyle = (position) => {
-    const targetOffset = this.getOffset(this.target)
-    const bodyRect = document.body.getBoundingClientRect()
-
     const style = {}
+    const targetOffset = this.targetOffset
+    const bodyRect = document.body.getBoundingClientRect()
 
     const offsetTop = targetOffset.top - bodyRect.top
     const offsetBottom = targetOffset.bottom - bodyRect.top
@@ -129,14 +135,14 @@ export default class Tooltip extends Component {
 
     this.overlay = this.makeOverlay()
 
-    // TODO: children type is component
-
     if (typeof children === 'string') {
       return createElement(children, rest)
     } else if (typeof children === 'object') {
       return cloneElement(children, {
         ...triggerProps,
-        ref: (node) => { this.target = node },
+        ref: (node) => {
+          this.target = node
+        },
       })
     }
     return null
