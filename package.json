@@ -30,6 +30,10 @@
     "url": "https://github.com/huozhi/reactip/issues"
   },
   "homepage": "https://github.com/huozhi/reactip#readme",
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
+  },
   "devDependencies": {
     "autoprefixer": "^6.6.0",
     "babel-core": "^6.21.0",

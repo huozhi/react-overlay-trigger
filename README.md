@@ -3,6 +3,10 @@
 
 ### Usage
 
+```
+npm i --save reactip
+```
+
 Wrapp the trigger with `Tooltip` component
 
 ```js
