@@ -3,12 +3,9 @@ import {render} from 'react-dom'
 import Tooltip from 'reactip'
 import './app.css'
 
-class Button extends React.Component {
-  render() {
-    const {children, ...rest} = this.props
-    return <button {...rest}>{children}</button>
-  }
-}
+const Button = ({children, ...rest}) => (
+  <button {...rest}>{children}</button>
+)
 
 const App = () => {
   return (

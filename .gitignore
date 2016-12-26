@@ -1,4 +1,4 @@
 node_modules
-npm.log*
+npm-debug.log*
 docs/dist
 lib/

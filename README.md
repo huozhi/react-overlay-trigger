@@ -1,7 +1,11 @@
 # Reactip
 > tooltip component for react.
 
-### Usage
+## Examples
+
+visist https://huozhi.github.io/reactip
+
+## Usage
 
 ```
 npm i --save reactip
@@ -33,14 +37,13 @@ const Demo = () => (
 )
 ```
 
-### Props
+## API
 
-- position
+| props    | type   | default | description |
+| :------: | :----: | :-----: | :---------: |
+| position | string | "right" | position which tooltip will point to and show up at that side |
+| tooltip  | anything | null | tooltip content, you can pass DOM node or react component |
 
-- tooltip
-  - anyth
+## License
 
-### Limitations
-
-**Notice** that the wrapped component must be stateful react component or a dom node.
-That means you have to `extends React.Component` if you use react component instead.
+`Reactip` is released under the MIT license.
