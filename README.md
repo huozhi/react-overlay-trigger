@@ -17,21 +17,18 @@ Wrapp the trigger with `Tooltip` component
 import React from 'react'
 import Tooltip from 'reactip'
 
-class Button extends React.Component {
-  render() {
-    const {children, ...rest} = this.props
-    return <button {...rest}>{children}</button>
-  }
-}
+const Button = ({children, ...rest}) => (
+  <button {...rest}>{children}</button>
+)
 
 const Demo = () => (
   <div>
     <Tooltip position="right" tooltip="something">
-      <Button className="Toggler">right</Button>
+      <Button className="Button">right</Button>
     </Tooltip>
 
     <Tooltip position="top" tooltip="something">
-      <button className="Toggler">top</button>
+      <button className="Button">top</button>
     </Tooltip>
   <div>
 )
