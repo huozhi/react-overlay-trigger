@@ -48,6 +48,7 @@ export default class Tooltip extends Component {
 
   handleMouseEnter = (e) => {
     handleMouseOverOut(() => {
+      this.targetOffset = this.getOffset()
       this.setState({show: true})
     }, e)
   }
@@ -59,7 +60,11 @@ export default class Tooltip extends Component {
   }
 
   handleClick = () => {
-    this.setState({show: !this.state.show})
+    const {show} = this.state
+    if (!show) {
+      this.targetOffset = this.getOffset()
+    }
+    this.setState({show: !show})
   }
 
   getOffset = () => {
