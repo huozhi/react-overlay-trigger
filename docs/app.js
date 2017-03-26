@@ -12,6 +12,9 @@ const App = () => {
     <div className="App">
       <div className="App-titile">
         Reactip -- Easy Tooltip Component for React
+        <div className="App-github">
+          <iframe src={`https://ghbtns.com/github-btn.html?user=huozhi&repo=reactip&type=star`} frameBorder="0" scrolling="0" width="60px" height="20px" />
+        </div>
       </div>
       <p className="App-subtitle">click the buttons below</p>
 
