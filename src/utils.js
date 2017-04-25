@@ -47,11 +47,18 @@ export const position = (placement, anchorRect) => {
   return style
 }
 
+const viewportRect = {
+  top: 0,
+  left: 0,
+  bottom: (window.innerHeight || document.documentElement.clientHeight),
+  right: (window.innerWidth || document.documentElement.clientWidth),
+}
+
 export const isInViewport = (rect) => {
   return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    rect.top >= viewportRect.top &&
+    rect.left >= viewportRect.left &&
+    rect.bottom <= viewportRect.bottom &&
+    rect.right <= viewportRect.right
   )
 }

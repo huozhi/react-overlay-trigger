@@ -16,7 +16,6 @@ body {
   line-height: 1.5;
   background-color: #6abac7;
   color: #fff;
-  font-weight: 300;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -40,7 +39,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2em 0;
+  padding: 2em 20px;
 }
 
 .Toggler {
@@ -60,6 +59,14 @@ body {
   &:active {
     background-color: transparent;
   }
+}
+
+.App-code {
+  margin-top: 100px;
+  padding: 20px 0;
+  background-color: #63a0b3;
+  border-radius: 10px;
+  font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
 }
 
 @media (max-width: 768px) {
