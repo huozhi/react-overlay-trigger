@@ -16,25 +16,45 @@ const App = () => {
           <iframe src={`https://ghbtns.com/github-btn.html?user=huozhi&repo=reactip&type=star`} frameBorder="0" scrolling="0" width="60px" height="20px" />
         </div>
       </div>
-      <p className="App-subtitle">click the buttons below</p>
+      <p className="App-subtitle">click buttons below</p>
 
       <div className="Demo">
-        <Tooltip placement="right" tooltip="something">
+        <Tooltip placement="right" event="hover" tooltip="something">
           <Button className="Toggler">right</Button>
         </Tooltip>
 
-        <Tooltip placement="top" tooltip="something">
+        <Tooltip placement="top" event="hover" tooltip="something">
           <button className="Toggler">top</button>
         </Tooltip>
 
-        <Tooltip placement="left" tooltip="something">
+        <Tooltip placement="left" event="click" tooltip="something">
           <button className="Toggler">left</button>
         </Tooltip>
 
-        <Tooltip placement="bottom" tooltip="something">
+        <Tooltip placement="bottom" event="click" tooltip="something">
           <button className="Toggler">bottom</button>
         </Tooltip>
       </div>
+
+      <pre className="App-code">
+        {`
+          <Tooltip placement="right" event="hover" tooltip="something">
+            <Button className="Toggler">right</Button>
+          </Tooltip>
+
+          <Tooltip placement="top" event="hover" tooltip="something">
+            <button className="Toggler">top</button>
+          </Tooltip>
+
+          <Tooltip placement="left" event="click" tooltip="something">
+            <button className="Toggler">left</button>
+          </Tooltip>
+
+          <Tooltip placement="bottom" event="click" tooltip="something">
+            <button className="Toggler">bottom</button>
+          </Tooltip>
+        `}
+      </pre>
     </div>
   )
 }

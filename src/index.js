@@ -12,6 +12,7 @@ import './index.css'
 class Tooltip extends Component {
   static defaultProps = {
     offsetParent: document.body,
+    event: 'hover',
   }
 
   componentDidMount() {
@@ -25,11 +26,11 @@ class Tooltip extends Component {
     this.mountDom = null
   }
 
-  handleMouseEnter = (e) => {
+  handleMouseEnter = () => {
     this.open()
   }
 
-  handleMouseLeave = (e) => {
+  handleMouseLeave = () => {
     this.close()
   }
 
@@ -88,6 +89,24 @@ class Tooltip extends Component {
     )
   }
 
+  get triggerProps() {
+    switch (this.props.event) {
+      case 'hover':
+        return {
+          onMouseEnter: this.handleMouseEnter,
+          onMouseLeave: this.handleMouseLeave,
+        }
+        break
+      case 'click':
+        return {
+          onClick: this.handleClick,
+        }
+        break
+      default:
+        return {}
+    }
+  }
+
   open = () => {
     renderSubtreeIntoContainer(this, this.makeOverlay(), this.mountDom)
   }
@@ -97,14 +116,7 @@ class Tooltip extends Component {
   }
 
   render() {
-    const {children} = this.props
-    const triggerProps = {
-      onMouseEnter: this.handleMouseEnter,
-      onMouseLeave: this.handleMouseLeave,
-      onClick: this.handleClick,
-    }
-
-    return cloneElement(children, triggerProps)
+    return cloneElement(this.props.children, this.triggerProps)
   }
 }
 
