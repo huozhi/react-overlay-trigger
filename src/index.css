@@ -1,5 +1,5 @@
 .Tooltip {
-  position: absolute;
+  position: fixed;
   border-radius: 4px;
   border: 1px solid #fff;
   background-color: #fff;
