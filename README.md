@@ -23,11 +23,11 @@ const Button = ({children, ...rest}) => (
 
 const Demo = () => (
   <div>
-    <Tooltip position="right" tooltip="something">
+    <Tooltip placement="right" tooltip="something" event="hover">
       <Button className="Button">right</Button>
     </Tooltip>
 
-    <Tooltip position="top" tooltip="something">
+    <Tooltip placement="top" tooltip="something" event="click">
       <button className="Button">top</button>
     </Tooltip>
   <div>
@@ -36,10 +36,11 @@ const Demo = () => (
 
 ## API
 
-| props    | type   | default | description |
-| :------: | :----: | :-----: | :---------: |
-| position | string | "right" | position which tooltip will point to and show up at that side |
-| tooltip  | anything | null | tooltip content, you can pass DOM node or react component |
+| props     | type     | default | description |
+| :-------: | :------: | :-----: | :---------: |
+| placement | string   | x       | placement tooltip showup: `[top, right, bottom, left]` |
+| tooltip   | anything | null    | tooltip content, you can pass DOM node or react component |
+| event     | string   | hover   | trigger event: `[hover, click]` |
 
 ## License
 
