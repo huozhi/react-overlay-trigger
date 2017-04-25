@@ -5,75 +5,65 @@ import {
   unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
 } from 'react-dom'
 import cx from 'classnames'
-import Portal from './Portal'
 import {position, getOppositePlacement, isInViewport} from './utils'
 import './index.css'
 
-const handleMouseOverOut = (handler, e) => {
-  // Simple implementation of mouseEnter and mouseLeave.
-  // React's built version is broken: https://github.com/facebook/react/issues/4251
-  // for cases when the trigger is disabled and mouseOut/Over can cause flicker
-  // moving from one child element to another.
-  const target = e.currentTarget
-  const related = e.relatedTarget || e.nativeEvent.toElement
 
-  if (!related || related !== target && !target.contains(related)) {
-    handler(e)
+class Tooltip extends Component {
+  static defaultProps = {
+    offsetParent: document.body,
   }
-}
-
-export default class Tooltip extends Component {
-  state = {
-    show: false
-  }
-
-  overlay = null
-  mountDom = null
-  targetOffset = {}
 
   componentDidMount() {
     this.mountDom = document.createElement('div')
-    this.renderOverlay()
-    this.targetOffset = this.getOffset()
-  }
-
-  componentDidUpdate() {
-    this.renderOverlay()
-    this.targetOffset = this.getOffset()
+    document.body.appendChild(this.mountDom)
   }
 
   componentWillUnmount() {
     unmountComponentAtNode(this.mountDom)
+    document.body.removeChild(this.mountDom)
     this.mountDom = null
   }
 
   handleMouseEnter = (e) => {
-    handleMouseOverOut(() => {
-      this.targetOffset = this.getOffset()
-      this.setState({show: true})
-    }, e)
+    this.open()
   }
 
   handleMouseLeave = (e) => {
-    handleMouseOverOut(() => {
-      this.setState({show: false})
-    }, e)
+    this.close()
   }
 
   handleClick = () => {
-    const {show} = this.state
-    this.targetOffset = this.getOffset()
-    this.setState({show: !show})
+    if (this.tooltip) {
+      this.close()
+    } else {
+      this.open()
+    }
+    const {children} = this.props
+    if (children && children.props.onClick) {
+      children.props.onClick()
+    }
   }
 
   getOffset = () => {
-    return findDOMNode(this).getBoundingClientRect()
+    const parentBcr = this.props.offsetParent.getBoundingClientRect()
+    const bcr = findDOMNode(this).getBoundingClientRect()
+    return {
+      left: bcr.left,
+      right: bcr.right,
+      width: bcr.width,
+      height: bcr.height,
+      top: bcr.top - parentBcr.top,
+      bottom: bcr.bottom - parentBcr.top,
+    }
   }
 
   makeOverlay = () => {
     const {placement, tooltip} = this.props
-    let style = position(placement, this.targetOffset)
+    const targetOffset = this.getOffset()
+    let style = position(placement, targetOffset)
     let finalPlacement = placement
+
     const popupRect = this.tooltip
       ? this.tooltip.getBoundingClientRect()
       : {bottom: style.top, right: style.left}
@@ -85,37 +75,37 @@ export default class Tooltip extends Component {
 
     if (!isInViewport(bcr)) {
       const oppositePlacement = getOppositePlacement(placement)
-      style = position(oppositePlacement, this.targetOffset)
+      style = position(oppositePlacement, targetOffset)
       finalPlacement = oppositePlacement
     }
 
-    const popup = (
+    return (
       <div className={cx('Tooltip', `Tooltip--${finalPlacement}`)} style={style}>
         <div className="Tooltip-content" ref={(node) => { this.tooltip = node }}>
           {tooltip}
         </div>
       </div>
     )
-
-    return this.state.show ? (
-      <Portal>
-         {popup}
-      </Portal>
-    ) : <noscript />
   }
 
-  renderOverlay = () => {
-    renderSubtreeIntoContainer(this, this.overlay, this.mountDom)
+  open = () => {
+    renderSubtreeIntoContainer(this, this.makeOverlay(), this.mountDom)
+  }
+
+  close = () => {
+    renderSubtreeIntoContainer(this, <noscript />, this.mountDom)
   }
 
   render() {
+    const {children} = this.props
     const triggerProps = {
-      onMouseOver: this.handleMouseEnter,
-      onMouseOut: this.handleMouseLeave,
+      onMouseEnter: this.handleMouseEnter,
+      onMouseLeave: this.handleMouseLeave,
       onClick: this.handleClick,
     }
 
-    this.overlay = this.makeOverlay()
-    return cloneElement(this.props.children, triggerProps)
+    return cloneElement(children, triggerProps)
   }
 }
+
+export default Tooltip
