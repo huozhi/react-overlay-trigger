@@ -6,6 +6,7 @@ import {
 } from 'react-dom'
 import cx from 'classnames'
 import Portal from './Portal'
+import {position, getOppositePlacement, isInViewport} from './utils'
 import './index.css'
 
 const handleMouseOverOut = (handler, e) => {
@@ -61,9 +62,7 @@ export default class Tooltip extends Component {
 
   handleClick = () => {
     const {show} = this.state
-    if (!show) {
-      this.targetOffset = this.getOffset()
-    }
+    this.targetOffset = this.getOffset()
     this.setState({show: !show})
   }
 
@@ -72,58 +71,41 @@ export default class Tooltip extends Component {
   }
 
   makeOverlay = () => {
-    const {position, tooltip} = this.props
-    const style = this.getPositionStyle(position)
-    return (
-      <Portal>
-        {this.state.show &&
-          <div className={cx('Tooltip', `Tooltip--${position}`)} style={style}>
-            <div className="Tooltip-content" ref={(node) => { this.tooltip = node }}>
-              {tooltip}
-            </div>
-          </div>
-        }
-      </Portal>
+    const {placement, tooltip} = this.props
+    let style = position(placement, this.targetOffset)
+    let finalPlacement = placement
+    const popupRect = this.tooltip
+      ? this.tooltip.getBoundingClientRect()
+      : {bottom: style.top, right: style.left}
+    const bcr = {
+      ...style,
+      bottom: popupRect.bottom,
+      right: popupRect.right,
+    }
+
+    if (!isInViewport(bcr)) {
+      const oppositePlacement = getOppositePlacement(placement)
+      style = position(oppositePlacement, this.targetOffset)
+      finalPlacement = oppositePlacement
+    }
+
+    const popup = (
+      <div className={cx('Tooltip', `Tooltip--${finalPlacement}`)} style={style}>
+        <div className="Tooltip-content" ref={(node) => { this.tooltip = node }}>
+          {tooltip}
+        </div>
+      </div>
     )
+
+    return this.state.show ? (
+      <Portal>
+         {popup}
+      </Portal>
+    ) : <noscript />
   }
 
   renderOverlay = () => {
     renderSubtreeIntoContainer(this, this.overlay, this.mountDom)
-  }
-
-  getPositionStyle = (position) => {
-    const style = {}
-    const targetOffset = this.targetOffset
-    const bodyRect = document.body.getBoundingClientRect()
-
-    const offsetTop = targetOffset.top - bodyRect.top
-    const offsetBottom = targetOffset.bottom - bodyRect.top
-
-    switch (position) {
-      case 'top': {
-        style.top = `${offsetTop}px`
-        style.left = `${targetOffset.left + targetOffset.width / 2}px`
-        break
-      }
-      case 'bottom': {
-        style.top = `${offsetBottom}px`
-        style.left = `${targetOffset.left + targetOffset.width / 2}px`
-        break
-      }
-      case 'left': {
-        style.left = `${targetOffset.left}px`
-        style.top = `${offsetTop + targetOffset.height / 2}px`
-        break
-      }
-      case 'right': {
-        style.left = `${targetOffset.right}px`
-        style.top = `${offsetTop + targetOffset.height / 2}px`
-        break
-      }
-      default:
-        break
-    }
-    return style
   }
 
   render() {
@@ -136,8 +118,4 @@ export default class Tooltip extends Component {
     this.overlay = this.makeOverlay()
     return cloneElement(this.props.children, triggerProps)
   }
-}
-
-Tooltip.defaultProps = {
-  position: 'right'
 }
