@@ -55,7 +55,6 @@ const viewportRect = {
 }
 
 export const isInViewport = (rect) => {
-  // console.debug(rect, viewportRect)
   return (
     rect.top >= viewportRect.top &&
     rect.left >= viewportRect.left &&
