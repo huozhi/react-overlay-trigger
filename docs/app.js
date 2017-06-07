@@ -16,23 +16,23 @@ const App = () => {
           <iframe src={`https://ghbtns.com/github-btn.html?user=huozhi&repo=reactip&type=star`} frameBorder="0" scrolling="0" width="60px" height="20px" />
         </div>
       </div>
-      <p className="App-subtitle">click buttons below</p>
+      <p className="App-subtitle">Try buttons below</p>
 
       <div className="Demo">
         <Tooltip placement="right" event="hover" tooltip="something">
-          <Button className="Toggler">right</Button>
+          <Button className="Toggler">hover right</Button>
         </Tooltip>
 
         <Tooltip placement="top" event="hover" tooltip="something">
-          <button className="Toggler">top</button>
+          <button className="Toggler">hover top</button>
         </Tooltip>
 
         <Tooltip placement="left" event="click" tooltip="something">
-          <button className="Toggler">left</button>
+          <button className="Toggler">click left</button>
         </Tooltip>
 
         <Tooltip placement="bottom" event="click" tooltip="something">
-          <button className="Toggler">bottom</button>
+          <button className="Toggler">click bottom</button>
         </Tooltip>
       </div>
 
