@@ -5,14 +5,17 @@ import {
   unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
 } from 'react-dom'
 import cx from 'classnames'
-import {position, getOppositePlacement, isInViewport} from './utils'
-import './index.css'
-
+import {position, getOppositePlacement, isInViewport, transformSelf} from './utils'
+import {css} from 'emotion'
+import styled from 'react-emotion'
+import Arrow from './Arrow'
+// import './index.css'
 
 class Tooltip extends Component {
   static defaultProps = {
     offsetParent: document.body,
     event: 'hover',
+    arrowSize: 5,
   }
 
   componentDidMount() {
@@ -46,7 +49,11 @@ class Tooltip extends Component {
     }
   }
 
-  getOffset = () => {
+  get positionStyle() {
+
+  }
+
+  get offset() {
     const parentBcr = this.props.offsetParent.getBoundingClientRect()
     const bcr = findDOMNode(this).getBoundingClientRect()
     return {
@@ -59,9 +66,9 @@ class Tooltip extends Component {
     }
   }
 
-  makeOverlay = () => {
-    const {placement, tooltip} = this.props
-    const targetOffset = this.getOffset()
+  renderOverlay = () => {
+    const {placement, tooltip, arrowSize} = this.props
+    const targetOffset = this.offset
     let style = position(placement, targetOffset)
     let finalPlacement = placement
 
@@ -81,10 +88,36 @@ class Tooltip extends Component {
     }
 
     return (
-      <div className={cx('Tooltip', `Tooltip--${finalPlacement}`)} style={style}>
-        <div className="Tooltip-content" ref={(node) => { this.tooltip = node }}>
+      <div
+        // className={cx('Tooltip', `Tooltip--${finalPlacement}`)}
+        // style={style}
+        css={`
+          position: absolute;
+          border-radius: 4px;
+          border: 1px solid #fff;
+          background-color: #fff;
+          font-size: 13px;
+          line-height: 1.7;
+          color: #354052;
+          font-weight: 400;
+          box-shadow: 0 5px 20px 0 rgba(0, 34, 20, .5);
+          transform: ${transformSelf(placement, arrowSize)};
+          top: ${style.top}px;
+          left: ${style.left}px;
+        `}
+      >
+        <div
+          css={`
+            position: relative;
+            max-width: 300px;
+            padding: 2px 10px;
+          `}
+          // className="Tooltip-content"
+          ref={(node) => { this.tooltip = node }}
+        >
           {tooltip}
         </div>
+        <Arrow placement={finalPlacement} />
       </div>
     )
   }
@@ -108,11 +141,12 @@ class Tooltip extends Component {
   }
 
   open = () => {
-    renderSubtreeIntoContainer(this, this.makeOverlay(), this.mountDom)
+    renderSubtreeIntoContainer(this, this.renderOverlay(), this.mountDom)
   }
 
   close = () => {
-    renderSubtreeIntoContainer(this, <noscript />, this.mountDom)
+    // unmountComponentAtNode(this.mountDom)
+    // renderSubtreeIntoContainer(this, <noscript />, this.mountDom)
   }
 
   render() {

@@ -19,16 +19,16 @@ const App = () => {
       <p className="App-subtitle">Try buttons below</p>
 
       <div className="Demo">
+        <Tooltip placement="left" event="click" tooltip="something">
+          <button className="Toggler">click left</button>
+        </Tooltip>
+
         <Tooltip placement="right" event="hover" tooltip="something">
           <Button className="Toggler">hover right</Button>
         </Tooltip>
 
         <Tooltip placement="top" event="hover" tooltip="something">
           <button className="Toggler">hover top</button>
-        </Tooltip>
-
-        <Tooltip placement="left" event="click" tooltip="something">
-          <button className="Toggler">click left</button>
         </Tooltip>
 
         <Tooltip placement="bottom" event="click" tooltip="something">

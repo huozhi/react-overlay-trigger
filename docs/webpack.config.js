@@ -15,15 +15,15 @@ module.exports = {
   },
   devtool: !isProduction && 'cheap-eval-source-map',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel',
+        use: 'babel-loader',
       },
       {
         test: /\.css$/,
-        loader: 'style!css!postcss',
+        use: ['style-loader', 'css-loader'],// 'postcss-loader'],
       }
     ],
   },
@@ -31,11 +31,11 @@ module.exports = {
     alias: {
       'reactip': joinPath('../src/index.js'),
     },
-    extensions: ['', '.js'],
+    // extensions: ['', '.js'],
   },
-  postcss: webpack => [
-    require('postcss-nested'),
-  ],
+  // postcss: webpack => [
+  //   require('postcss-nested'),
+  // ],
   plugins: ([
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
@@ -51,7 +51,7 @@ module.exports = {
     }),
   ] : [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
   ]),
   devServer: {
     hot: true,

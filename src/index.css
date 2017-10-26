@@ -9,12 +9,12 @@
   font-weight: 400;
   box-shadow: 0 5px 20px 0 rgba(0, 34, 20, .5);
 
-  &:before, &:after {
+  /*&:before, &:after {
     content: ' ';
     position: absolute;
     width: 0;
     height: 0;
-  }
+  }*/
 
   &.Tooltip--top {
     transform: translate(-50%, calc(-100% - 5px));
