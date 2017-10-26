@@ -65,18 +65,21 @@ export const isInViewport = (rect) => {
   )
 }
 
-export const transformSelf = ({placement, arrowSize}) => {
+export const transformSelf = (placement, arrowSize) => {
   let value
   switch (placement) {
     case 'top':
       value = `translate(-50%, calc(-100% - ${arrowSize}px));` //top
-      break;
+      break
     case 'left':
       value = `translate(calc(-100% - ${arrowSize}px), -50%);`; //left
+      break
     case 'right':
       value = `translate(${arrowSize}px, -50%);`
+      break
     case 'bottom':
       value = `translate(-50%, ${arrowSize}px);`
+      break
 
   }
   return value

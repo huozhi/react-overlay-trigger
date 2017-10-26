@@ -76,7 +76,6 @@ const Arrow = ({placement, arrowColor = '#fff'}) => (
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
       border-${placement}: 5px solid ${arrowColor};
-
       transform: ${isHorizontal(placement) ? 'translateY(-50%)' : 'translateX(-50%)'};
       ${getOppositePlacement(placement)}: -5px;
       ${isHorizontal(placement) ? 'top' : 'left'}: 50%;
