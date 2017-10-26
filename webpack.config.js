@@ -3,31 +3,33 @@ const webpack = require('webpack')
 const joinPath = path.join.bind(null, __dirname)
 
 module.exports = {
-  entry: {
-    index: [joinPath('src/index.js')],
-  },
+  entry: './src/index.js',
   output: {
     publicPath: '/',
-    path: joinPath('lib'),
+    path: path.resolve('./lib'),
     filename: 'index.js',
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
-        loader: 'babel',
+        test: /\.js$/,
+        use: 'babel-loader',
         exclude: /node_modules/,
       },
       {
         test: /\.css$/,
-        loader: 'style!css!postcss',
+        use: [
+          {loader: 'style-loader'},
+          {loader: 'css-loader'},
+          {loader: 'postcss-loader'}
+        ],
       },
     ],
-    resolve: {
-      alias: {
-        'react': path.resolve(__dirname, 'node_modules/react'),
-        'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
-      }
+  },
+  resolve: {
+    alias: {
+      'react': path.resolve(__dirname, 'node_modules/react'),
+      'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
     }
   },
   externals: {
@@ -44,7 +46,7 @@ module.exports = {
       amd: 'react-dom',
     },
   },
-  postcss: webpack => [
-    require('postcss-nested'),
-  ],
+  // postcss: webpack => [
+  //   require('postcss-nested'),
+  // ],
 }

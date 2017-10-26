@@ -41,6 +41,7 @@ const Demo = () => (
 | placement | string   | x       | placement tooltip showup: `[top, right, bottom, left]` |
 | tooltip   | anything | null    | tooltip content, you can pass DOM node or react component |
 | event     | string   | hover   | trigger event: `[hover, click]` |
+| offsetParent | node | document.body | position will be calculated relative to this node |
 
 ## License
 
