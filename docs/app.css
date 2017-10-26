@@ -11,7 +11,7 @@ html, body {
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 15px;
   line-height: 1.5;
   background-color: #6abac7;
@@ -62,14 +62,4 @@ body {
   background-color: #63a0b3;
   border-radius: 10px;
   font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
-}
-
-@media (max-width: 768px) {
-  .Demo {
-    flex-direction: column;
-  }
-
-  .Toggler + .Toggler {
-    margin-top: 60px;
-  }
 }

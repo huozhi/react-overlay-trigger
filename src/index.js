@@ -9,7 +9,6 @@ import {position, getOppositePlacement, isInViewport, transformSelf} from './uti
 import {css} from 'emotion'
 import styled from 'react-emotion'
 import Arrow from './Arrow'
-// import './index.css'
 
 class Tooltip extends Component {
   static defaultProps = {
@@ -21,6 +20,22 @@ class Tooltip extends Component {
   componentDidMount() {
     this.mountDom = document.createElement('div')
     document.body.appendChild(this.mountDom)
+  }
+
+  componentDidUpdate() {
+    console.log('componentDidUpdate', this.tooltip)
+    if (this.tooltip) {
+      const bcr = this.tooltip.getBoundingClientRect()
+      if (!isInViewport(bcr)) {
+        const oppositePlacement = getOppositePlacement(placement)
+        console.log('not in', bcr, 'oppositePlacement', oppositePlacement)
+        const style = position(oppositePlacement, this.offset)
+        // finalPlacement = oppositePlacement
+        renderSubtreeIntoContainer(this, this.renderOverlay(oppositePlacement), this.mountDom)
+      } else {
+        console.log('in viewportRect')
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -62,28 +77,26 @@ class Tooltip extends Component {
     }
   }
 
-  renderOverlay = () => {
-    const {placement, tooltip, arrowSize} = this.props
-    const targetOffset = this.offset
-    let style = position(placement, targetOffset)
-    let finalPlacement = placement
-
-    const popupRect = this.tooltip
-      ? this.tooltip.getBoundingClientRect()
-      : {bottom: style.top, right: style.left}
-    const bcr = {
-      top: style.top,
-      left: style.left,
-      right: popupRect.right,
-      bottom: popupRect.bottom,
-    }
-
-    // TODO: make it positioned as exact bcr
-    if (!isInViewport(bcr)) {
-      const oppositePlacement = getOppositePlacement(placement)
-      style = position(oppositePlacement, targetOffset)
-      finalPlacement = oppositePlacement
-    }
+  renderOverlay = (placement = this.props.placement) => {
+    const {tooltip, arrowSize} = this.props
+    const style = position(placement, this.offset)
+    // this.setState({style})
+    // let finalPlacement = placement
+    // console.log('this.tooltip', Boolean(this.tooltip))
+    // let bcr
+    // if (this.tooltip) {
+    //   bcr = this.tooltip.getBoundingClientRect()
+    // } else {
+      // const delta = {
+      //   left: -targetOffset.width,
+      //   right: targetOffset.width,
+      //   top: -targetOffset.height,
+      //   bottom: targetOffset.height,
+      // }
+      // bcr = {...style, bottom: style.top, right: style.left}
+      // // console.log('bcr', bcr, 'placement', placement, 'bcr[placement]', bcr[placement], 'delta[placement]', delta[placement])
+      // bcr[placement] += delta[placement]
+    // }
 
     return (
       <div
@@ -108,12 +121,11 @@ class Tooltip extends Component {
             max-width: 300px;
             padding: 2px 10px;
           `}
-          // className="Tooltip-content"
           ref={(node) => { this.tooltip = node }}
         >
           {tooltip}
         </div>
-        <Arrow placement={finalPlacement} />
+        <Arrow placement={placement} />
       </div>
     )
   }
@@ -142,7 +154,7 @@ class Tooltip extends Component {
 
   close = () => {
     // unmountComponentAtNode(this.mountDom)
-    // renderSubtreeIntoContainer(this, <noscript />, this.mountDom)
+    renderSubtreeIntoContainer(this, <noscript />, this.mountDom)
   }
 
   render() {

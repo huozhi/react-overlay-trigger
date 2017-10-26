@@ -22,6 +22,8 @@ export const position = (placement, anchorRect) => {
     height,
   } = anchorRect
 
+  // console.log('anchorRect', anchorRect)
+
   switch (placement) {
     case 'top': {
       style.top = top
