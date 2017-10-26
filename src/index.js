@@ -49,10 +49,6 @@ class Tooltip extends Component {
     }
   }
 
-  get positionStyle() {
-
-  }
-
   get offset() {
     const parentBcr = this.props.offsetParent.getBoundingClientRect()
     const bcr = findDOMNode(this).getBoundingClientRect()
@@ -76,11 +72,13 @@ class Tooltip extends Component {
       ? this.tooltip.getBoundingClientRect()
       : {bottom: style.top, right: style.left}
     const bcr = {
-      ...style,
-      bottom: popupRect.bottom,
+      top: style.top,
+      left: style.left,
       right: popupRect.right,
+      bottom: popupRect.bottom,
     }
 
+    // TODO: make it positioned as exact bcr
     if (!isInViewport(bcr)) {
       const oppositePlacement = getOppositePlacement(placement)
       style = position(oppositePlacement, targetOffset)
@@ -89,8 +87,6 @@ class Tooltip extends Component {
 
     return (
       <div
-        // className={cx('Tooltip', `Tooltip--${finalPlacement}`)}
-        // style={style}
         css={`
           position: absolute;
           border-radius: 4px;
