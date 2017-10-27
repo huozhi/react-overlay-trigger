@@ -5,10 +5,9 @@ import {
   unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
 } from 'react-dom'
 import cx from 'classnames'
-import {position, getOppositePlacement, isInViewport, transformSelf} from './utils'
+import {position, getOppositePlacement, isInViewport} from './utils'
 import {css} from 'emotion'
-import styled from 'react-emotion'
-import Arrow from './Arrow'
+import Popup from './Popup'
 
 class Tooltip extends Component {
   static defaultProps = {
@@ -17,25 +16,13 @@ class Tooltip extends Component {
     arrowSize: 5,
   }
 
+  state = {
+    visible: false,
+  }
+
   componentDidMount() {
     this.mountDom = document.createElement('div')
     document.body.appendChild(this.mountDom)
-  }
-
-  componentDidUpdate() {
-    console.log('componentDidUpdate', this.tooltip)
-    if (this.tooltip) {
-      const bcr = this.tooltip.getBoundingClientRect()
-      if (!isInViewport(bcr)) {
-        const oppositePlacement = getOppositePlacement(placement)
-        console.log('not in', bcr, 'oppositePlacement', oppositePlacement)
-        const style = position(oppositePlacement, this.offset)
-        // finalPlacement = oppositePlacement
-        renderSubtreeIntoContainer(this, this.renderOverlay(oppositePlacement), this.mountDom)
-      } else {
-        console.log('in viewportRect')
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -52,8 +39,12 @@ class Tooltip extends Component {
     this.close()
   }
 
+  handlePupupRef = (node) => {
+    this.tooltip = node
+  }
+
   handleClick = () => {
-    if (this.tooltip) {
+    if (this.state.visible) {
       this.close()
     } else {
       this.open()
@@ -77,56 +68,14 @@ class Tooltip extends Component {
     }
   }
 
-  renderOverlay = (placement = this.props.placement) => {
-    const {tooltip, arrowSize} = this.props
-    const style = position(placement, this.offset)
-    // this.setState({style})
-    // let finalPlacement = placement
-    // console.log('this.tooltip', Boolean(this.tooltip))
-    // let bcr
-    // if (this.tooltip) {
-    //   bcr = this.tooltip.getBoundingClientRect()
-    // } else {
-      // const delta = {
-      //   left: -targetOffset.width,
-      //   right: targetOffset.width,
-      //   top: -targetOffset.height,
-      //   bottom: targetOffset.height,
-      // }
-      // bcr = {...style, bottom: style.top, right: style.left}
-      // // console.log('bcr', bcr, 'placement', placement, 'bcr[placement]', bcr[placement], 'delta[placement]', delta[placement])
-      // bcr[placement] += delta[placement]
-    // }
+  renderOverlay = () => {
+    const element = findDOMNode(this)
+    const {placement, tooltip, arrowSize} = this.props
 
     return (
-      <div
-        css={`
-          position: absolute;
-          border-radius: 4px;
-          border: 1px solid #fff;
-          background-color: #fff;
-          font-size: 13px;
-          line-height: 1.7;
-          color: #354052;
-          font-weight: 400;
-          box-shadow: 0 5px 20px 0 rgba(0, 34, 20, .5);
-          transform: ${transformSelf(placement, arrowSize)};
-          top: ${style.top}px;
-          left: ${style.left}px;
-        `}
-      >
-        <div
-          css={`
-            position: relative;
-            max-width: 300px;
-            padding: 2px 10px;
-          `}
-          ref={(node) => { this.tooltip = node }}
-        >
-          {tooltip}
-        </div>
-        <Arrow placement={placement} />
-      </div>
+      <Popup onRef={this.handlePupupRef} target={element} placement={placement}>
+        {tooltip}
+      </Popup>
     )
   }
 
@@ -150,11 +99,12 @@ class Tooltip extends Component {
 
   open = () => {
     renderSubtreeIntoContainer(this, this.renderOverlay(), this.mountDom)
+    this.setState({visible: true})
   }
 
   close = () => {
-    // unmountComponentAtNode(this.mountDom)
     renderSubtreeIntoContainer(this, <noscript />, this.mountDom)
+    this.setState({visible: false})
   }
 
   render() {

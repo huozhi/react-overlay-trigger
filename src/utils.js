@@ -1,3 +1,15 @@
+export const contains = (x, y) => {
+  const xBcr = x.getBoundingClientRect()
+  const yBcr = y.getBoundingClientRect()
+
+  return (
+    yBcr.top >= xBcr.top &&
+    yBcr.left >= xBcr.left &&
+    yBcr.bottom <= xBcr.bottom &&
+    yBcr.right <= xBcr.right
+  )
+}
+
 const oppositePlacements = {
   top: 'bottom',
   bottom: 'top',
@@ -11,78 +23,61 @@ export const getOppositePlacement = (placement) => {
 
 export const isHorizontal = (placement) => ['left', 'right'].indexOf(placement) >= 0
 
-export const position = (placement, anchorRect) => {
-  const style = {}
-  const {
-    top,
-    right,
-    bottom,
-    left,
-    width,
-    height,
-  } = anchorRect
+export const position = (placement, node, target) => {
+  const nodeBcr = node.getBoundingClientRect()
+  const targetBcr = target.getBoundingClientRect()
 
-  // console.log('anchorRect', anchorRect)
+  const style = {top: 0, left: 0}
+  // TODO: fixed and absolute
+  const offsetTop = targetBcr.top
+  const offsetLeft = targetBcr.left
 
   switch (placement) {
     case 'top': {
-      style.top = top
-      style.left = left + width / 2
+      style.top = offsetTop - nodeBcr.height
+      style.left = offsetLeft + (targetBcr.width - nodeBcr.width) / 2
       break
     }
     case 'bottom': {
-      style.top = bottom
-      style.left = left + width / 2
+      style.top = offsetTop + targetBcr.height
+      style.left = offsetLeft + (targetBcr.width - nodeBcr.width) / 2
       break
     }
     case 'left': {
-      style.left = left
-      style.top = top + height / 2
+      style.top = offsetTop + (targetBcr.height - nodeBcr.height) / 2
+      style.left = offsetLeft - nodeBcr.width
       break
     }
     case 'right': {
-      style.left = right
-      style.top = top + height / 2
+      style.top = offsetTop + (targetBcr.height - nodeBcr.height) / 2
+      style.left = offsetLeft + targetBcr.width
       break
     }
     default:
       break
   }
-  return style
+
+  return {
+    top: style.top,
+    left: style.left,
+    bottom: nodeBcr.bottom,
+    right: nodeBcr.right,
+  }
 }
 
-const viewportRect = {
-  top: 0,
-  left: 0,
-  bottom: (window.innerHeight || document.documentElement.clientHeight),
-  right: (window.innerWidth || document.documentElement.clientWidth),
-}
 
 export const isInViewport = (rect) => {
+  const viewportRect = {
+    top: 0,
+    left: 0,
+    bottom: (window.innerHeight || document.documentElement.clientHeight),
+    right: (window.innerWidth || document.documentElement.clientWidth),
+  }
+
   return (
     rect.top >= viewportRect.top &&
     rect.left >= viewportRect.left &&
     rect.bottom <= viewportRect.bottom &&
     rect.right <= viewportRect.right
   )
-}
-
-export const transformSelf = (placement, arrowSize) => {
-  let value
-  switch (placement) {
-    case 'top':
-      value = `translate(-50%, calc(-100% - ${arrowSize}px));` //top
-      break
-    case 'left':
-      value = `translate(calc(-100% - ${arrowSize}px), -50%);`; //left
-      break
-    case 'right':
-      value = `translate(${arrowSize}px, -50%);`
-      break
-    case 'bottom':
-      value = `translate(-50%, ${arrowSize}px);`
-      break
-
-  }
-  return value
 }
