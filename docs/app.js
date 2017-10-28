@@ -19,39 +19,39 @@ const App = () => {
       <p className="App-subtitle">Try buttons below</p>
 
       <div className="Demo">
-        <Tooltip placement="left" event="click" tooltip="something">
-          <button className="Toggler">click left</button>
+        <Tooltip placement="left" event="hover" tooltip="something">
+          <button className="Toggler">hover [left]</button>
         </Tooltip>
 
         <Tooltip placement="right" event="hover" tooltip="something">
-          <Button className="Toggler">hover right</Button>
+          <Button className="Toggler">hover [right]</Button>
         </Tooltip>
 
-        <Tooltip placement="top" event="hover" tooltip="something">
-          <button className="Toggler">hover top</button>
+        <Tooltip placement="top" event="click" tooltip="something">
+          <button className="Toggler">click [top]</button>
         </Tooltip>
 
         <Tooltip placement="bottom" event="click" tooltip="something">
-          <button className="Toggler">click bottom</button>
+          <button className="Toggler">click [bottom]</button>
         </Tooltip>
       </div>
 
       <pre className="App-code">
         {`
+          <Tooltip placement="left" event="hover" tooltip="something">
+            <button className="Toggler">hover [left]</button>
+          </Tooltip>
+
           <Tooltip placement="right" event="hover" tooltip="something">
-            <Button className="Toggler">right</Button>
+            <Button className="Toggler">hover [right]</Button>
           </Tooltip>
 
-          <Tooltip placement="top" event="hover" tooltip="something">
-            <button className="Toggler">top</button>
-          </Tooltip>
-
-          <Tooltip placement="left" event="click" tooltip="something">
-            <button className="Toggler">left</button>
+          <Tooltip placement="top" event="click" tooltip="something">
+            <button className="Toggler">click [top]</button>
           </Tooltip>
 
           <Tooltip placement="bottom" event="click" tooltip="something">
-            <button className="Toggler">bottom</button>
+            <button className="Toggler">click [bottom]</button>
           </Tooltip>
         `}
       </pre>

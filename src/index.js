@@ -53,10 +53,6 @@ class Tooltip extends Component {
     }
   }
 
-  updateTarget = () => {
-    this.target = findDOMNode(this)
-  }
-
   get targetBcr() {
     const node = this.target
     return (node && node.getBoundingClientRect) ? node.getBoundingClientRect() : defaultBcr
