@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const pkg = require('../package.json')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const joinPath = path.join.bind(null, __dirname)
 const isProduction = process.env.NODE_ENV === 'production'
@@ -9,7 +10,7 @@ module.exports = {
     app: [joinPath('app.js')],
   },
   output: {
-    publicPath: isProduction ? '/reactip' : '/',
+    publicPath: isProduction ? `/${pkg.name}` : '/',
     path: joinPath('dist'),
     filename: isProduction ? 'app.[hash].js' : 'app.js',
   },
@@ -29,7 +30,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'reactip': joinPath('../src/index.js'),
+      'reactip': joinPath('../lib/index.js'),
     },
   },
   plugins: ([
