@@ -59,13 +59,20 @@ export const position = (placement, node, target, offsetParent, arrowSize = 0) =
   }
 
   return {
-    top: style.top,
-    left: style.left,
-    bottom: nodeBcr.bottom,
-    right: nodeBcr.right,
+    offset: {
+      top: style.top,
+      left: style.left,
+      bottom: style.top + nodeBcr.height,
+      right: style.left + nodeBcr.width,
+    },
+    rect: {
+      top: style.top + offsetBcr.top,
+      left: style.left + offsetBcr.left,
+      bottom: style.top + nodeBcr.height,
+      right: style.left + nodeBcr.width,
+    }
   }
 }
-
 
 export const isInViewport = (rect) => {
   const viewportRect = {
@@ -76,9 +83,9 @@ export const isInViewport = (rect) => {
   }
 
   return (
-    rect.top >= viewportRect.top &&
-    rect.left >= viewportRect.left &&
-    rect.bottom <= viewportRect.bottom &&
-    rect.right <= viewportRect.right
+    rect.top >= viewportRect.top && rect.top <= viewportRect.bottom &&
+    rect.left >= viewportRect.left && rect.left <= viewportRect.right &&
+    rect.bottom >= viewportRect.top && rect.bottom <= viewportRect.bottom &&
+    rect.right >= viewportRect.left && rect.right <= viewportRect.right
   )
 }

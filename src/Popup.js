@@ -27,15 +27,18 @@ class Popup extends React.Component {
   }
 
   adjustPosition = () => {
-    const {placement, target, arrowSize, offsetParent} = this.props
+    const {target, arrowSize, offsetParent, placement} = this.props
     // TODO: default bcr
-    let rect = position(placement, this.ref, target, offsetParent, arrowSize)
+
+    let expected = position(placement, this.ref, target, offsetParent, arrowSize)
     let finalPlacement = placement
-    if (!isInViewport(rect)) {
+
+    if (!isInViewport(expected.rect)) {
       finalPlacement = getOppositePlacement(placement)
-      rect = position(finalPlacement, this.ref, target, offsetParent, arrowSize)
+      expected = position(finalPlacement, this.ref, target, offsetParent, arrowSize)
     }
-    this.setState({style: rect, placement: finalPlacement})
+
+    this.setState({style: expected.offset, placement: finalPlacement})
   }
 
   handleScroll = () => {
