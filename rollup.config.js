@@ -16,7 +16,9 @@ const config = {
   plugins: [
     resolve(),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
+      externalHelpers: false,
+      runtimeHelpers: true,
     }),
     replace({
       'process.env.NODE_ENV': JSON.stringify('production')
