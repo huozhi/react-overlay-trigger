@@ -58,27 +58,29 @@ export const position = (placement, node, target, offsetParent, arrowSize = 0) =
       break
   }
 
-  return {
+  const offset = {
     top: style.top,
     left: style.left,
-    bottom: nodeBcr.bottom,
-    right: nodeBcr.right,
+    bottom: style.top + nodeBcr.height,
+    right: style.left + nodeBcr.width,
+  }
+
+  const popupRect = {
+    top: offset.top + offsetBcr.top,
+    left: offset.left + offsetBcr.left,
+    bottom: offset.top + offsetBcr.top,
+    right: offset.left + offsetBcr.left,
+  }
+
+  return {
+    offset,
+    rect: popupRect,
   }
 }
 
-
-export const isInViewport = (rect) => {
-  const viewportRect = {
-    top: 0,
-    left: 0,
-    bottom: (window.innerHeight || document.documentElement.clientHeight),
-    right: (window.innerWidth || document.documentElement.clientWidth),
-  }
-
-  return (
-    rect.top >= viewportRect.top &&
-    rect.left >= viewportRect.left &&
-    rect.bottom <= viewportRect.bottom &&
-    rect.right <= viewportRect.right
-  )
-}
+export const isInViewport = (rect) => (
+  rect.top >= 0 &&
+  rect.left >= 0 &&
+  rect.bottom <= (window.innerWidth || document.documentElement.clientWidth) &&
+  rect.right <= (window.innerHeight || document.documentElement.clientHeight)
+)
