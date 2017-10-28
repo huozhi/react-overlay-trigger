@@ -23,7 +23,7 @@ export const getOppositePlacement = (placement) => {
 
 export const isHorizontal = (placement) => ['left', 'right'].indexOf(placement) >= 0
 
-export const position = (placement, node, target) => {
+export const position = (placement, node, target, arrowSize = 0) => {
   const nodeBcr = node.getBoundingClientRect()
   const targetBcr = target.getBoundingClientRect()
 
@@ -34,23 +34,23 @@ export const position = (placement, node, target) => {
 
   switch (placement) {
     case 'top': {
-      style.top = offsetTop - nodeBcr.height
+      style.top = offsetTop - nodeBcr.height - arrowSize
       style.left = offsetLeft + (targetBcr.width - nodeBcr.width) / 2
       break
     }
     case 'bottom': {
-      style.top = offsetTop + targetBcr.height
+      style.top = offsetTop + targetBcr.height + arrowSize
       style.left = offsetLeft + (targetBcr.width - nodeBcr.width) / 2
       break
     }
     case 'left': {
       style.top = offsetTop + (targetBcr.height - nodeBcr.height) / 2
-      style.left = offsetLeft - nodeBcr.width
+      style.left = offsetLeft - nodeBcr.width - arrowSize
       break
     }
     case 'right': {
       style.top = offsetTop + (targetBcr.height - nodeBcr.height) / 2
-      style.left = offsetLeft + targetBcr.width
+      style.left = offsetLeft + targetBcr.width + arrowSize
       break
     }
     default:
