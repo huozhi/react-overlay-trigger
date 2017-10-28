@@ -57,6 +57,6 @@
   },
   "dependencies": {
     "emotion": "^8.0.5",
-    "react-emotion": "^8.0.5"
+    "react-emotion": "^8.0.9"
   }
 }
