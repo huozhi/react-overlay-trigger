@@ -16,15 +16,30 @@ class Popup extends React.Component {
   }
 
   componentDidMount() {
-    const {placement, target, arrowSize} = this.props
+    this.adjustPosition()
+    window.addEventListener('resize', this.handleScroll)
+    window.addEventListener('scroll', this.handleScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleScroll)
+    window.removeEventListener('scroll', this.handleScroll)
+  }
+
+  adjustPosition = () => {
+    const {placement, target, arrowSize, offsetParent} = this.props
     // TODO: default bcr
-    let rect = position(placement, this.ref, target, arrowSize)
+    let rect = position(placement, this.ref, target, offsetParent, arrowSize)
     let finalPlacement = placement
     if (!isInViewport(rect)) {
       finalPlacement = getOppositePlacement(placement)
-      rect = position(finalPlacement, this.ref, target, arrowSize)
+      rect = position(finalPlacement, this.ref, target, offsetParent, arrowSize)
     }
     this.setState({style: rect, placement: finalPlacement})
+  }
+
+  handleScroll = () => {
+    requestAnimationFrame(this.adjustPosition)
   }
 
   handleRef = (node) => {
@@ -38,26 +53,26 @@ class Popup extends React.Component {
 
     return (
       <div
-        ref={node => (this.ref = node)}
+        ref={this.handleRef}
+        // TODO: customized style
         css={`
           position: absolute;
+          top: ${style.top}px;
+          left: ${style.left}px;
+          padding: 2px 10px;
+          line-height: 1.7;
           border-radius: 4px;
           border: 1px solid #fff;
           background-color: #fff;
           font-size: 13px;
-          line-height: 1.7;
           color: #354052;
-          font-weight: 400;
           box-shadow: 0 5px 20px 0 rgba(0, 34, 20, .5);
-          top: ${style.top}px;
-          left: ${style.left}px;
         `}
       >
         <div
           css={`
             position: relative;
             max-width: 300px;
-            padding: 2px 10px;
           `}
         >
           {children}
