@@ -23,6 +23,7 @@ body {
   max-width: 768px;
   margin: auto;
   padding: 2em 16px;
+  padding-bottom: 500px;
 }
 
 .App-titile {
@@ -37,6 +38,7 @@ body {
 
 .Demo {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 2em 20px;
@@ -44,6 +46,8 @@ body {
 
 .Toggler {
   display: inline-block;
+  flex-shrink: 0;
+  margin: .5em;
   padding: 8px 16px;
   border-radius: 3px;
   border: 1px solid #fff;
@@ -57,6 +61,7 @@ body {
 .Toggler:active { background-color: transparent; }
 
 .App-code {
+  overflow: auto;
   margin-top: 100px;
   padding: 20px 0;
   background-color: #63a0b3;

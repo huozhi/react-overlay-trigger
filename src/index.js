@@ -33,18 +33,18 @@ class Tooltip extends Component {
 
   ensureExcuteChildMethod = (method) => {
     const child = this.props.children
-    if (child && typeof isFunction(child.props[method])) {
+    if (child && isFunction(child.props[method])) {
       child.props[method]()
     }
   }
 
   handleMouseEnter = () => {
-    ensureExcuteChildMethod('onMouseEnter')
+    this.ensureExcuteChildMethod('onMouseEnter')
     this.open()
   }
 
   handleMouseLeave = () => {
-    ensureExcuteChildMethod('onMouseLeave')
+    this.ensureExcuteChildMethod('onMouseLeave')
     this.close()
   }
 
@@ -53,7 +53,7 @@ class Tooltip extends Component {
   }
 
   handleClick = () => {
-    ensureExcuteChildMethod('onClick')
+    this.ensureExcuteChildMethod('onClick')
     if (this.state.visible) {
       this.close()
     } else {
