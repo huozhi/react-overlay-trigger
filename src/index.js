@@ -7,6 +7,8 @@ import {
 import {defaultBcr} from './consts'
 import Popup from './Popup'
 
+const isFunction = fn => typeof fn === 'function'
+
 class Tooltip extends Component {
   static defaultProps = {
     offsetParent: document.body,
@@ -29,11 +31,20 @@ class Tooltip extends Component {
     this.mountDom = null
   }
 
+  ensureExcuteChildMethod = (method) => {
+    const child = this.props.children
+    if (child && typeof isFunction(child.props[method])) {
+      child.props[method]()
+    }
+  }
+
   handleMouseEnter = () => {
+    ensureExcuteChildMethod('onMouseEnter')
     this.open()
   }
 
   handleMouseLeave = () => {
+    ensureExcuteChildMethod('onMouseLeave')
     this.close()
   }
 
@@ -42,20 +53,12 @@ class Tooltip extends Component {
   }
 
   handleClick = () => {
+    ensureExcuteChildMethod('onClick')
     if (this.state.visible) {
       this.close()
     } else {
       this.open()
     }
-    const {children} = this.props
-    if (children && children.props.onClick) {
-      children.props.onClick()
-    }
-  }
-
-  get targetBcr() {
-    const node = this.target
-    return (node && node.getBoundingClientRect) ? node.getBoundingClientRect() : defaultBcr
   }
 
   renderOverlay = () => {
