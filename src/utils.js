@@ -23,14 +23,15 @@ export const getOppositePlacement = (placement) => {
 
 export const isHorizontal = (placement) => ['left', 'right'].indexOf(placement) >= 0
 
-export const position = (placement, node, target, arrowSize = 0) => {
+export const position = (placement, node, target, offsetParent, arrowSize = 0) => {
   const nodeBcr = node.getBoundingClientRect()
   const targetBcr = target.getBoundingClientRect()
+  const offsetBcr = offsetParent.getBoundingClientRect()
 
   const style = {top: 0, left: 0}
   // TODO: fixed and absolute
-  const offsetTop = targetBcr.top
-  const offsetLeft = targetBcr.left
+  const offsetTop = targetBcr.top - offsetBcr.top
+  const offsetLeft = targetBcr.left - offsetBcr.left
 
   switch (placement) {
     case 'top': {

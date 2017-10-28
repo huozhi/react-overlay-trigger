@@ -5,8 +5,8 @@ import {
   unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
 } from 'react-dom'
 import cx from 'classnames'
-import {position, getOppositePlacement, isInViewport} from './utils'
 import {css} from 'emotion'
+import {defaultBcr} from './consts'
 import Popup from './Popup'
 
 class Tooltip extends Component {
@@ -55,25 +55,21 @@ class Tooltip extends Component {
     }
   }
 
-  get offset() {
-    const parentBcr = this.props.offsetParent.getBoundingClientRect()
-    const bcr = findDOMNode(this).getBoundingClientRect()
-    return {
-      left: bcr.left,
-      right: bcr.right,
-      width: bcr.width,
-      height: bcr.height,
-      top: bcr.top - parentBcr.top,
-      bottom: bcr.bottom - parentBcr.top,
-    }
+  updateTarget = () => {
+    this.target = findDOMNode(this)
+  }
+
+  get targetBcr() {
+    const node = this.target
+    return (node && node.getBoundingClientRect) ? node.getBoundingClientRect() : defaultBcr
   }
 
   renderOverlay = () => {
     const element = findDOMNode(this)
-    const {placement, tooltip, arrowSize} = this.props
+    const {placement, tooltip, arrowSize, offsetParent} = this.props
 
     return (
-      <Popup onRef={this.handlePupupRef} target={element} placement={placement}>
+      <Popup onRef={this.handlePupupRef} target={element} placement={placement} offsetParent={offsetParent}>
         {tooltip}
       </Popup>
     )
