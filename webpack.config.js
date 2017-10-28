@@ -16,14 +16,6 @@ module.exports = {
         use: 'babel-loader',
         exclude: /node_modules/,
       },
-      {
-        test: /\.css$/,
-        use: [
-          {loader: 'style-loader'},
-          {loader: 'css-loader'},
-          {loader: 'postcss-loader'}
-        ],
-      },
     ],
   },
   resolve: {
@@ -46,7 +38,4 @@ module.exports = {
       amd: 'react-dom',
     },
   },
-  // postcss: webpack => [
-  //   require('postcss-nested'),
-  // ],
 }
