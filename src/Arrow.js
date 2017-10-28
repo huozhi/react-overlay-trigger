@@ -1,6 +1,5 @@
 import React from 'react'
 import {css} from 'emotion'
-import styled from 'react-emotion'
 import {isHorizontal, getOppositePlacement} from './utils'
 
 const Arrow = ({placement, arrowColor = '#fff', arrowSize = 5}) => (
