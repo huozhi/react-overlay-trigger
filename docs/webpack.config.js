@@ -23,7 +23,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],// 'postcss-loader'],
+        use: ['style-loader', 'css-loader'],
       }
     ],
   },
@@ -31,11 +31,7 @@ module.exports = {
     alias: {
       'reactip': joinPath('../src/index.js'),
     },
-    // extensions: ['', '.js'],
   },
-  // postcss: webpack => [
-  //   require('postcss-nested'),
-  // ],
   plugins: ([
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
