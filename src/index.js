@@ -4,8 +4,6 @@ import {
   unmountComponentAtNode,
   unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
 } from 'react-dom'
-import cx from 'classnames'
-import {css} from 'emotion'
 import {defaultBcr} from './consts'
 import Popup from './Popup'
 

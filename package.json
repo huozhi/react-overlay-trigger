@@ -7,7 +7,8 @@
     "clean:docs": "rm -rf docs/dist",
     "build:docs": "npm run clean:docs && NODE_ENV=production webpack --colors --progress --config docs/webpack.config.js",
     "deploy:docs": "npm run build:docs && gh-pages -d docs/dist",
-    "build": "NODE_ENV=production webpack --colors --progress --config webpack.config.js",
+    "build": "npm run build:rollup",
+    "build:rollup": "rollup -c rollup.config.js",
     "start": "webpack-dev-server --progress --colors --content-base docs --config docs/webpack.config.js --port 3000",
     "postversion": "git push && git push --tags"
   },
@@ -39,10 +40,11 @@
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
     "babel-plugin-emotion": "^8.0.4",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.1",
     "classnames": "^2.2.5",
     "css-loader": "^0.26.1",
     "gh-pages": "^0.12.0",
@@ -51,12 +53,15 @@
     "postcss-nested": "^1.0.0",
     "react": "*",
     "react-dom": "*",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^2.0.0",
     "style-loader": "^0.13.1",
     "webpack": "^2.7.0",
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "emotion": "^8.0.5",
-    "react-emotion": "^8.0.9"
+    "emotion": "^8.0.5"
   }
 }
