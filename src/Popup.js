@@ -11,7 +11,7 @@ class Popup extends React.Component {
   }
 
   state = {
-    style: {top: 0, left: 0},
+    pos: {top: 0, left: 0},
     placement: this.props.placement,
   }
 
@@ -38,7 +38,7 @@ class Popup extends React.Component {
       expected = position(finalPlacement, this.ref, target, offsetParent, arrowSize)
     }
 
-    this.setState({style: expected.offset, placement: finalPlacement})
+    this.setState({pos: expected.offset, placement: finalPlacement})
   }
 
   handleScroll = () => {
@@ -50,26 +50,33 @@ class Popup extends React.Component {
     this.props.onRef(node)
   }
 
-  render() {
-    const {arrowSize, children} = this.props
-    const {style, placement} = this.state
+  getDefaultStyle(style) {
+    return Object.assign({
+      position: 'absolute',
+      padding: '2px 10px',
+      lineHeight: 1.7,
+      borderRadius: 4,
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: '#fff',
+      backgroundColor: '#fff',
+      fontSize: 13,
+      color: '#354052',
+      boxShadow: '0 5px 20px 0 rgba(0, 34, 20, .5)',
+    }, style)
+  }
 
+  render() {
+    const {arrowSize, children, style} = this.props
+    const {pos, placement} = this.state
+    
     return (
       <div
         ref={this.handleRef}
-        // TODO: customized style
         css={`
-          position: absolute;
-          top: ${style.top}px;
-          left: ${style.left}px;
-          padding: 2px 10px;
-          line-height: 1.7;
-          border-radius: 4px;
-          border: 1px solid #fff;
-          background-color: #fff;
-          font-size: 13px;
-          color: #354052;
-          box-shadow: 0 5px 20px 0 rgba(0, 34, 20, .5);
+          top: ${pos.top}px;
+          left: ${pos.left}px;
+          ${this.getDefaultStyle(style)}
         `}
       >
         <div
