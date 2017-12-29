@@ -68,8 +68,8 @@ export const position = (placement, node, target, offsetParent, arrowSize = 0) =
   const popupRect = {
     top: offset.top + offsetBcr.top,
     left: offset.left + offsetBcr.left,
-    bottom: offset.top + offsetBcr.top,
-    right: offset.left + offsetBcr.left,
+    bottom: offset.top + offsetBcr.top + nodeBcr.height,
+    right: offset.left + offsetBcr.left + nodeBcr.width,
   }
 
   return {
@@ -81,6 +81,6 @@ export const position = (placement, node, target, offsetParent, arrowSize = 0) =
 export const isInViewport = (rect) => (
   rect.top >= 0 &&
   rect.left >= 0 &&
-  rect.bottom <= (window.innerWidth || document.documentElement.clientWidth) &&
-  rect.right <= (window.innerHeight || document.documentElement.clientHeight)
+  rect.right <= (window.innerWidth || document.documentElement.clientWidth) &&
+  rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
 )
