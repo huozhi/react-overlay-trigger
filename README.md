@@ -7,9 +7,12 @@ visist https://huozhi.github.io/reactip
 
 ## Usage
 
+```sh
+npm i -S react react-dom emotion # for dependencies
+npm i -S reactip
 ```
-npm i --save reactip
-```
+
+> NOTICE: If you don't have these dependencies above, it won't work!
 
 Wrapp the trigger with `Tooltip` component
 
@@ -42,7 +45,7 @@ const Demo = () => (
 | tooltip   | anything | null    | tooltip content, you can pass DOM node or react component |
 | event     | string   | hover   | trigger event: `[hover, click]` |
 | offsetParent | node | document.body | position will be calculated relative to this node |
-| popupStyle | object | undefined | popup style object | 
+| popupStyle | object | undefined | popup style object |
 
 ## License
 
