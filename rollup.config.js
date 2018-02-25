@@ -6,8 +6,9 @@ import resolve from 'rollup-plugin-node-resolve'
 const config = {
   input: './src/index.js',
   output: {
+    name: 'reactip',
     file: './lib/index.js',
-    format: 'cjs',
+    format: 'umd',
   },
   external: [
     'react',
@@ -19,7 +20,7 @@ const config = {
     babel({
       exclude: 'node_modules/**',
       externalHelpers: false,
-      runtimeHelpers: true,
+      runtimeHelpers: false,
     }),
     commonjs({
       include: 'node_modules/**',
