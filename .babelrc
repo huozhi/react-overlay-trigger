@@ -2,10 +2,6 @@
   "presets": [["env", {"modules": false}]],
   "plugins": [
     "emotion", "transform-object-rest-spread", "transform-react-jsx", "transform-class-properties",
-    ["transform-runtime", {
-      "helpers": false,
-      "polyfill": false,
-      "regenerator": false
-    }]
+    "external-helpers"
   ]
 }
