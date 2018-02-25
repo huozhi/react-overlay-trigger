@@ -13,7 +13,13 @@ const config = {
   external: [
     'react',
     'react-dom',
+    'emotion',
   ],
+  globals: {
+    react: 'React',
+    emotion: 'emotion',
+    'react-dom': 'ReactDOM',
+  },
   sourcemap: true,
   plugins: [
     resolve(),
