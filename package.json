@@ -9,8 +9,7 @@
     "deploy:docs": "npm run build:docs && gh-pages -d docs/dist",
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "webpack-dev-server --progress --colors --content-base docs --config docs/webpack.config.js --port 3000",
-    "postversion": "git push && git push --tags"
+    "start": "webpack-dev-server --progress --colors --content-base docs --config docs/webpack.config.js --port 3000"
   },
   "files": [
     "*.md",
