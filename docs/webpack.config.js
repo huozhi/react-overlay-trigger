@@ -30,21 +30,21 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'reactip': joinPath('../lib/index.js'),
+      'reactip': joinPath('../src/index.js'),
     },
   },
   plugins: ([
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
+    new HtmlWebpackPlugin({
+      template: joinPath('index.html'),
+      minify: false,
+    }),
   ]).concat(isProduction ? [
     new webpack.optimize.UglifyJsPlugin({
       compressor: {warnings: false},
       output: {comments: false},
-    }),
-    new HtmlWebpackPlugin({
-      template: joinPath('index-tpl.html'),
-      minify: false,
     }),
   ] : [
     new webpack.HotModuleReplacementPlugin(),

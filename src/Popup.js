@@ -1,5 +1,4 @@
 import React from 'react'
-import {css} from 'emotion'
 import Arrow from './Arrow'
 import {position, isInViewport, getOppositePlacement} from './utils'
 
@@ -67,9 +66,9 @@ class Popup extends React.Component {
   }
 
   render() {
-    const {arrowSize, children, style} = this.props
+    const {children, style} = this.props
     const {pos, placement} = this.state
-    
+
     return (
       <div
         ref={this.handleRef}
