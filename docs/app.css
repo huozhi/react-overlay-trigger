@@ -41,7 +41,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 2em 20px;
+  padding: 2em 0 1em;
 }
 
 .Toggler {
@@ -49,10 +49,9 @@ body {
   flex-shrink: 0;
   margin: .5em;
   padding: 8px 16px;
-  border-radius: 3px;
-  border: 1px solid #fff;
+  border: 0;
   color: #fff;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.2);
   font-size: 20px;
   outline: none;
 }
@@ -64,7 +63,6 @@ body {
   overflow: auto;
   margin-top: 100px;
   padding: 20px 0;
-  background-color: #63a0b3;
-  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
   font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
 }
