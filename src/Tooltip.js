@@ -4,7 +4,6 @@ import {
   unmountComponentAtNode,
   unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
 } from 'react-dom'
-import {defaultBcr} from './consts'
 import Popup from './Popup'
 
 const isFunction = fn => typeof fn === 'function'
