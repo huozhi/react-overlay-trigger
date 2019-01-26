@@ -11,12 +11,13 @@ const App = () => {
   return (
     <div className="App">
       <div className="App-titile">
-        Reactip -- Easy Tooltip Component for React
+        REACTIP
+        <small style={{fontSize: 22, marginLeft: 30}}>Easy Tooltip Component for React</small>
         <div className="App-github">
           <iframe src={`https://ghbtns.com/github-btn.html?user=huozhi&repo=reactip&type=star`} frameBorder="0" scrolling="0" width="60px" height="20px" />
         </div>
       </div>
-      <p className="App-subtitle">Try buttons below</p>
+      <p className="App-subtitle">Examples</p>
 
       <div className="Demo">
         <Tooltip placement="left" event="hover" tooltip="something">
@@ -36,7 +37,8 @@ const App = () => {
         </Tooltip>
       </div>
 
-      <pre className="App-code">
+      <pre>
+        <code className="App-code language-javascript">
         {`
           <Tooltip placement="left" event="hover" tooltip="something">
             <button className="Toggler">hover [left]</button>
@@ -54,6 +56,7 @@ const App = () => {
             <button className="Toggler">click [bottom]</button>
           </Tooltip>
         `}
+        </code>
       </pre>
     </div>
   )
