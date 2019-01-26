@@ -1,33 +1,47 @@
-import React, {Component, cloneElement} from 'react'
-import {
-  findDOMNode,
-  unmountComponentAtNode,
-  unstable_renderSubtreeIntoContainer as renderSubtreeIntoContainer
-} from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import Popup from './Popup'
+import {position, isInViewport, getOppositePlacement} from './utils'
 
 const isFunction = fn => typeof fn === 'function'
 
-class Tooltip extends Component {
+class Tooltip extends React.Component {
   static defaultProps = {
-    offsetParent: document.body,
+    offsetParent: document && document.body,
     event: 'hover',
     arrowSize: 5,
+    placement: 'left',
   }
-
+  
   state = {
+    pos: {top: 0, left: 0},
     visible: false,
   }
 
+  handleScroll = () => requestAnimationFrame(this.adjustPosition)
+
   componentDidMount() {
-    this.mountDom = document.createElement('div')
-    document.body.appendChild(this.mountDom)
+    this.mountNode = document.createElement('div')
+    document.body.appendChild(this.mountNode)
+    this.target = ReactDOM.findDOMNode(this)
+
+    this.adjustPosition()
+    window.addEventListener('resize', this.handleScroll)
+    window.addEventListener('scroll', this.handleScroll)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.target = ReactDOM.findDOMNode(this)
+    if (this.state.visible && !prevState.visible) {
+      this.adjustPosition()
+    }
   }
 
   componentWillUnmount() {
-    unmountComponentAtNode(this.mountDom)
-    document.body.removeChild(this.mountDom)
-    this.mountDom = null
+    window.removeEventListener('resize', this.handleScroll)
+    window.removeEventListener('scroll', this.handleScroll)
+    document.body.removeChild(this.mountNode)
+    this.mountNode = null
   }
 
   ensureExcuteChildMethod = (method) => {
@@ -47,10 +61,6 @@ class Tooltip extends Component {
     this.close()
   }
 
-  handlePupupRef = (node) => {
-    this.tooltip = node
-  }
-
   handleClick = () => {
     this.ensureExcuteChildMethod('onClick')
     if (this.state.visible) {
@@ -60,21 +70,38 @@ class Tooltip extends Component {
     }
   }
 
-  renderOverlay = () => {
-    const element = findDOMNode(this)
-    const {placement, tooltip, arrowSize, offsetParent, popupStyle} = this.props
+  adjustPosition = () => {
+    if (!this.popup) { return; }
+    const {arrowSize, offsetParent, placement} = this.props
+    const target = this.target
+    const overlay = ReactDOM.findDOMNode(this.popup)
+    let expected = position(placement, overlay, target, offsetParent, arrowSize)
+    let finalPlacement = placement
 
-    return (
+    if (!isInViewport(expected.rect)) {
+      finalPlacement = getOppositePlacement(placement)
+      expected = position(finalPlacement, overlay, target, offsetParent, arrowSize)
+    }
+
+    this.setState({pos: expected.offset, placement: finalPlacement})
+  }
+
+  renderOverlay = () => {
+    const {tooltip, arrowSize, popupStyle} = this.props
+    const {pos, placement} = this.state
+    const popup = (
       <Popup
-        target={element}
-        placement={placement}
+        pos={pos}
         style={popupStyle}
-        offsetParent={offsetParent}
-        onRef={this.handlePupupRef}
+        arrowSize={arrowSize}
+        placement={placement}
+        ref={ref => this.popup = ref}
       >
         {tooltip}
       </Popup>
     )
+
+    return ReactDOM.createPortal(popup, this.mountNode)
   }
 
   get triggerProps() {
@@ -84,29 +111,30 @@ class Tooltip extends Component {
           onMouseEnter: this.handleMouseEnter,
           onMouseLeave: this.handleMouseLeave,
         }
-        break
       case 'click':
         return {
           onClick: this.handleClick,
         }
-        break
       default:
         return {}
     }
   }
 
   open = () => {
-    renderSubtreeIntoContainer(this, this.renderOverlay(), this.mountDom)
     this.setState({visible: true})
   }
 
   close = () => {
-    renderSubtreeIntoContainer(this, <noscript />, this.mountDom)
     this.setState({visible: false})
   }
 
   render() {
-    return cloneElement(this.props.children, this.triggerProps)
+    return (
+      <React.Fragment>
+        {React.cloneElement(this.props.children, this.triggerProps)}
+        {this.state.visible && this.renderOverlay()}
+      </React.Fragment>
+    )
   }
 }
 
