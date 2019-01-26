@@ -979,7 +979,7 @@ babel-plugin-emotion@^10.0.6:
     find-root "^1.1.0"
     source-map "^0.5.7"
 
-babel-plugin-macros@^2.0.0:
+babel-plugin-macros@^2.0.0, babel-plugin-macros@^2.4.5:
   version "2.4.5"
   resolved "http://registry.npm.taobao.org/babel-plugin-macros/download/babel-plugin-macros-2.4.5.tgz#7000a9b1f72d19ceee19a5804f1d23d6daf38c13"
   dependencies:

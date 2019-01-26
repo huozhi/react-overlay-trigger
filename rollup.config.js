@@ -8,11 +8,12 @@ const config = {
   output: {
     name: 'reactip',
     file: './lib/index.js',
-    format: 'esm',
+    format: 'cjs',
   },
   external: [
     'react',
     'react-dom',
+    '@emotion/core',
   ],
   sourcemap: true,
   plugins: [
