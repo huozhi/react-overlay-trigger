@@ -32,8 +32,8 @@
   },
   "homepage": "https://github.com/huozhi/reactip#readme",
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": ">= 16",
+    "react-dom": ">= 16"
   },
   "devDependencies": {
     "autoprefixer": "^6.6.0",
@@ -51,8 +51,8 @@
     "html-webpack-plugin": "^2.24.1",
     "postcss-loader": "^1.2.1",
     "postcss-nested": "^1.0.0",
-    "react": "*",
-    "react-dom": "*",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.5",
