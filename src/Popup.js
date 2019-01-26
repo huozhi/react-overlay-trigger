@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import React from 'react'
 import Arrow from './Arrow'
-import {jsx, css} from '@emotion/core'
+import {jsx} from '@emotion/core'
+import css from '@emotion/css/macro'
 
 class Popup extends React.Component {
   static defaultProps = {
