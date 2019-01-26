@@ -1,52 +1,10 @@
 import React from 'react'
 import Arrow from './Arrow'
-import {position, isInViewport, getOppositePlacement} from './utils'
 
 class Popup extends React.Component {
   static defaultProps = {
-    onRef() {},
     arrowSize: 5,
     placement: 'left',
-  }
-
-  state = {
-    pos: {top: 0, left: 0},
-    placement: this.props.placement,
-  }
-
-  componentDidMount() {
-    this.adjustPosition()
-    window.addEventListener('resize', this.handleScroll)
-    window.addEventListener('scroll', this.handleScroll)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleScroll)
-    window.removeEventListener('scroll', this.handleScroll)
-  }
-
-  adjustPosition = () => {
-    const {target, arrowSize, offsetParent, placement} = this.props
-    // TODO: default bcr
-
-    let expected = position(placement, this.ref, target, offsetParent, arrowSize)
-    let finalPlacement = placement
-
-    if (!isInViewport(expected.rect)) {
-      finalPlacement = getOppositePlacement(placement)
-      expected = position(finalPlacement, this.ref, target, offsetParent, arrowSize)
-    }
-
-    this.setState({pos: expected.offset, placement: finalPlacement})
-  }
-
-  handleScroll = () => {
-    requestAnimationFrame(this.adjustPosition)
-  }
-
-  handleRef = (node) => {
-    this.ref = node
-    this.props.onRef(node)
   }
 
   getDefaultStyle(style) {
@@ -66,12 +24,11 @@ class Popup extends React.Component {
   }
 
   render() {
-    const {children, style} = this.props
-    const {pos, placement} = this.state
+    const {children, style, pos, placement} = this.props
 
     return (
       <div
-        ref={this.handleRef}
+        ref={(ref) => this.ref = ref}
         css={`
           top: ${pos.top}px;
           left: ${pos.left}px;
