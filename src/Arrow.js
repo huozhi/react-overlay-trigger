@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import {isHorizontal, getOppositePlacement} from './utils'
-import {jsx, css} from '@emotion/core'
+import {jsx} from '@emotion/core'
+import css from '@emotion/css/macro'
 
 const Arrow = ({placement, arrowColor = '#fff', arrowSize = 5}) => (
   <span
