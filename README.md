@@ -8,7 +8,7 @@ visist https://huozhi.github.io/reactip
 ## Usage
 
 ```sh
-npm i -S react react-dom emotion # for dependencies
+npm i -S react react-dom @emotion/core # for dependencies
 npm i -S reactip
 ```
 
