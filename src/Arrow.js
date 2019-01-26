@@ -1,9 +1,10 @@
-import React from 'react'
+/** @jsx jsx */
 import {isHorizontal, getOppositePlacement} from './utils'
+import {jsx, css} from '@emotion/core'
 
 const Arrow = ({placement, arrowColor = '#fff', arrowSize = 5}) => (
   <span
-    css={`
+    css={css`
       position: absolute;
       width: 0;
       height: 0;

@@ -8,18 +8,12 @@ const config = {
   output: {
     name: 'reactip',
     file: './lib/index.js',
-    format: 'umd',
+    format: 'esm',
   },
   external: [
     'react',
     'react-dom',
-    'emotion',
   ],
-  globals: {
-    react: 'React',
-    emotion: 'emotion',
-    'react-dom': 'ReactDOM',
-  },
   sourcemap: true,
   plugins: [
     resolve(),
