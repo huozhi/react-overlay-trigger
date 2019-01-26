@@ -1,6 +1,9 @@
 {
-  "presets": [["env", {"modules": false}]],
+  "presets": [
+    ["@babel/preset-env", {"modules": false, "loose": true}],
+  ],
   "plugins": [
-    "emotion", "transform-object-rest-spread", "transform-react-jsx", "transform-class-properties"
+    "@babel/plugin-transform-react-jsx",
+    "@babel/plugin-proposal-class-properties",
   ]
 }

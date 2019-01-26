@@ -1,26 +1,28 @@
 const path = require('path')
-const webpack = require('webpack')
 const pkg = require('../package.json')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const joinPath = path.join.bind(null, __dirname)
 const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
+  mode: process.env.NODE_ENV || 'none',
   entry: {
     app: [joinPath('app.js')],
   },
   output: {
-    publicPath: isProduction ? `/${pkg.name}` : '/',
     path: joinPath('dist'),
+    publicPath: isProduction ? `/${pkg.name}` : '/',
     filename: isProduction ? 'app.[hash].js' : 'app.js',
   },
-  devtool: !isProduction && 'cheap-eval-source-map',
+  devtool: !isProduction && 'inline-cheap-source-map',
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+        }
       },
       {
         test: /\.css$/,
@@ -34,21 +36,9 @@ module.exports = {
     },
   },
   plugins: ([
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    }),
     new HtmlWebpackPlugin({
       template: joinPath('index.html'),
-      minify: false,
     }),
-  ]).concat(isProduction ? [
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {warnings: false},
-      output: {comments: false},
-    }),
-  ] : [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
   ]),
   devServer: {
     hot: true,

@@ -1,5 +1,7 @@
+/** @jsx jsx */
 import React from 'react'
 import Arrow from './Arrow'
+import {jsx, css} from '@emotion/core'
 
 class Popup extends React.Component {
   static defaultProps = {
@@ -25,18 +27,17 @@ class Popup extends React.Component {
 
   render() {
     const {children, style, pos, placement} = this.props
-
     return (
       <div
         ref={(ref) => this.ref = ref}
-        css={`
+        css={css`
           top: ${pos.top}px;
           left: ${pos.left}px;
           ${this.getDefaultStyle(style)}
         `}
       >
         <div
-          css={`
+          css={css`
             position: relative;
             max-width: 300px;
           `}
