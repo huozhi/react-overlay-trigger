@@ -9,25 +9,25 @@ const config = {
     name: 'reactip',
     file: './lib/index.js',
     format: 'cjs',
+    sourcemap: true,
   },
   external: [
     'react',
     'react-dom',
     '@emotion/core',
   ],
-  sourcemap: true,
   plugins: [
     resolve(),
-    babel({
-      exclude: 'node_modules/**',
-      externalHelpers: false,
-      runtimeHelpers: false,
-    }),
     commonjs({
       include: 'node_modules/**',
     }),
     replace({
       'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    babel({
+      exclude: 'node_modules/**',
+      externalHelpers: false,
+      runtimeHelpers: false,
     }),
   ],
 }
