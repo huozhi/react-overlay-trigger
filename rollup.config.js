@@ -1,4 +1,3 @@
-import replace from 'rollup-plugin-replace'
 import babel from 'rollup-plugin-babel'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
@@ -14,15 +13,11 @@ const config = {
   external: [
     'react',
     'react-dom',
-    '@emotion/core',
   ],
   plugins: [
     resolve(),
     commonjs({
       include: 'node_modules/**',
-    }),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('production')
     }),
     babel({
       exclude: 'node_modules/**',

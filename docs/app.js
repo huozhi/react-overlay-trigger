@@ -3,11 +3,35 @@ import {render} from 'react-dom'
 import Tooltip from 'reactip'
 import './app.css'
 
+const usageDescription = `
+<Tooltip placement="left" trigger="hover" overlay={<Overlay>something</Overlay>}>
+  <button className="Toggler">hover [left]</button>
+</Tooltip>
+
+<Tooltip placement="right" trigger="hover" overlay={<Overlay>something</Overlay>}>
+  <Button className="Toggler">hover [right]</Button>
+</Tooltip>
+
+<Tooltip placement="top" trigger="click" overlay={<Overlay>something</Overlay>}>
+  <button className="Toggler">click [top]</button>
+</Tooltip>
+
+<Tooltip placement="bottom" trigger="click" overlay={<Overlay>something</Overlay>}>
+  <button className="Toggler">click [bottom]</button>
+</Tooltip>
+`
+
 const Button = ({children, ...rest}) => (
   <button {...rest}>{children}</button>
 )
 
+const Overlay = ({children, style}) => {
+  return <span style={{...style, padding: 10}}>{children}</span>
+}
+
+
 const App = () => {
+  const tooltip = <Overlay>something</Overlay>
   return (
     <div className="App">
       <div className="App-titile">
@@ -20,42 +44,26 @@ const App = () => {
       <p className="App-subtitle">Examples</p>
 
       <div className="Demo">
-        <Tooltip placement="left" event="hover" tooltip="something">
+        <Tooltip placement="left" trigger="hover" overlay={tooltip}>
           <button className="Toggler">hover [left]</button>
         </Tooltip>
 
-        <Tooltip placement="right" event="hover" tooltip="something">
+        <Tooltip placement="right" trigger="hover" overlay={tooltip}>
           <Button className="Toggler">hover [right]</Button>
         </Tooltip>
 
-        <Tooltip placement="top" event="click" tooltip="something">
+        <Tooltip placement="top" trigger="click" overlay={tooltip}>
           <button className="Toggler">click [top]</button>
         </Tooltip>
 
-        <Tooltip placement="bottom" event="click" tooltip="something">
+        <Tooltip placement="bottom" trigger="click" overlay={tooltip}>
           <button className="Toggler">click [bottom]</button>
         </Tooltip>
       </div>
 
       <pre>
         <code className="App-code language-javascript">
-        {`
-          <Tooltip placement="left" event="hover" tooltip="something">
-            <button className="Toggler">hover [left]</button>
-          </Tooltip>
-
-          <Tooltip placement="right" event="hover" tooltip="something">
-            <Button className="Toggler">hover [right]</Button>
-          </Tooltip>
-
-          <Tooltip placement="top" event="click" tooltip="something">
-            <button className="Toggler">click [top]</button>
-          </Tooltip>
-
-          <Tooltip placement="bottom" event="click" tooltip="something">
-            <button className="Toggler">click [bottom]</button>
-          </Tooltip>
-        `}
+          {usageDescription}
         </code>
       </pre>
     </div>
