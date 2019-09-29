@@ -1,15 +1,14 @@
-# Reactip
-> tooltip component for react.
+# React Overlay Trigger
+> positioned overlay component for react.
 
 ## Examples
 
-visist https://huozhi.github.io/reactip
+visist https://huozhi.github.io/react-overlay-trigger
 
 ## Usage
 
 ```sh
-npm i -S react react-dom @emotion/core # for dependencies
-npm i -S reactip
+npm i -S react-overlay-trigger
 ```
 
 > NOTICE: If you don't have these dependencies above, it won't work!
@@ -18,7 +17,7 @@ Wrapp the trigger with `Tooltip` component
 
 ```js
 import React from 'react'
-import Tooltip from 'reactip'
+import Tooltip from 'react-overlay-trigger'
 
 const Button = ({children, ...rest}) => (
   <button {...rest}>{children}</button>
@@ -49,4 +48,4 @@ const Demo = () => (
 
 ## License
 
-`Reactip` is released under the MIT license.
+`React Overlay Trigger` is released under the MIT license.

@@ -36,15 +36,22 @@ body {
 
 .Demo {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
+  padding: 2em 0 1em;
+}
+
+.Demo-item {
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2em 0 1em;
+  margin: 20px 0;
 }
 
 .Toggler {
   display: inline-block;
   flex-shrink: 0;
+  width: 200px;
   margin: .5em;
   padding: 8px 16px;
   border: 0;
@@ -62,7 +69,7 @@ body {
   overflow: auto;
   white-space: pre-wrap;
   padding: 0;
-  
+
   font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
 }
 

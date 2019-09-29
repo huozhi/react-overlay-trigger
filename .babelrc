@@ -1,10 +1,9 @@
 {
   "presets": [
-    ["@babel/preset-env", {"loose": true}],
+    ["@babel/preset-env", {"loose": true}]
   ],
   "plugins": [
-    "babel-plugin-macros",
     "@babel/plugin-transform-react-jsx",
-    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-class-properties"
   ]
 }
