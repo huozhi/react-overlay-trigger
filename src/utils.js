@@ -23,34 +23,33 @@ export const getOppositePlacement = (placement) => {
 
 export const isHorizontal = (placement) => ['left', 'right'].indexOf(placement) >= 0
 
-export const position = (placement, node, target, offsetParent, arrowSize = 0) => {
-  const nodeBcr = node.getBoundingClientRect()
+export const position = (placement, overlay, target, offsetParent, arrowSize = 0) => {
+  const overlayBcr = overlay.getBoundingClientRect()
   const targetBcr = target.getBoundingClientRect()
   const offsetBcr = offsetParent.getBoundingClientRect()
 
   const style = {top: 0, left: 0}
-  // TODO: fixed and absolute
   const offsetTop = targetBcr.top - offsetBcr.top
   const offsetLeft = targetBcr.left - offsetBcr.left
 
   switch (placement) {
     case 'top': {
-      style.top = offsetTop - nodeBcr.height - arrowSize
-      style.left = offsetLeft + (targetBcr.width - nodeBcr.width) / 2
+      style.top = offsetTop - overlayBcr.height - arrowSize
+      style.left = offsetLeft + (targetBcr.width - overlayBcr.width) / 2
       break
     }
     case 'bottom': {
       style.top = offsetTop + targetBcr.height + arrowSize
-      style.left = offsetLeft + (targetBcr.width - nodeBcr.width) / 2
+      style.left = offsetLeft + (targetBcr.width - overlayBcr.width) / 2
       break
     }
     case 'left': {
-      style.top = offsetTop + (targetBcr.height - nodeBcr.height) / 2
-      style.left = offsetLeft - nodeBcr.width - arrowSize
+      style.top = offsetTop + (targetBcr.height - overlayBcr.height) / 2
+      style.left = offsetLeft - overlayBcr.width - arrowSize
       break
     }
     case 'right': {
-      style.top = offsetTop + (targetBcr.height - nodeBcr.height) / 2
+      style.top = offsetTop + (targetBcr.height - overlayBcr.height) / 2
       style.left = offsetLeft + targetBcr.width + arrowSize
       break
     }
@@ -61,15 +60,15 @@ export const position = (placement, node, target, offsetParent, arrowSize = 0) =
   const offset = {
     top: style.top,
     left: style.left,
-    bottom: style.top + nodeBcr.height,
-    right: style.left + nodeBcr.width,
+    bottom: style.top + overlayBcr.height,
+    right: style.left + overlayBcr.width,
   }
 
   const popupRect = {
     top: offset.top + offsetBcr.top,
     left: offset.left + offsetBcr.left,
-    bottom: offset.top + offsetBcr.top + nodeBcr.height,
-    right: offset.left + offsetBcr.left + nodeBcr.width,
+    bottom: offset.top + offsetBcr.top + overlayBcr.height,
+    right: offset.left + offsetBcr.left + overlayBcr.width,
   }
 
   return {

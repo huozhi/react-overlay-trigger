@@ -32,7 +32,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'reactip': joinPath('../src/index.js'),
+      'react-overlay-trigger': joinPath('../src/index.js'),
     },
   },
   plugins: ([
