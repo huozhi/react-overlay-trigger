@@ -13,25 +13,25 @@ npm i -S react-overlay-trigger
 
 > NOTICE: If you don't have these dependencies above, it won't work!
 
-Wrapp the trigger with `Tooltip` component
+Wrapp the trigger with `OverlayTrigger` component
 
 ```js
 import React from 'react'
-import Tooltip from 'react-overlay-trigger'
+import OverlayTrigger from 'react-overlay-trigger'
 
-const Button = ({children, ...rest}) => (
-  <button {...rest}>{children}</button>
-)
+const Overlay = ({style, ...rest}) => <span {...rest}>{children}</span>
+
+const overlay = <Overlay>yep</Overlay>
 
 const Demo = () => (
   <div>
-    <Tooltip placement="right" tooltip="something" event="hover">
+    <OverlayTrigger placement="right" overlay={overlay} trigger="hover">
       <Button className="Button">right</Button>
-    </Tooltip>
+    </OverlayTrigger>
 
-    <Tooltip placement="top" tooltip="something" event="click">
+    <OverlayTrigger placement="top" overlay={overlay} trigger="click">
       <button className="Button">top</button>
-    </Tooltip>
+    </OverlayTrigger>
   <div>
 )
 ```
@@ -40,11 +40,10 @@ const Demo = () => (
 
 | props     | type     | default | description |
 | :-------: | :------: | :-----: | :---------: |
-| placement | string   | x       | placement tooltip showup: `[top, right, bottom, left]` |
-| tooltip   | anything | null    | tooltip content, you can pass DOM node or react component |
-| event     | string   | hover   | trigger event: `[hover, click]` |
-| offsetParent | node | document.body | position will be calculated relative to this node |
-| popupStyle | object | undefined | popup style object |
+| placement | string   | x       | placement direction: `[top, right, bottom, left]` |
+| overlay   | anything | null    | overlay content, you can pass DOM node or react component |
+| trigger     | string   | hover   | trigger event: `[hover, click]` |
+| container | node | document.body | position will be calculated relative to this node |
 
 ## License
 
