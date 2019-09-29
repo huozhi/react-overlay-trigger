@@ -1,7 +1,7 @@
 {
   "name": "react-overlay-trigger",
   "version": "2.0.0",
-  "description": "react tooltip component",
+  "description": "react positioned overlay component",
   "main": "lib/index.js",
   "scripts": {
     "clean:docs": "rm -rf docs/dist",
@@ -23,6 +23,9 @@
   },
   "keywords": [
     "react",
+    "overlay",
+    "positioned",
+    "trigger",
     "tooltip"
   ],
   "author": "huozhi",

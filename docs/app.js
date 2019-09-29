@@ -47,7 +47,7 @@ const App = () => {
     <div className="App">
       <div className="App-titile">
         React Overlay Trigger
-        <small style={{fontSize: 22, marginLeft: 30}}>Easy Tooltip Component for React</small>
+        <small style={{fontSize: 22, marginLeft: 30}}>Positioned overlay Component for React</small>
         <div className="App-github">
           <iframe src={`https://ghbtns.com/github-btn.html?user=huozhi&repo=react-overlay-trigger&type=star`} frameBorder="0" scrolling="0" width="60px" height="20px" />
         </div>
