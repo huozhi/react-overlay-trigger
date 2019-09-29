@@ -43,10 +43,6 @@ module.exports = {
   devServer: {
     hot: true,
     inline: true,
-    stats: {
-      colors: true,
-      chunks: false,
-      chunkModules: false,
-    },
+    stats: 'minimal',
   },
 }
