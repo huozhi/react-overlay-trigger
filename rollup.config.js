@@ -5,7 +5,7 @@ import resolve from 'rollup-plugin-node-resolve'
 const config = {
   input: './src/index.js',
   output: {
-    name: 'reactip',
+    name: 'react-overlay-trigger',
     file: './lib/index.js',
     format: 'cjs',
     sourcemap: true,

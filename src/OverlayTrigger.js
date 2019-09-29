@@ -8,7 +8,7 @@ class RefHolder extends React.Component {
   }
 }
 
-class Tooltip extends React.Component {
+class OverlayTrigger extends React.Component {
   static defaultProps = {
     container: document ? document.body : null,
     trigger: 'hover',
@@ -19,7 +19,6 @@ class Tooltip extends React.Component {
     super(props)
     this.triggerRef = React.createRef()
     this.state = {
-      pos: {top: 0, left: 0},
       visible: false,
     }
   }
@@ -91,16 +90,17 @@ class Tooltip extends React.Component {
         </RefHolder>
         {this.state.visible &&
           <Overlay
-            overlay={overlay}
             arrowSize={arrowSize}
             container={container}
             placement={placement}
             target={this.getTarget}
-          />
+          >
+            {overlay}
+          </Overlay>
         }
       </React.Fragment>
     )
   }
 }
 
-export default Tooltip
+export default OverlayTrigger

@@ -40,12 +40,12 @@ class Overlay extends React.Component {
   }
 
   render() {
-    const {container, overlay} = this.props
-    if (!(overlay && container)) return null
+    const {container, children} = this.props
+    if (!(children && container)) return null
     return (
       ReactDOM.createPortal(
-        React.cloneElement(overlay, {
-            style: {...overlay.props.style, ...this.getStyle()}
+        React.cloneElement(children, {
+            style: {...children.props.style, ...this.getStyle()}
           }
         ),
        container

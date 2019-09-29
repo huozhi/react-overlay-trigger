@@ -1,5 +1,5 @@
 {
-  "name": "reactip",
+  "name": "react-overlay-trigger",
   "version": "2.0.0",
   "description": "react tooltip component",
   "main": "lib/index.js",
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/huozhi/reactip.git"
+    "url": "git+https://github.com/huozhi/react-overlay-trigger.git"
   },
   "keywords": [
     "react",
@@ -28,9 +28,9 @@
   "author": "huozhi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/huozhi/reactip/issues"
+    "url": "https://github.com/huozhi/react-overlay-trigger/issues"
   },
-  "homepage": "https://github.com/huozhi/reactip#readme",
+  "homepage": "https://github.com/huozhi/react-overlay-trigger#readme",
   "peerDependencies": {
     "react": ">= 16",
     "react-dom": ">= 16"
