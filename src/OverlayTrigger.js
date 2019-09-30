@@ -75,7 +75,7 @@ class OverlayTrigger extends React.Component {
   }
 
   render() {
-    const {children, container, overlay, arrowSize, placement} = this.props
+    const {children, container, overlay, arrowProps, placement} = this.props
     const child = React.Children.only(children)
     return (
       <React.Fragment>
@@ -84,7 +84,7 @@ class OverlayTrigger extends React.Component {
         </RefHolder>
         {this.state.visible &&
           <Overlay
-            arrowSize={arrowSize}
+            arrowProps={arrowProps}
             container={container}
             placement={placement}
             target={this.getTarget}

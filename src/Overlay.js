@@ -33,8 +33,8 @@ class Overlay extends React.Component {
     const triggerNode = this.props.target()
     if (!triggerNode || !this.props.container) { return }
     const overlayNode = ReactDOM.findDOMNode(this)
-    const {placement, container} = this.props
-    const expected = position(placement, overlayNode, triggerNode, container)
+    const {placement, container, arrowProps} = this.props
+    const expected = position(placement, overlayNode, triggerNode, container, arrowProps.size)
     const {top, left} = expected.offset
     this.setState({offsetTop: top, offsetLeft: left})
   }
@@ -52,6 +52,12 @@ class Overlay extends React.Component {
       )
     )
   }
+}
+
+Overlay.defaultProps = {
+  arrowProps: {
+    size: 0,
+  },
 }
 
 export default Overlay
