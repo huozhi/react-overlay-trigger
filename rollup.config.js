@@ -4,12 +4,17 @@ import resolve from 'rollup-plugin-node-resolve'
 
 const config = {
   input: './src/index.js',
-  output: {
+  output:  [{
     name: 'react-overlay-trigger',
     file: './lib/index.js',
     format: 'cjs',
     sourcemap: true,
-  },
+  }, {
+    name: 'react-overlay-trigger',
+    file: './lib/index.module.js',
+    format: 'esm',
+    sourcemap: true,
+  }],
   external: [
     'react',
     'react-dom',
