@@ -9,12 +9,6 @@ class RefHolder extends React.Component {
 }
 
 class OverlayTrigger extends React.Component {
-  static defaultProps = {
-    container: document ? document.body : null,
-    trigger: 'hover',
-    placement: 'left',
-  }
-
   constructor(props) {
     super(props)
     this.triggerRef = React.createRef()
@@ -101,6 +95,12 @@ class OverlayTrigger extends React.Component {
       </React.Fragment>
     )
   }
+}
+
+OverlayTrigger.defaultProps = {
+  trigger: 'hover',
+  placement: 'right',
+  container: document.body,
 }
 
 export default OverlayTrigger

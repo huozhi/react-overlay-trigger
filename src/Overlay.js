@@ -31,17 +31,17 @@ class Overlay extends React.Component {
 
   adjustPosition = () => {
     const triggerNode = this.props.target()
-    if (!triggerNode) { return; }
+    if (!triggerNode || !this.props.container) { return }
     const overlayNode = ReactDOM.findDOMNode(this)
-    const {container, placement} = this.props
+    const {placement, container} = this.props
     const expected = position(placement, overlayNode, triggerNode, container)
     const {top, left} = expected.offset
     this.setState({offsetTop: top, offsetLeft: left})
   }
 
   render() {
-    const {container, children} = this.props
-    if (!(children && container)) return null
+    const {children, container} = this.props
+    if (!container || !children) return null
     return (
       ReactDOM.createPortal(
         React.cloneElement(children, {
