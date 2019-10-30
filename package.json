@@ -11,7 +11,7 @@
     "prepublishOnly": "rm -rf dist && npm run build",
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "NODE_ENV=development webpack-dev-server --hot --progress --colors --content-base docs --config docs/webpack.config.js --port 3000"
+    "start": "NODE_ENV=development webpack-dev-server --hot --progress --colors --content-base docs --config docs/webpack.config.js"
   },
   "files": [
     "*.md",
