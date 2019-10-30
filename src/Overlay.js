@@ -8,6 +8,7 @@ class Overlay extends React.Component {
     this.state = {
       offsetTop: 0,
       offsetLeft: 0,
+      container: props.container,
     }
   }
 
@@ -31,16 +32,25 @@ class Overlay extends React.Component {
 
   adjustPosition = () => {
     const triggerNode = this.props.target()
-    if (!triggerNode || !this.props.container) { return }
+    const {container} = this.state
+    if (!triggerNode || !container) { return }
     const overlayNode = ReactDOM.findDOMNode(this)
-    const {placement, container, arrowProps} = this.props
+    const {placement, arrowProps} = this.props
     const expected = position(placement, overlayNode, triggerNode, container, arrowProps.size)
     const {top, left} = expected.offset
     this.setState({offsetTop: top, offsetLeft: left})
   }
 
+  componentDidUpdate(prevProps) {
+    // resolve dom node change
+    if (prevProps.container !== this.props.container) {
+      this.setState({container: this.props.container})
+    }
+  }
+
   render() {
-    const {children, container} = this.props
+    const {children} = this.props
+    const {container} = this.state
     if (!container || !children) return null
     return (
       ReactDOM.createPortal(
