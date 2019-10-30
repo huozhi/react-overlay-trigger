@@ -76,10 +76,3 @@ export const position = (placement, overlay, target, offsetParent, arrowSize = 0
     rect: popupRect,
   }
 }
-
-export const isInViewport = (rect) => (
-  rect.top >= 0 &&
-  rect.left >= 0 &&
-  rect.right <= (window.innerWidth || document.documentElement.clientWidth) &&
-  rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-)
