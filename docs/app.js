@@ -1,6 +1,6 @@
 import React from 'react'
 import {render} from 'react-dom'
-import OverlayTrigger from '../src'
+import OverlayTrigger from '..'
 import './app.css'
 
 const usageDescription = `
