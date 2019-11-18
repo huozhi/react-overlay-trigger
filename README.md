@@ -40,9 +40,9 @@ const Demo = () => (
 
 | props     | type     | default | description |
 | :-------: | :------: | :-----: | :---------: |
-| placement | string   | x       | placement direction: `[top, right, bottom, left]` |
+| placement | string   | x       | placement direction: `top | right | bottom | left]` |
 | overlay   | anything | null    | overlay content, you can pass DOM node or react component |
-| trigger     | string   | hover   | trigger event: `[hover, click]` |
+| triggers     | array   | null   | trigger events: `[hover, click, focus]` |
 | container | node | document.body | position will be calculated relative to this node |
 
 ## License
