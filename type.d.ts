@@ -10,10 +10,6 @@ export interface OverlayTriggerProps {
   placement: PlacementType;
 }
 
-/**
- * Alerts are used to communicate a state that affects a system, feature or page
- */
-
 declare const OverlayTrigger: React.ClassicComponentClass<OverlayTriggerProps>;
 
 export default OverlayTrigger;
