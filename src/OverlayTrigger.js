@@ -51,19 +51,20 @@ class OverlayTrigger extends React.Component {
   }
 
   getTriggerProps = () => {
-    switch (this.props.trigger) {
-      case 'hover':
-        return {
-          onMouseEnter: this.handleMouseEnter,
-          onMouseLeave: this.handleMouseLeave,
-        }
-      case 'click':
-        return {
-          onClick: this.handleClick,
-        }
-      default:
-        return {}
+    const {triggers} = this.props;
+    const triggerProps = {};
+    if (triggers.indexOf('hover') !== -1) {
+      triggerProps.onMouseEnter = this.handleMouseEnter
+      triggerProps.onMouseLeave = this.handleMouseLeave
     }
+    if (triggers.indexOf('focus') !== -1) {
+      triggerProps.onFocus = this.open
+      triggerProps.onBlur = this.close
+    }
+    if (triggers.indexOf('click') !== -1) {
+      triggerProps.onClick = this.handleClick
+    }
+    return triggerProps
   }
 
   open = () => {
@@ -98,7 +99,6 @@ class OverlayTrigger extends React.Component {
 }
 
 OverlayTrigger.defaultProps = {
-  trigger: 'hover',
   placement: 'right',
   container: document.body,
 }
