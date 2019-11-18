@@ -30,11 +30,11 @@ module.exports = {
       }
     ],
   },
-  resolve: {
-    alias: {
-      'react-overlay-trigger': joinPath('../src/index.js'),
-    },
-  },
+  // resolve: {
+  //   alias: {
+  //     'react-overlay-trigger': joinPath('../src/index.js'),
+  //   },
+  // },
   plugins: ([
     new HtmlWebpackPlugin({
       template: joinPath('index.html'),
