@@ -10,20 +10,20 @@ function Overlay({style, ...rest}) {
 
 const overlay = <Overlay>tooltip</Overlay>
 
-<OverlayTrigger placement="left" trigger="hover" overlay={overlay}>
-  <button className="Toggler">hover [left]</button>
+<OverlayTrigger placement="left" triggers={['hover']} overlay={overlay}>
+  <button className="Trigger">hover [left]</button>
 </OverlayTrigger>
 
-<OverlayTrigger placement="right" trigger="hover" overlay={overlay}>
-  <button className="Toggler">hover [right]</button>
+<OverlayTrigger placement="right" triggers={['hover']} overlay={overlay}>
+  <button className="Trigger">hover [right]</button>
 </OverlayTrigger>
 
-<OverlayTrigger placement="top" trigger="click" overlay={overlay}>
-  <button className="Toggler">click [top]</button>
+<OverlayTrigger placement="top" triggers={['click']} overlay={overlay}>
+  <button className="Trigger">click [top]</button>
 </OverlayTrigger>
 
-<OverlayTrigger placement="bottom" trigger="click" overlay={overlay}>
-  <button className="Toggler">click [bottom]</button>
+<OverlayTrigger placement="bottom" triggers={['click']} overlay={overlay}>
+  <button className="Trigger">click [bottom]</button>
 </OverlayTrigger>
 `
 
@@ -33,7 +33,11 @@ function Overlay({style, ...rest}) {
       style={{
         ...style,
         padding: '2px 8px',
-        backgroundColor: 'rgba(255, 255, 255, .05)'
+        backgroundColor: '#000',
+        color: '#fff',
+        lineHeight: 1,
+        fontWeight: 500,
+        borderRadius: 3,
       }}
     >
       tooltip
@@ -56,21 +60,21 @@ const App = () => {
 
       <div className="Demo">
         <div className="Demo-item">
-          <OverlayTrigger placement="left" trigger="hover" overlay={overlay}>
-            <button className="Toggler">hover [left]</button>
+          <OverlayTrigger placement="left" triggers={['hover', 'focus']} overlay={overlay}>
+            <button className="Trigger">hover/focus [left]</button>
           </OverlayTrigger>
 
-          <OverlayTrigger placement="right" trigger="hover" overlay={overlay}>
-            <button className="Toggler">hover [right]</button>
+          <OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={overlay}>
+            <button className="Trigger">hover/focus [right]</button>
           </OverlayTrigger>
         </div>
         <div className="Demo-item">
-          <OverlayTrigger placement="top" trigger="click" overlay={overlay}>
-            <button className="Toggler">click [top]</button>
+          <OverlayTrigger placement="top" triggers={['click']} overlay={overlay}>
+            <button className="Trigger">click [top]</button>
           </OverlayTrigger>
 
-          <OverlayTrigger placement="bottom" trigger="click" overlay={overlay}>
-            <button className="Toggler">click [bottom]</button>
+          <OverlayTrigger placement="bottom" triggers={['click']} overlay={overlay}>
+            <button className="Trigger">click [bottom]</button>
           </OverlayTrigger>
         </div>
       </div>
