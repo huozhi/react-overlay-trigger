@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Overlay from './Overlay'
 
 class RefHolder extends React.Component {
@@ -46,10 +45,6 @@ class OverlayTrigger extends React.Component {
     }
   }
 
-  getTarget = () => {
-    return ReactDOM.findDOMNode(this.triggerRef.current)
-  }
-
   getTriggerProps = () => {
     const {triggers} = this.props;
     const triggerProps = {};
@@ -88,7 +83,7 @@ class OverlayTrigger extends React.Component {
             arrowProps={arrowProps}
             container={container}
             placement={placement}
-            target={this.getTarget}
+            target={this.triggerRef}
           >
             {overlay}
           </Overlay>
@@ -99,7 +94,6 @@ class OverlayTrigger extends React.Component {
 }
 
 OverlayTrigger.defaultProps = {
-  placement: 'right',
   container: document.body,
 }
 
