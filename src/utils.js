@@ -59,15 +59,15 @@ export const position = (placement, target, offsetParent, arrowSize = 0) => {
   const offset = {
     top: style.top,
     left: style.left,
-    bottom: style.top + overlayBcr.height,
-    right: style.left + overlayBcr.width,
+    bottom: style.top,
+    right: style.left,
   }
 
   const popupRect = {
     top: offset.top + offsetBcr.top,
     left: offset.left + offsetBcr.left,
-    bottom: offset.top + offsetBcr.top + overlayBcr.height,
-    right: offset.left + offsetBcr.left + overlayBcr.width,
+    bottom: offset.top + offsetBcr.top,
+    right: offset.left + offsetBcr.left,
   }
 
   return {

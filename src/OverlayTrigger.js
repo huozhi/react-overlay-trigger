@@ -45,7 +45,7 @@ class OverlayTrigger extends React.Component {
     }
   }
 
-  handleFocus = () => {
+  handleFocus = (e) => {
     safeCall(this.getChildProps().onFocus, e)
   }
 
