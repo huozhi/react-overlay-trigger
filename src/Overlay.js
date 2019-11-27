@@ -2,6 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {position} from './utils'
 
+function compareBcr(a, b) {
+  const keys = ['left', 'top', 'width', 'height']
+  for (const key of keys) {
+    if (a[key] !== b[key]) return false
+  }
+  return true
+}
+
 const overlayTranslations = {
   left: ['-100%', '-50%'],
   right: ['0', '-50%'],
@@ -55,6 +63,15 @@ class Overlay extends React.Component {
     // resolve dom node change
     if (prevProps.container !== this.props.container) {
       this.setState({container: this.props.container})
+    }
+    const triggerReference = this.props.target.current
+    if (triggerReference) {
+      const targetNode = ReactDOM.findDOMNode(triggerReference)
+      const bcr = targetNode.getBoundingClientRect()
+      if (!compareBcr(bcr, this.lastBcr)) {
+        this.adjustPosition()
+        this.lastBcr = bcr
+      }
     }
   }
 

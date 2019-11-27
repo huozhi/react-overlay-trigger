@@ -51,7 +51,7 @@ body {
 .Trigger {
   display: inline-block;
   flex-shrink: 0;
-  width: 200px;
+  min-width: 200px;
   margin: .5em;
   padding: 8px 16px;
   border: 0;

@@ -45,6 +45,16 @@ function Overlay({style, ...rest}) {
   )
 }
 
+function ReflowButton({children, onClick, ...rest}) {
+  const [text, setText] = React.useState(children)
+
+  function handleClick(e) {
+    typeof onClick === 'function' && onClick(e)
+    setText(text === children ? Array(3).fill(children) : children)
+  }
+  return <button {...rest} onClick={handleClick}>{text}</button>
+}
+
 const App = () => {
   const overlay = <Overlay>yep</Overlay>
   return (
@@ -64,8 +74,8 @@ const App = () => {
             <button className="Trigger">hover/focus [left]</button>
           </OverlayTrigger>
 
-          <OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={overlay}>
-            <button className="Trigger">hover/focus [right]</button>
+          <OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={overlay}>
+            <ReflowButton className="Trigger">hover/focus [right]</ReflowButton>
           </OverlayTrigger>
         </div>
         <div className="Demo-item">
