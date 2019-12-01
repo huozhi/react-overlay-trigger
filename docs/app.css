@@ -12,7 +12,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 15px;
   line-height: 1.5;
-  background-color: #43585d;
+  background-color: #5b8994;
   color: #fff;
   -webkit-font-smoothing: antialiased;
 }
@@ -73,5 +73,5 @@ body {
 }
 
 :not(pre)>code[class*=language-], pre[class*=language-] {
-  background-color: rgba(180, 180, 180, 0.1);
+  background-color: #5d7a80;
 }

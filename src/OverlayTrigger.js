@@ -17,6 +17,7 @@ class OverlayTrigger extends React.Component {
   constructor(props) {
     super(props)
     this.triggerRef = React.createRef()
+    this.overlayRef = React.createRef()
     this.state = {
       visible: false,
     }
@@ -92,6 +93,7 @@ class OverlayTrigger extends React.Component {
             container={container}
             placement={placement}
             target={this.triggerRef}
+            ref={this.overlayRef}
           >
             {overlay}
           </Overlay>
