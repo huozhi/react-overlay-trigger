@@ -45,13 +45,19 @@ function Overlay({style, ...rest}) {
   )
 }
 
+function ReflowButton({children, ...rest}) {
+  return <button {...rest}>{children}</button>
+}
+
+const Button = ({...props}) => <button {...props} />
+
 const App = () => {
   const overlay = <Overlay>yep</Overlay>
   return (
     <div className="App">
       <div className="App-titile">
-        React Overlay Trigger
-        <small style={{fontSize: 22, marginLeft: 30}}>Positioned overlay Component for React</small>
+        <h2 style={{margin: '0.2em 0'}}>React Overlay Trigger</h2>
+        <small style={{fontSize: 22}}>Positioned overlay Component for React</small>
         <div className="App-github">
           <iframe src={`https://ghbtns.com/github-btn.html?user=huozhi&repo=react-overlay-trigger&type=star`} frameBorder="0" scrolling="0" width="60px" height="20px" />
         </div>
@@ -59,22 +65,25 @@ const App = () => {
       <p className="App-subtitle">Examples</p>
 
       <div className="Demo">
+        <div>click the following buttons will reisze button, hover and focus will trigger tooltips</div>
         <div className="Demo-item">
-          <OverlayTrigger placement="left" triggers={['hover', 'focus']} overlay={overlay}>
-            <button className="Trigger">hover/focus [left]</button>
+          <OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={overlay}>
+            <ReflowButton className="Trigger">hover/focus [top]</ReflowButton>
           </OverlayTrigger>
 
-          <OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={overlay}>
-            <button className="Trigger">hover/focus [right]</button>
+          <OverlayTrigger placement="bottom" triggers={['hover', 'focus']} overlay={overlay}>
+            <ReflowButton className="Trigger">hover/focus [bottom]</ReflowButton>
           </OverlayTrigger>
         </div>
+
+        <div>click the following buttons will trigger tooltips</div>
         <div className="Demo-item">
-          <OverlayTrigger placement="top" triggers={['click']} overlay={overlay}>
-            <button className="Trigger">click [top]</button>
+          <OverlayTrigger placement="left" triggers={['click']} overlay={overlay}>
+            <Button className="Trigger">click [left]</Button>
           </OverlayTrigger>
 
-          <OverlayTrigger placement="bottom" triggers={['click']} overlay={overlay}>
-            <button className="Trigger">click [bottom]</button>
+          <OverlayTrigger placement="right" triggers={['click']} overlay={overlay}>
+            <Button className="Trigger">click [right]</Button>
           </OverlayTrigger>
         </div>
       </div>
