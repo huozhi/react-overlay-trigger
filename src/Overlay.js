@@ -2,6 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {position} from './utils'
 
+const overlayTranslations = {
+  left: ['-100%', '-50%'],
+  right: ['0', '-50%'],
+  top: ['-50%', '-100%'],
+  bottom: ['-50%', '0'],
+}
+
 class Overlay extends React.Component {
   constructor(props) {
     super(props)
@@ -18,25 +25,28 @@ class Overlay extends React.Component {
 
   getStyle = () => {
     const {offsetTop, offsetLeft} = this.state
-    const transform3dValue = `translate3d(${Math.round(offsetLeft)}px, ${Math.round(offsetTop)}px, 0)`
+    const {placement} = this.props
+    const diff = overlayTranslations[placement]
+    const transforms = `translate3d(${offsetLeft}px, ${offsetTop}px, 0) translate(${diff[0]}, ${diff[1]})`
+
     return {
       position: 'absolute',
       left: 0,
       top: 0,
-      transform: transform3dValue,
-      WebkitTransform: transform3dValue,
-      MozTransform: transform3dValue,
-      msTransform: transform3dValue,
+      transform: transforms,
+      WebkitTransform: transforms,
+      MozTransform: transforms,
+      msTransform: transforms,
     }
   }
 
   adjustPosition = () => {
-    const triggerNode = this.props.target()
     const {container} = this.state
-    if (!triggerNode || !container) { return }
-    const overlayNode = ReactDOM.findDOMNode(this)
+    const triggerReference = this.props.target.current
+    if (!triggerReference || !container) { return }
+    const targetNode = ReactDOM.findDOMNode(triggerReference)
     const {placement, arrowProps} = this.props
-    const expected = position(placement, overlayNode, triggerNode, container, arrowProps.size)
+    const expected = position(placement, targetNode, container, arrowProps.size)
     const {top, left} = expected.offset
     this.setState({offsetTop: top, offsetLeft: left})
   }

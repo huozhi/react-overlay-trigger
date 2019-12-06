@@ -1,6 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Overlay from './Overlay'
+
+const safeCall = (fn, ...args) => {
+  if (typeof fn === 'function') {
+    fn(...args)
+  }
+}
 
 class RefHolder extends React.Component {
   render() {
@@ -12,14 +17,9 @@ class OverlayTrigger extends React.Component {
   constructor(props) {
     super(props)
     this.triggerRef = React.createRef()
+    this.overlayRef = React.createRef()
     this.state = {
       visible: false,
-    }
-  }
-
-  safeCall = (fn) => {
-    if (typeof fn === 'function') {
-      fn()
     }
   }
 
@@ -27,18 +27,18 @@ class OverlayTrigger extends React.Component {
     return this.props.children.props
   }
 
-  handleMouseEnter = () => {
-    this.safeCall(this.getChildProps().onMouseEnter)
+  handleMouseEnter = (e) => {
+    safeCall(this.getChildProps().onMouseEnter, e)
     this.open()
   }
 
-  handleMouseLeave = () => {
-    this.safeCall(this.getChildProps().onMouseLeave)
+  handleMouseLeave = (e) => {
+    safeCall(this.getChildProps().onMouseLeave, e)
     this.close()
   }
 
-  handleClick = () => {
-    this.safeCall(this.getChildProps().onClick)
+  handleClick = (e) => {
+    safeCall(this.getChildProps().onClick, e)
     if (this.state.visible) {
       this.close()
     } else {
@@ -46,8 +46,12 @@ class OverlayTrigger extends React.Component {
     }
   }
 
-  getTarget = () => {
-    return ReactDOM.findDOMNode(this.triggerRef.current)
+  handleFocus = (e) => {
+    safeCall(this.getChildProps().onFocus, e)
+  }
+
+  handleBlur = (e) => {
+    safeCall(this.getChildProps().onBlur, e)
   }
 
   getTriggerProps = () => {
@@ -58,8 +62,8 @@ class OverlayTrigger extends React.Component {
       triggerProps.onMouseLeave = this.handleMouseLeave
     }
     if (triggers.indexOf('focus') !== -1) {
-      triggerProps.onFocus = this.open
-      triggerProps.onBlur = this.close
+      triggerProps.onFocus = this.handleFocus
+      triggerProps.onBlur = this.handleBlur
     }
     if (triggers.indexOf('click') !== -1) {
       triggerProps.onClick = this.handleClick
@@ -88,7 +92,8 @@ class OverlayTrigger extends React.Component {
             arrowProps={arrowProps}
             container={container}
             placement={placement}
-            target={this.getTarget}
+            target={this.triggerRef}
+            ref={this.overlayRef}
           >
             {overlay}
           </Overlay>
@@ -99,7 +104,6 @@ class OverlayTrigger extends React.Component {
 }
 
 OverlayTrigger.defaultProps = {
-  placement: 'right',
   container: document.body,
 }
 
