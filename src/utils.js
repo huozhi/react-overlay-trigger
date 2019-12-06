@@ -23,8 +23,7 @@ export const getOppositePlacement = (placement) => {
 
 export const isHorizontal = (placement) => ['left', 'right'].indexOf(placement) >= 0
 
-export const position = (placement, overlay, target, offsetParent, arrowSize = 0) => {
-  const overlayBcr = overlay.getBoundingClientRect()
+export const position = (placement, target, offsetParent, arrowSize = 0) => {
   const targetBcr = target.getBoundingClientRect()
   const offsetBcr = offsetParent.getBoundingClientRect()
 
@@ -34,22 +33,22 @@ export const position = (placement, overlay, target, offsetParent, arrowSize = 0
 
   switch (placement) {
     case 'top': {
-      style.top = offsetTop - overlayBcr.height - arrowSize
-      style.left = offsetLeft + (targetBcr.width - overlayBcr.width) / 2
+      style.top = offsetTop - arrowSize
+      style.left = offsetLeft + (targetBcr.width) / 2
       break
     }
     case 'bottom': {
       style.top = offsetTop + targetBcr.height + arrowSize
-      style.left = offsetLeft + (targetBcr.width - overlayBcr.width) / 2
+      style.left = offsetLeft + (targetBcr.width) / 2
       break
     }
     case 'left': {
-      style.top = offsetTop + (targetBcr.height - overlayBcr.height) / 2
-      style.left = offsetLeft - overlayBcr.width - arrowSize
+      style.top = offsetTop + (targetBcr.height) / 2
+      style.left = offsetLeft - arrowSize
       break
     }
     case 'right': {
-      style.top = offsetTop + (targetBcr.height - overlayBcr.height) / 2
+      style.top = offsetTop + (targetBcr.height) / 2
       style.left = offsetLeft + targetBcr.width + arrowSize
       break
     }
@@ -60,15 +59,15 @@ export const position = (placement, overlay, target, offsetParent, arrowSize = 0
   const offset = {
     top: style.top,
     left: style.left,
-    bottom: style.top + overlayBcr.height,
-    right: style.left + overlayBcr.width,
+    bottom: style.top,
+    right: style.left,
   }
 
   const popupRect = {
     top: offset.top + offsetBcr.top,
     left: offset.left + offsetBcr.left,
-    bottom: offset.top + offsetBcr.top + overlayBcr.height,
-    right: offset.left + offsetBcr.left + overlayBcr.width,
+    bottom: offset.top + offsetBcr.top,
+    right: offset.left + offsetBcr.left,
   }
 
   return {
