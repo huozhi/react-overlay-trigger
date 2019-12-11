@@ -75,3 +75,18 @@ export const position = (placement, target, offsetParent, arrowSize = 0) => {
     rect: popupRect,
   }
 }
+
+function attachRef(ref, node) {
+  if (typeof ref === 'function') {
+    ref(node)
+  } else {
+    ref.current = node
+  }
+}
+
+export function combineRef(refX, refY) {
+  return function functionalRef(node) {
+    attachRef(refX, node)
+    attachRef(refY, node)
+  }
+}

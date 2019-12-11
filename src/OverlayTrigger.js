@@ -1,15 +1,10 @@
 import React from 'react'
 import Overlay from './Overlay'
+import DomObserver from './DomObserver'
 
 const safeCall = (fn, ...args) => {
   if (typeof fn === 'function') {
     fn(...args)
-  }
-}
-
-class RefHolder extends React.Component {
-  render() {
-    return this.props.children
   }
 }
 
@@ -79,20 +74,27 @@ class OverlayTrigger extends React.Component {
     this.setState({visible: false})
   }
 
+  scheduleUpdate = () => {
+    const {current: overlayInstance} = this.overlayRef
+    if (overlayInstance) {
+      overlayInstance.adjustPosition()
+    }
+  }
+
   render() {
-    const {children, container, overlay, arrowProps, placement} = this.props
+    const {children, observer, container, overlay, arrowProps, placement} = this.props
     const child = React.Children.only(children)
     return (
       <React.Fragment>
-        <RefHolder ref={this.triggerRef}>
+        <DomObserver ref={this.triggerRef} observerOption={observer} onMutate={this.scheduleUpdate}>
           {(child != null && child !== false) && React.cloneElement(child, this.getTriggerProps())}
-        </RefHolder>
+        </DomObserver>
         {this.state.visible &&
           <Overlay
             arrowProps={arrowProps}
             container={container}
             placement={placement}
-            target={this.triggerRef}
+            targetRef={this.triggerRef}
             ref={this.overlayRef}
           >
             {overlay}
@@ -105,6 +107,7 @@ class OverlayTrigger extends React.Component {
 
 OverlayTrigger.defaultProps = {
   container: document.body,
+  observer: false,
 }
 
 export default OverlayTrigger
