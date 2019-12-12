@@ -53,19 +53,14 @@ class Overlay extends React.Component {
     }
   }
 
-  getPositionOffset() {
+  adjustPosition = () => {
     const {container} = this.state
     const {getTrigger, placement, arrowProps} = this.props
     const triggerNode = getTrigger()
     const overlayNode = this.overlayRef.current
-    if (!triggerNode || !container) { return }
+    if (!triggerNode || !overlayNode || !container) { return }
     const expected = position(placement, overlayNode, triggerNode, container, arrowProps.size)
     const {top, left} = expected.offset
-    return {top, left}
-  }
-
-  adjustPosition = () => {
-    const {top, left} = this.getPositionOffset()
     const {offsetTop, offsetLeft} = this.state
     if (top !== offsetTop || left !== offsetLeft) {
       this.setState({offsetTop: top, offsetLeft: left})
