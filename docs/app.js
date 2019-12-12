@@ -1,31 +1,24 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {render} from 'react-dom'
 import OverlayTrigger from '..'
-import './app.css'
 
-const usageDescription = `
-function Overlay({style, ...rest}) {
-  return <span style={{...style, padding: 10, backgroundColor: 'rgba(255, 255, 255, .3)'}}>tooltip</span>
+function Example({children, code, title}) {
+  return (
+    <div className='Example'>
+      <div className='Example-title'>{title}</div>
+      <div className='Example-instance'>
+        {children}
+      </div>
+      <div className='Example-code'>
+        <pre className='language-javascript'>
+          <code className='App-code'>
+            {code}
+          </code>
+        </pre>
+      </div>
+    </div>
+  )
 }
-
-const overlay = <Overlay>tooltip</Overlay>
-
-<OverlayTrigger placement="left" triggers={['hover']} overlay={overlay}>
-  <button className="Trigger">hover [left]</button>
-</OverlayTrigger>
-
-<OverlayTrigger placement="right" triggers={['hover']} overlay={overlay}>
-  <button className="Trigger">hover [right]</button>
-</OverlayTrigger>
-
-<OverlayTrigger placement="top" triggers={['click']} overlay={overlay}>
-  <button className="Trigger">click [top]</button>
-</OverlayTrigger>
-
-<OverlayTrigger placement="bottom" triggers={['click']} overlay={overlay}>
-  <button className="Trigger">click [bottom]</button>
-</OverlayTrigger>
-`
 
 const Overlay = React.forwardRef(({style, ...rest}, ref) => {
   return (
@@ -47,8 +40,12 @@ const Overlay = React.forwardRef(({style, ...rest}, ref) => {
   )
 })
 
-const ReflowButton = React.forwardRef(({children, onClick, ...rest}, ref) => {
+const ReflowButton = React.forwardRef(({children, vertical, onClick, ...rest}, ref) => {
   const [g, setG] = useState(true)
+  const style = {}
+  if (vertical) {
+    style.height = g ? 'auto' : 200
+  }
   return (
     <button
       {...rest}
@@ -57,8 +54,10 @@ const ReflowButton = React.forwardRef(({children, onClick, ...rest}, ref) => {
         setG(!g)
       }}
       ref={ref}
+      style={style}
     >
-      {g ? children : '>>> ' + children + ' <<<'}
+      {!vertical && (g ? children : '>>> ' + children + ' <<<')}
+      {vertical && children}
     </button>
   )
 })
@@ -79,34 +78,51 @@ const App = () => {
       <p className="App-subtitle">Examples</p>
 
       <div className="Demo">
-        <div>click the following buttons will reisze button, hover and focus will trigger tooltips</div>
-        <div className="Demo-item">
-          <OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={overlay}>
-            <ReflowButton className="Trigger">hover/focus [top]</ReflowButton>
-          </OverlayTrigger>
+        <Example
+          title='click, tooltip show on bottom and right'
+          code={`
+<OverlayTrigger placement="right" triggers={['click']} overlay={overlay}>
+  <Button className="Trigger">....</Button>
+</OverlayTrigger>
 
-          <OverlayTrigger placement="bottom" triggers={['hover', 'focus']} overlay={overlay}>
-            <ReflowButton className="Trigger">hover/focus [bottom]</ReflowButton>
-          </OverlayTrigger>
-        </div>
+<OverlayTrigger placement="bottom" triggers={['click']} overlay={overlay}>
+  <Button className="Trigger">....</Button>
+</OverlayTrigger>
+            `}
+          >
+            <div>
+              <OverlayTrigger placement="right" triggers={['click']} overlay={overlay}>
+                <Button className="Trigger">click to toggle tips</Button>
+              </OverlayTrigger>
 
-        <div>click the following buttons will trigger tooltips</div>
-        <div className="Demo-item">
-          <OverlayTrigger placement="left" triggers={['click']} overlay={overlay}>
-            <Button className="Trigger">click [left]</Button>
-          </OverlayTrigger>
+              <OverlayTrigger placement="bottom" triggers={['click']} overlay={overlay}>
+                <Button className="Trigger">click to toggle tips</Button>
+              </OverlayTrigger>
+            </div>
+          </Example>
+          <Example
+            title='hover / focus, tooltip show on top and left'
+            code={`
+<OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={overlay}>
+  <button className="Trigger">....</button>
+</OverlayTrigger>
 
-          <OverlayTrigger placement="right" triggers={['click']} overlay={overlay}>
-            <Button className="Trigger">click [right]</Button>
-          </OverlayTrigger>
-        </div>
+<OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={overlay}>
+  <button className="Trigger">....</button>
+</OverlayTrigger>
+            `}
+          >
+            <div>
+              <OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={overlay}>
+                <ReflowButton className="Trigger">click to resize</ReflowButton>
+              </OverlayTrigger>
+              <OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={overlay}>
+                <ReflowButton vertical className="Trigger">click to resize</ReflowButton>
+              </OverlayTrigger>
+
+            </div>
+          </Example>
       </div>
-
-      <pre>
-        <code className="App-code language-javascript">
-          {usageDescription}
-        </code>
-      </pre>
     </div>
   )
 }
