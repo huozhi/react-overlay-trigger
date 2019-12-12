@@ -14,8 +14,28 @@ class Overlay extends React.Component {
     }
   }
 
+  static getDerivedStateFromProps(props, state) {
+    // resolve dom node change
+    if (props.container !== state.container) {
+      return {
+        container: props.container
+      }
+    }
+    return null
+  }
+
   componentDidMount() {
     this.adjustPosition()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.container !== this.state.container ||
+      prevProps.placement !== this.props.placement ||
+      prevProps.arrowProps !== this.props.arrowProps
+    ) {
+      this.adjustPosition()
+    }
   }
 
   getStyle = () => {
@@ -52,32 +72,23 @@ class Overlay extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    // resolve dom node change
-    if (prevProps.container !== this.props.container) {
-      this.setState({container: this.props.container})
-    }
-    this.adjustPosition()
-  }
-
   render() {
     const {children} = this.props
     const {container} = this.state
     if (!container || !children) return null
     return (
       ReactDOM.createPortal((
-          <DomObserver
-            ref={this.overlayRef}
-            onMeasure={this.adjustPosition}
-          >
-            {React.cloneElement(children, {
-              style: {...children.props.style, ...this.getStyle()},
-            })}
-          </DomObserver>
-        ),
-        container
-      )
-    )
+        <DomObserver
+          ref={this.overlayRef}
+          onMeasure={this.adjustPosition}
+        >
+          {React.cloneElement(children, {
+            style: {...children.props.style, ...this.getStyle()},
+          })}
+        </DomObserver>
+      ),
+      container
+    ))
   }
 }
 

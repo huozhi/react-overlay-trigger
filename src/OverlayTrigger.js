@@ -86,11 +86,11 @@ class OverlayTrigger extends React.Component {
   }
 
   render() {
-    const {children, observe, container, overlay, arrowProps, placement} = this.props
+    const {children, container, overlay, arrowProps, placement} = this.props
     const child = React.Children.only(children)
     return (
       <React.Fragment>
-        <DomObserver ref={this.triggerRef} observerOption={observe} onMeasure={this.scheduleUpdate}>
+        <DomObserver ref={this.triggerRef} onMeasure={this.scheduleUpdate}>
           {(child != null && child !== false) && React.cloneElement(child, this.getTriggerProps())}
         </DomObserver>
         {this.state.visible &&
@@ -111,7 +111,6 @@ class OverlayTrigger extends React.Component {
 
 OverlayTrigger.defaultProps = {
   container: document.body,
-  observe: false,
 }
 
 export default OverlayTrigger

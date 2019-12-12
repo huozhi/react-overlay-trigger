@@ -28,7 +28,6 @@ const overlay = <Overlay>tooltip</Overlay>
 `
 
 const Overlay = React.forwardRef(({style, ...rest}, ref) => {
-  const cnt = Math.round((Math.random() * 20))
   return (
     <span
       {...rest}
@@ -43,7 +42,7 @@ const Overlay = React.forwardRef(({style, ...rest}, ref) => {
         borderRadius: 3,
       }}
     >
-      {Array(Math.max(cnt, 1)).fill('x')}
+      Tooltip
     </span>
   )
 })

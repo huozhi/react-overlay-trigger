@@ -38,8 +38,6 @@ const DomObserver = React.forwardRef(
       let observer = null
       if (node) {
         observer = createObserver(node, onMeasure)
-        // ob = new MutationObserver(onMeasure)
-        // ob.observe(node, observeOption)
       }
       return () => {
         if (observer) {
