@@ -2,6 +2,8 @@ import React from 'react'
 import Overlay from './Overlay'
 import DomObserver from './DomObserver'
 
+const isPointerEventSupported = !!window.PointerEvent
+
 const safeCall = (fn, ...args) => {
   if (typeof fn === 'function') {
     fn(...args)
@@ -24,12 +26,30 @@ class OverlayTrigger extends React.Component {
 
   handleMouseEnter = (e) => {
     safeCall(this.getChildProps().onMouseEnter, e)
-    this.open()
+    if (!isPointerEventSupported) {
+      this.open()
+    }
   }
 
   handleMouseLeave = (e) => {
     safeCall(this.getChildProps().onMouseLeave, e)
-    this.close()
+    if (!isPointerEventSupported) {
+      this.close()
+    }
+  }
+
+  handlePointerEnter = (e) => {
+    safeCall(this.getChildProps().onPointerEnter, e)
+    if (e.pointerType === 'mouse') {
+      this.open()
+    }
+  }
+
+  handlePointerLeave = (e) => {
+    safeCall(this.getChildProps().onPointerLeave, e)
+    if (e.pointerType === 'mouse') {
+      this.close()
+    }
   }
 
   handleClick = (e) => {
@@ -55,6 +75,8 @@ class OverlayTrigger extends React.Component {
     if (triggers.indexOf('hover') !== -1) {
       triggerProps.onMouseEnter = this.handleMouseEnter
       triggerProps.onMouseLeave = this.handleMouseLeave
+      triggerProps.onPointerEnter = this.handlePointerEnter
+      triggerProps.onPointerLeave = this.handlePointerLeave
     }
     if (triggers.indexOf('focus') !== -1) {
       triggerProps.onFocus = this.handleFocus
