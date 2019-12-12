@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {render} from 'react-dom'
 import OverlayTrigger from '..'
 import './app.css'
@@ -27,9 +27,11 @@ const overlay = <Overlay>tooltip</Overlay>
 </OverlayTrigger>
 `
 
-function Overlay({style, ...rest}) {
+const Overlay = React.forwardRef(({style, ...rest}, ref) => {
   return (
     <span
+      {...rest}
+      ref={ref}
       style={{
         ...style,
         padding: '2px 8px',
@@ -40,19 +42,31 @@ function Overlay({style, ...rest}) {
         borderRadius: 3,
       }}
     >
-      tooltip
+      Tooltip
     </span>
   )
-}
+})
 
-function ReflowButton({children, ...rest}) {
-  return <button {...rest}>{children}</button>
-}
+const ReflowButton = React.forwardRef(({children, onClick, ...rest}, ref) => {
+  const [g, setG] = useState(true)
+  return (
+    <button
+      {...rest}
+      onClick={(e) => {
+        onClick && onClick(e)
+        setG(!g)
+      }}
+      ref={ref}
+    >
+      {g ? children : '>>> ' + children + ' <<<'}
+    </button>
+  )
+})
 
-const Button = ({...props}) => <button {...props} />
+const Button = React.forwardRef((props, ref) => <button {...props} ref={ref} /> )
 
 const App = () => {
-  const overlay = <Overlay>yep</Overlay>
+  const overlay = <Overlay />
   return (
     <div className="App">
       <div className="App-titile">
