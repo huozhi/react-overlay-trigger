@@ -1,15 +1,10 @@
 import React from 'react'
 import Overlay from './Overlay'
+import DomObserver from './DomObserver'
 
 const safeCall = (fn, ...args) => {
   if (typeof fn === 'function') {
     fn(...args)
-  }
-}
-
-class RefHolder extends React.Component {
-  render() {
-    return this.props.children
   }
 }
 
@@ -55,8 +50,8 @@ class OverlayTrigger extends React.Component {
   }
 
   getTriggerProps = () => {
-    const {triggers} = this.props;
-    const triggerProps = {};
+    const {triggers} = this.props
+    const triggerProps = {}
     if (triggers.indexOf('hover') !== -1) {
       triggerProps.onMouseEnter = this.handleMouseEnter
       triggerProps.onMouseLeave = this.handleMouseLeave
@@ -79,20 +74,31 @@ class OverlayTrigger extends React.Component {
     this.setState({visible: false})
   }
 
+  getTrigger = () => {
+    return this.triggerRef.current
+  }
+
+  scheduleUpdate = () => {
+    const {current: overlayInstance} = this.overlayRef
+    if (overlayInstance) {
+      overlayInstance.adjustPosition()
+    }
+  }
+
   render() {
     const {children, container, overlay, arrowProps, placement} = this.props
     const child = React.Children.only(children)
     return (
       <React.Fragment>
-        <RefHolder ref={this.triggerRef}>
+        <DomObserver ref={this.triggerRef} onMeasure={this.scheduleUpdate}>
           {(child != null && child !== false) && React.cloneElement(child, this.getTriggerProps())}
-        </RefHolder>
+        </DomObserver>
         {this.state.visible &&
           <Overlay
             arrowProps={arrowProps}
             container={container}
             placement={placement}
-            target={this.triggerRef}
+            getTrigger={this.getTrigger}
             ref={this.overlayRef}
           >
             {overlay}

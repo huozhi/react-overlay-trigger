@@ -23,33 +23,50 @@ export const getOppositePlacement = (placement) => {
 
 export const isHorizontal = (placement) => ['left', 'right'].indexOf(placement) >= 0
 
-export const position = (placement, target, offsetParent, arrowSize = 0) => {
-  const targetBcr = target.getBoundingClientRect()
+
+function attachRef(ref, node) {
+  if (typeof ref === 'function') {
+    ref(node)
+  } else {
+    ref.current = node
+  }
+}
+
+export function combineRef(refX, refY) {
+  return function functionalRef(node) {
+    attachRef(refX, node)
+    attachRef(refY, node)
+  }
+}
+
+export const position = (placement, overlay, trigger, offsetParent, arrowSize = 0) => {
+  const overlayBcr = overlay.getBoundingClientRect()
+  const triggertBcr = trigger.getBoundingClientRect()
   const offsetBcr = offsetParent.getBoundingClientRect()
 
   const style = {top: 0, left: 0}
-  const offsetTop = targetBcr.top - offsetBcr.top
-  const offsetLeft = targetBcr.left - offsetBcr.left
+  const offsetTop = triggertBcr.top - offsetBcr.top
+  const offsetLeft = triggertBcr.left - offsetBcr.left
 
   switch (placement) {
     case 'top': {
-      style.top = offsetTop - arrowSize
-      style.left = offsetLeft + (targetBcr.width) / 2
+      style.top = offsetTop - overlayBcr.height - arrowSize
+      style.left = offsetLeft + (triggertBcr.width - overlayBcr.width) / 2
       break
     }
     case 'bottom': {
-      style.top = offsetTop + targetBcr.height + arrowSize
-      style.left = offsetLeft + (targetBcr.width) / 2
+      style.top = offsetTop + triggertBcr.height + arrowSize
+      style.left = offsetLeft + (triggertBcr.width - overlayBcr.width) / 2
       break
     }
     case 'left': {
-      style.top = offsetTop + (targetBcr.height) / 2
-      style.left = offsetLeft - arrowSize
+      style.top = offsetTop + (triggertBcr.height - overlayBcr.height) / 2
+      style.left = offsetLeft - overlayBcr.width - arrowSize
       break
     }
     case 'right': {
-      style.top = offsetTop + (targetBcr.height) / 2
-      style.left = offsetLeft + targetBcr.width + arrowSize
+      style.top = offsetTop + (triggertBcr.height - overlayBcr.height) / 2
+      style.left = offsetLeft + triggertBcr.width + arrowSize
       break
     }
     default:
