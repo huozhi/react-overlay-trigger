@@ -1,30 +1,49 @@
 import React, {useEffect, useRef} from 'react'
 import {combineRef} from './utils'
 
-const defaultObserverOption = {
+const mutationObserverOption = {
   subtree: true,
+  childList: true,
   attributes: true,
   characterData: true,
-};
+}
+
+function createObserver(node, onMeasure) {
+  if (window.ResizeObserver) {
+    const ro = new ResizeObserver(() => onMeasure())
+    ro.observe(node)
+    return ro
+  } else {
+    const cachedSize = {width: 0, height: 0}
+    function handleMutate() {
+      const {width, height} = node.getBoundingClientRect()
+      if (cachedSize.width !== width || cachedSize.height !== height) {
+        cachedSize.width = width
+        cachedSize.height = height
+        onMeasure()
+      }
+    }
+    const mob = new MutationObserver(handleMutate)
+    mob.observe(node, mutationObserverOption)
+    return mob
+  }
+}
 
 const DomObserver = React.forwardRef(
-  ({children, observeOption: originObserverOption, onMutate}, ref) => {
+  ({children, onMeasure}, ref) => {
     const innerRef = useRef(null)
-    // when `originObserverOption` is true, use default option
-    // when `originObserverOption` is false or others, use itself
-    // and when `originObserverOption` is object only, it will be applied to MutationObserver
-    const observeOption = originObserverOption === true ? defaultObserverOption : originObserverOption
 
     useEffect(() => {
       const node = innerRef.current
-      let ob = null
-      if (node && typeof observeOption === 'object') {
-        ob = new MutationObserver(onMutate)
-        ob.observe(node, observeOption)
+      let observer = null
+      if (node) {
+        observer = createObserver(node, onMeasure)
+        // ob = new MutationObserver(onMeasure)
+        // ob.observe(node, observeOption)
       }
       return () => {
-        if (ob) {
-          ob.disconnect()
+        if (observer) {
+          observer.disconnect()
         }
       }
     }, [])
@@ -36,8 +55,7 @@ const DomObserver = React.forwardRef(
 )
 
 DomObserver.defaultProps = {
-  onMutate() {},
-  observeOption: defaultObserverOption,
+  onMeasure() {},
 }
 
 export default DomObserver

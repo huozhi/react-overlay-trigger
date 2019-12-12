@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {render} from 'react-dom'
 import OverlayTrigger from '..'
 import './app.css'
@@ -28,6 +28,7 @@ const overlay = <Overlay>tooltip</Overlay>
 `
 
 const Overlay = React.forwardRef(({style, ...rest}, ref) => {
+  const cnt = Math.round((Math.random() * 20))
   return (
     <span
       {...rest}
@@ -42,7 +43,7 @@ const Overlay = React.forwardRef(({style, ...rest}, ref) => {
         borderRadius: 3,
       }}
     >
-      tooltip
+      {Array(Math.max(cnt, 1)).fill('x')}
     </span>
   )
 })
@@ -66,7 +67,7 @@ const ReflowButton = React.forwardRef(({children, onClick, ...rest}, ref) => {
 const Button = React.forwardRef((props, ref) => <button {...props} ref={ref} /> )
 
 const App = () => {
-  const overlay = <Overlay>yep</Overlay>
+  const overlay = <Overlay />
   return (
     <div className="App">
       <div className="App-titile">

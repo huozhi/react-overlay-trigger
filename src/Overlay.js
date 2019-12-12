@@ -1,17 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {position} from './utils'
-
-const overlayTranslations = {
-  left: ['-100%', '-50%'],
-  right: ['0', '-50%'],
-  top: ['-50%', '-100%'],
-  bottom: ['-50%', '0'],
-}
+import DomObserver from './DomObserver'
 
 class Overlay extends React.Component {
   constructor(props) {
     super(props)
+    this.overlayRef = React.createRef()
     this.state = {
       offsetTop: 0,
       offsetLeft: 0,
@@ -25,9 +20,7 @@ class Overlay extends React.Component {
 
   getStyle = () => {
     const {offsetTop, offsetLeft} = this.state
-    const {placement} = this.props
-    const diff = overlayTranslations[placement]
-    const transforms = `translate3d(${offsetLeft}px, ${offsetTop}px, 0) translate(${diff[0]}, ${diff[1]})`
+    const transforms = `translate3d(${offsetLeft}px, ${offsetTop}px, 0)`
 
     return {
       position: 'absolute',
@@ -40,14 +33,23 @@ class Overlay extends React.Component {
     }
   }
 
-  adjustPosition = () => {
+  getPositionOffset() {
     const {container} = this.state
-    const targetNode = this.props.targetRef.current
-    if (!targetNode || !container) { return }
-    const {placement, arrowProps} = this.props
-    const expected = position(placement, targetNode, container, arrowProps.size)
+    const {getTrigger, placement, arrowProps} = this.props
+    const triggerNode = getTrigger()
+    const overlayNode = this.overlayRef.current
+    if (!triggerNode || !container) { return }
+    const expected = position(placement, overlayNode, triggerNode, container, arrowProps.size)
     const {top, left} = expected.offset
-    this.setState({offsetTop: top, offsetLeft: left})
+    return {top, left}
+  }
+
+  adjustPosition = () => {
+    const {top, left} = this.getPositionOffset()
+    const {offsetTop, offsetLeft} = this.state
+    if (top !== offsetTop || left !== offsetLeft) {
+      this.setState({offsetTop: top, offsetLeft: left})
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -55,6 +57,7 @@ class Overlay extends React.Component {
     if (prevProps.container !== this.props.container) {
       this.setState({container: this.props.container})
     }
+    this.adjustPosition()
   }
 
   render() {
@@ -62,12 +65,17 @@ class Overlay extends React.Component {
     const {container} = this.state
     if (!container || !children) return null
     return (
-      ReactDOM.createPortal(
-        React.cloneElement(children, {
-            style: {...children.props.style, ...this.getStyle()}
-          }
+      ReactDOM.createPortal((
+          <DomObserver
+            ref={this.overlayRef}
+            onMeasure={this.adjustPosition}
+          >
+            {React.cloneElement(children, {
+              style: {...children.props.style, ...this.getStyle()},
+            })}
+          </DomObserver>
         ),
-       container
+        container
       )
     )
   }
