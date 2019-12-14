@@ -41,7 +41,8 @@ const Demo = () => (
 | props     | type     | default | description |
 | :-------: | :------: | :-----: | :---------: |
 | placement | string   | x       | placement direction: `top | right | bottom | left]` |
-| overlay   | anything | null    | overlay content, you can pass DOM node or react component |
+| overlay   | node \| React.RefForwardingComponent | null    | overlay content, you can pass DOM node or react component |
+| children | node \| RefForwardingComponent | x | the trigger element |
 | triggers     | array   | null   | trigger events: `[hover, click, focus]` |
 | container | node | document.body | position will be calculated relative to this node |
 

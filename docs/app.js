@@ -5,7 +5,7 @@ import OverlayTrigger from '..'
 function Example({children, code, title}) {
   return (
     <div className='Example'>
-      <div className='Example-title'>{title}</div>
+      <div className='Example-title' tabIndex={0}>{title}</div>
       <div className='Example-instance'>
         {children}
       </div>
@@ -68,7 +68,7 @@ const App = () => {
   const overlay = <Overlay />
   return (
     <div className="App">
-      <div className="App-titile">
+      <div className="App-title">
         <h2 style={{margin: '0.2em 0'}}>React Overlay Trigger</h2>
         <small style={{fontSize: 22}}>Positioned overlay Component for React</small>
         <div className="App-github">
@@ -100,27 +100,40 @@ const App = () => {
               </OverlayTrigger>
             </div>
           </Example>
+
           <Example
-            title='hover / focus, tooltip show on top and left'
+            title='Only mouse hover will trigger tooltips. they will show on top and left'
             code={`
-<OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={overlay}>
+<OverlayTrigger placement="top" triggers={['hover']} overlay={overlay}>
   <button className="Trigger">....</button>
 </OverlayTrigger>
 
-<OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={overlay}>
+<OverlayTrigger placement="right" triggers={['hover']} overlay={overlay}>
   <button className="Trigger">....</button>
 </OverlayTrigger>
             `}
           >
             <div>
-              <OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={overlay}>
+              <OverlayTrigger placement="top" triggers={['hover']} overlay={overlay}>
                 <ReflowButton className="Trigger">click to resize</ReflowButton>
               </OverlayTrigger>
-              <OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={overlay}>
+              <OverlayTrigger placement="right" triggers={['hover']} overlay={overlay}>
                 <ReflowButton vertical className="Trigger">click to resize</ReflowButton>
               </OverlayTrigger>
-
             </div>
+          </Example>
+
+          <Example
+            title='focus and tooltip show on top and left'
+            code={`
+<OverlayTrigger placement="top" triggers={['focus']} overlay={overlay}>
+  <button className="Trigger">....</button>
+</OverlayTrigger>
+            `}
+          >
+            <OverlayTrigger placement="right" triggers={['focus']} overlay={overlay}>
+              <Button className="Trigger">focus here</Button>
+            </OverlayTrigger>
           </Example>
       </div>
     </div>
