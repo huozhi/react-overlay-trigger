@@ -35,5 +35,6 @@ module.exports = {
     hot: true,
     inline: true,
     stats: 'minimal',
+    host: '0.0.0.0',
   },
 }
