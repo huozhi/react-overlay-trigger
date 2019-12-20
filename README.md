@@ -1,9 +1,14 @@
 # React Overlay Trigger
-> positioned overlay component for react.
+> zero dependencies overlay positioning component for react.
+
+
+[![npm version](https://img.shields.io/npm/v/react-overlay-trigger.svg?style=flat-square)](https://www.npmjs.com/package/react-overlay-trigger)
+[![npm downloads](https://img.shields.io/npm/dm/react-overlay-trigger.svg?style=flat-square)](https://www.npmjs.com/package/react-overlay-trigger)
+
 
 ## Examples
 
-visist https://huozhi.github.io/react-overlay-trigger
+checkout https://huozhi.github.io/react-overlay-trigger
 
 ## Usage
 
@@ -11,9 +16,7 @@ visist https://huozhi.github.io/react-overlay-trigger
 npm i -S react-overlay-trigger
 ```
 
-> NOTICE: If you don't have these dependencies above, it won't work!
-
-Wrapp the trigger with `OverlayTrigger` component
+Wrap the trigger with `OverlayTrigger` component
 
 ```js
 import React from 'react'
@@ -22,6 +25,8 @@ import OverlayTrigger from 'react-overlay-trigger'
 const Overlay = ({style, ...rest}) => <span {...rest}>{children}</span>
 
 const overlay = <Overlay>yep</Overlay>
+
+const Button = React.forwardRef((props, ref) => <div {...props} ref={ref} />)
 
 const Demo = () => (
   <div>
@@ -36,15 +41,28 @@ const Demo = () => (
 )
 ```
 
+## Development 
+
+```sh
+npm install
+npm start # then goto http://localhost:8080
+```
+
 ## API
 
 | props     | type     | default | description |
 | :-------: | :------: | :-----: | :---------: |
 | placement | string   | x       | placement direction: `top | right | bottom | left]` |
-| overlay   | node \| React.RefForwardingComponent | null    | overlay content, you can pass DOM node or react component |
-| children | node \| RefForwardingComponent | x | the trigger element |
+| overlay   | React.ReactNode \| React.RefForwardingComponent | null    | overlay content, you can pass DOM node or react component |
+| children | React.ReactNode \| RefForwardingComponent | x | the trigger element |
 | triggers     | array   | null   | trigger events: `[hover, click, focus]` |
-| container | node | document.body | position will be calculated relative to this node |
+| container | HTMLElement | document.body | position will be calculated relative to this node |
+
+
+# IMPORTANT 💥
+
+**react-overlay-trigger** supports `<React.StrictMode>` 🎉, we didn't use any `findDOMNode` API inside the library. So it requires you only pass the children as ReactNode (like `<div />`) or RefForwardingComponent (like `React.forwardRef((props, ref) => ...)` component with ref accessing an actual DOM node). Then it could position the DOM nodes with correct positions and sizes.
+
 
 ## License
 
