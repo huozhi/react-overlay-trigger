@@ -71,9 +71,9 @@ const App = () => {
       <div className="App-title">
         <h2 style={{margin: '0.2em 0'}}>React Overlay Trigger</h2>
         <small style={{fontSize: 22}}>Positioned overlay Component for React</small>
-        <div className="App-github">
+        <span className="App-github">
           <iframe src={`https://ghbtns.com/github-btn.html?user=huozhi&repo=react-overlay-trigger&type=star`} frameBorder="0" scrolling="0" width="60px" height="20px" />
-        </div>
+        </span>
       </div>
       <p className="App-subtitle">Examples</p>
 
@@ -140,7 +140,10 @@ const App = () => {
   )
 }
 
-render(
-  <App />,
+render((
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  ),
   document.getElementById('root')
 )
