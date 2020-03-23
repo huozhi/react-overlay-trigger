@@ -47,7 +47,7 @@ const DomObserver = React.forwardRef(
     }, [])
 
     return React.cloneElement(children, {
-      ref: combineRef(innerRef, ref)
+      ref: combineRef(innerRef, ref, children.ref)
     })
   }
 )
