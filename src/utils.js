@@ -27,15 +27,14 @@ export const isHorizontal = (placement) => ['left', 'right'].indexOf(placement) 
 function attachRef(ref, node) {
   if (typeof ref === 'function') {
     ref(node)
-  } else {
+  } else if (typeof ref === 'object') {
     ref.current = node
   }
 }
 
-export function combineRef(refX, refY) {
+export function combineRef(...args) {
   return function functionalRef(node) {
-    attachRef(refX, node)
-    attachRef(refY, node)
+    args.filter(arg => arg != null).forEach(ref => attachRef(ref, node))
   }
 }
 

@@ -91,7 +91,12 @@ const App = () => {
             `}
           >
             <div>
-              <OverlayTrigger placement="right" triggers={['click']} overlay={overlay}>
+              <OverlayTrigger 
+                placement="right" 
+                triggers={['click']} 
+                ref={(ref) => { window.console.log(ref) }} 
+                overlay={overlay}
+              >
                 <Button className="Trigger">click to toggle tips</Button>
               </OverlayTrigger>
 
