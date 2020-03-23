@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {forwardRef} from 'react'
 import Overlay from './Overlay'
 import DomObserver from './DomObserver'
+import { combineRef } from './utils'
 
 const isPointerEventSupported = !!window.PointerEvent
 const isTouchEventSupported = !!window.TouchEvent
@@ -111,11 +112,12 @@ class OverlayTrigger extends React.Component {
   }
 
   render() {
-    const {children, container, overlay, arrowProps, placement} = this.props
+    const {children, forwardRef, container, overlay, arrowProps, placement} = this.props
     const child = React.Children.only(children)
+
     return (
       <React.Fragment>
-        <DomObserver ref={this.triggerRef} onMeasure={this.scheduleUpdate}>
+        <DomObserver ref={combineRef(this.triggerRef, forwardRef)} onMeasure={this.scheduleUpdate}>
           {(child != null && child !== false) && React.cloneElement(child, this.getTriggerProps())}
         </DomObserver>
         {this.state.visible &&
@@ -138,4 +140,6 @@ OverlayTrigger.defaultProps = {
   container: document.body,
 }
 
-export default OverlayTrigger
+export default forwardRef((props, ref) => {
+  return <OverlayTrigger {...props} forwardRef={ref} />
+})
