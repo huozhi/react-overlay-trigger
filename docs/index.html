@@ -100,9 +100,17 @@ body {
 .Trigger:active,
 .Trigger:hover,
 .Trigger:focus {
-  background: #92c8d6;
-  box-shadow: 8px 8px 44px #5e7c83, 
-             -11px -11px 44px #d0ffff;
+  background: #8ed1e2;
+  box-shadow: 15px 7px 16px 1px #86bbc7, -6px -6px 44px #d0ffff;
+}
+
+@keyframes fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.Overlay {
+  animation: fade 0.3s ease 0.1s both;
 }
 
 .App-code {
@@ -118,6 +126,11 @@ body {
   border-radius: 1em;
   box-shadow: -10px -10px 50px #a2dce6, 
               10px 10px 50px #324f54;
+  transition: all .2s ease;
+}
+
+:not(pre)>code[class*=language-]:hover, pre[class*=language-]:hover {
+  box-shadow: -10px -10px 50px #a2dce6, 10px 10px 50px #44696f;
 }
 
 </style>
