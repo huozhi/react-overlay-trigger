@@ -6,7 +6,13 @@
 <title>React Overlay Trigger</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism-tomorrow.min.css" />
 <style>
-html, html * {
+:root {
+  --theme-background: #97c8d4;
+  --theme-text-color: #2e8492;
+  --theme-background--dark: #16788c;
+}
+
+* {
   box-sizing: border-box;
 }
 
@@ -16,12 +22,16 @@ html, body {
   padding: 0;
 }
 
+h1, h2, small {
+  letter-spacing: 0.5px;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 15px;
   line-height: 1.5;
-  background-color: #5b8994;
-  color: #fff;
+  background-color: var(--theme-background);
+  color: var(--theme-text-color);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -33,13 +43,24 @@ body {
 }
 
 .App-title {
-  margin: 30px 0;
+  margin: 30px 0 60px;
   font-size: 36px;
   font-weight: 500;
+  letter-spacing: 1.5px;
+}
+
+.App-title h2 {
+  margin: 0.3em 0 0;
+}
+
+.App-title small {
+  font-size: 20px;
+  font-weight: 300;
 }
 
 .App-subtitle {
   font-size: 24px;
+  font-weight: 600;
 }
 
 .App-github {
@@ -56,24 +77,33 @@ body {
 }
 
 .Example {
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .Trigger {
   display: block;
   flex-shrink: 0;
   min-width: 160px;
-  margin: .5em;
+  margin: 16px 0;
   padding: 8px 16px;
   border: 0;
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.2);
   font-size: 20px;
+  color: var(--theme-text-color);
   outline: none;
+  border-radius: 0.5em;
+  background: #97c8d4;
+  box-shadow: 23px 23px 44px #5f7e86, 
+              -6px -6px 44px #cfffff;
+  transition: all .2s ease;
 }
 
-.Trigger:hover, .Trigger:focus { background-color: rgba(0, 0, 0, .2); }
-.Trigger:active { background-color: transparent; }
+.Trigger:active,
+.Trigger:hover,
+.Trigger:focus {
+  background: #92c8d6;
+  box-shadow: 8px 8px 44px #5e7c83, 
+             -11px -11px 44px #d0ffff;
+}
 
 .App-code {
   display: block;
@@ -84,7 +114,10 @@ body {
 }
 
 :not(pre)>code[class*=language-], pre[class*=language-] {
-  background-color: #5d7a80;
+  background-color: #16788c;
+  border-radius: 1em;
+  box-shadow: -10px -10px 50px #a2dce6, 
+              10px 10px 50px #324f54;
 }
 
 </style>
