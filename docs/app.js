@@ -25,6 +25,7 @@ const Overlay = React.forwardRef(({style, ...rest}, ref) => {
     <span
       {...rest}
       ref={ref}
+      className="Overlay"
       style={{
         ...style,
         padding: '2px 8px',
