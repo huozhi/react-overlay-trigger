@@ -1,5 +1,4 @@
 const path = require('path')
-const pkg = require('../package.json')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const joinPath = path.join.bind(null, __dirname)
 const isProduction = process.env.NODE_ENV === 'production'
@@ -11,7 +10,7 @@ module.exports = {
   },
   output: {
     path: joinPath('dist'),
-    publicPath: isProduction ? `/${pkg.name}` : '/',
+    publicPath: '/',
     filename: isProduction ? 'app.[hash].js' : 'app.js',
   },
   devtool: !isProduction && 'inline-cheap-source-map',
