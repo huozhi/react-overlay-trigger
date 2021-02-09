@@ -30,11 +30,11 @@ const Button = React.forwardRef((props, ref) => <div {...props} ref={ref} />)
 
 const Demo = () => (
   <div>
-    <OverlayTrigger placement="right" overlay={overlay} trigger="hover">
+    <OverlayTrigger placement="right" overlay={overlay} triggers={["hover"]}>
       <Button className="Button">right</Button>
     </OverlayTrigger>
 
-    <OverlayTrigger placement="top" overlay={overlay} trigger="click">
+    <OverlayTrigger placement="top" overlay={overlay} triggers={["click"]}>
       <button className="Button">top</button>
     </OverlayTrigger>
   <div>
@@ -54,8 +54,8 @@ npm start # then goto http://localhost:8080
 | :-------: | :------: | :-----: | :---------: |
 | placement | string   | x       | placement direction: `top | right | bottom | left]` |
 | overlay   | React.ReactNode \| React.RefForwardingComponent | null    | overlay content, you can pass DOM node or react component |
-| children | React.ReactNode \| RefForwardingComponent | x | the trigger element |
-| triggers     | array   | null   | trigger events: `[hover, click, focus]` |
+| children  | React.ReactNode \| RefForwardingComponent | x | the trigger element |
+| triggers  | array    | null    | trigger events: `[hover, click, focus]` |
 | container | HTMLElement | document.body | position will be calculated relative to this node |
 
 
