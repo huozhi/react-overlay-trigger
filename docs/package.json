@@ -1,0 +1,16 @@
+{
+  "name": "react-overlay-trigger-example",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "2.0.5"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-overlay-trigger": "latest"
+  }
+}
