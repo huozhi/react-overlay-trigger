@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {render} from 'react-dom'
-import OverlayTrigger from '..'
+import OverlayTrigger from 'react-overlay-trigger'
 
 function Example({children, code, title}) {
   return (
