@@ -1,22 +1,16 @@
 # React Overlay Trigger
 > zero dependencies overlay positioning component for react.
 
-
 [![npm version](https://img.shields.io/npm/v/react-overlay-trigger.svg?style=flat-square)](https://www.npmjs.com/package/react-overlay-trigger)
 [![npm downloads](https://img.shields.io/npm/dm/react-overlay-trigger.svg?style=flat-square)](https://www.npmjs.com/package/react-overlay-trigger)
+[![size](https://badgen.net/bundlephobia/minzip/react-overlay-trigger)](https://www.npmjs.com/package/react-overlay-trigger)
 
-
-## Examples
-
-checkout https://huozhi.github.io/react-overlay-trigger
-
+[react-overlay-trigger.vercel.app](https://react-overlay-trigger.vercel.app)
 ## Usage
 
 ```sh
 npm i -S react-overlay-trigger
 ```
-
-Wrap the trigger with `OverlayTrigger` component
 
 ```js
 import React from 'react'
