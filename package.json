@@ -7,13 +7,11 @@
   "types": "dist/type.d.ts",
   "scripts": {
     "clean:docs": "rm -rf docs/dist",
-    "build:docs": "npm run build && npm run clean:docs && NODE_ENV=production webpack --colors --progress --config docs/webpack.config.js",
     "prepublishOnly": "rm -rf dist && npm run build",
     "build": "yarn build:lib && yarn build:types",
     "build:lib": "bunchee src/index.js --no-sourcemap",
     "build:types": "cp type.d.ts dist/type.d.ts",
-    "dev": "yarn build:lib --watch",
-    "start": "NODE_ENV=development webpack-dev-server --hot --progress --colors --content-base docs --config docs/webpack.config.js"
+    "dev": "yarn build:lib --watch"
   },
   "files": [
     "dist"
