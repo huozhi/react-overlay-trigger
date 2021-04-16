@@ -38,7 +38,7 @@
     "react-dom": ">= 16.8"
   },
   "devDependencies": {
-    "bunchee": "1.5.1",
+    "bunchee": "1.5.4",
     "vite": "2.1.2"
   }
 }
