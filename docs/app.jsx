@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {render} from 'react-dom'
-import OverlayTrigger from 'react-overlay-trigger'
+import OverlayTrigger from '..'
 
 function Example({children, code, title}) {
   return (
@@ -96,7 +96,6 @@ const App = () => {
               <OverlayTrigger 
                 placement="right" 
                 triggers={['click']} 
-                ref={(ref) => { window.console.log(ref) }} 
                 overlay={overlay}
               >
                 <Button className="Trigger">click to toggle tips</Button>

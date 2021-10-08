@@ -1,4 +1,4 @@
-import React, {forwardRef} from 'react'
+import React, {forwardRef, useEffect} from 'react'
 import Overlay from './Overlay'
 import DomObserver from './DomObserver'
 import { combineRef } from './utils'
@@ -10,6 +10,21 @@ const safeCall = (fn, ...args) => {
   if (typeof fn === 'function') {
     fn(...args)
   }
+}
+
+function DocumentClick({condition, callback}) {
+  const handleClick = e => {
+    if (condition(e)) {
+      callback()
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
+  }, [condition, callback])
+
+  return null
 }
 
 class OverlayTrigger extends React.Component {
@@ -63,6 +78,17 @@ class OverlayTrigger extends React.Component {
     }
   }
 
+  isClickOutside = (e) => {
+    const { target } = e
+    const overlay = this.overlayRef.current
+    const trigger = this.triggerRef.current
+    // outside of the trigger or overlay
+    return (
+      (trigger && !trigger.contains(target)) && 
+      (overlay && overlay.overlayRef.current && !overlay.overlayRef.current.contains(target))
+    )
+  }
+
   handleFocus = (e) => {
     safeCall(this.getChildProps().onFocus, e)
     this.open()
@@ -105,7 +131,7 @@ class OverlayTrigger extends React.Component {
   }
 
   scheduleUpdate = () => {
-    const {current: overlayInstance} = this.overlayRef
+    const overlayInstance = this.overlayRef.current
     if (overlayInstance) {
       overlayInstance.adjustPosition()
     }
@@ -120,6 +146,10 @@ class OverlayTrigger extends React.Component {
         <DomObserver ref={combineRef(this.triggerRef, forwardRef)} onMeasure={this.scheduleUpdate}>
           {(child != null && child !== false) && React.cloneElement(child, this.getTriggerProps())}
         </DomObserver>
+        <DocumentClick
+          condition={this.isClickOutside}
+          callback={this.close}
+        />
         {this.state.visible &&
           <Overlay
             arrowProps={arrowProps}
