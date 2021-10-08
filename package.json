@@ -40,10 +40,9 @@
     "react-dom": ">= 16.8"
   },
   "devDependencies": {
-    "bunchee": "^1.7.1",
+    "bunchee": "^1.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "typescript": "^4.4.3",
     "vite": "^2.6.5"
   }
 }

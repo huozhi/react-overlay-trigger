@@ -1222,10 +1222,10 @@ builtin-modules@^3.1.0:
   resolved "https://registry.npmjs.org/builtin-modules/-/builtin-modules-3.2.0.tgz#45d5db99e7ee5e6bc4f362e008bf917ab5049887"
   integrity sha512-lGzLKcioL90C7wMczpkY0n/oART3MbBa8R9OFGE1rJxoVI86u4WAGfEk8Wjv10eKSyTHVGkSo3bvBylCEtk7LA==
 
-bunchee@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/bunchee/-/bunchee-1.7.1.tgz#b987ac0ecda6c92d4f36915ca02e941e72f25231"
-  integrity sha512-5d0XHrbgcaICoGnEk3qjD3NpGKxEqQnL+aJfg3P9VOksi8PbxOw2DZdTzxl7QplVkMP9JkpMWaw1/7CBAWOhqQ==
+bunchee@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/bunchee/-/bunchee-1.7.2.tgz#af7f0fced6f2e3026f5b47b17b24977712030b2d"
+  integrity sha512-C3HuKXI8zuhXMAHuGdS6IejK6yT4XynB1hv62anF19bBPbxP39irzi65+olxpAxYkBi3Amnq6zV7UliiDLSYKA==
   dependencies:
     "@rollup/plugin-babel" "5.2.1"
     "@rollup/plugin-commonjs" "20.0.0"
@@ -1915,11 +1915,6 @@ tslib@2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
   integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
-
-typescript@^4.4.3:
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.3.tgz#bdc5407caa2b109efd4f82fe130656f977a29324"
-  integrity sha512-4xfscpisVgqqDfPaJo5vkd+Qd/ItkoagnHpufr+i2QCHBsNYp+G7UAoyFl8aPtx879u38wPV65rZ8qbGZijalA==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
