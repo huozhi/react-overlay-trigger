@@ -41,8 +41,8 @@
   },
   "homepage": "https://github.com/huozhi/react-overlay-trigger#readme",
   "peerDependencies": {
-    "react": ">= 16.8",
-    "react-dom": ">= 16.8"
+    "react": "^16.8 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "bunchee": "^1.8.2",

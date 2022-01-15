@@ -46,10 +46,10 @@ npm start # then goto http://localhost:8080
 
 | props     | type     | default | description |
 | :-------: | :------: | :-----: | :---------: |
-| placement | string   | x       | placement direction: `top | right | bottom | left | center]` |
+| placement | string   | x       | placement direction: top, right, bottom, left, center] |
 | overlay   | React.ReactNode \| React.RefForwardingComponent | null    | overlay content, you can pass DOM node or react component |
 | children  | React.ReactNode \| RefForwardingComponent | x | the trigger element |
-| triggers  | array    | null    | trigger events: `[hover, click, focus]` |
+| triggers  | array    | null    | trigger events: hover, click, focus |
 | container | HTMLElement | document.body | position will be calculated relative to this node |
 
 ## License
