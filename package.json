@@ -2,8 +2,13 @@
   "name": "react-overlay-trigger",
   "version": "1.0.7",
   "description": "react positioned overlay component",
-  "main": "dist/index.cjs.js",
+  "main": "dist/index.js",
   "module": "dist/index.esm.js",
+  "exports": {
+    "import": "dist/index.mjs",
+    "require": "dist/index.js",
+    "module": "dist/index.esm.js"
+  },
   "types": "dist/type.d.ts",
   "scripts": {
     "prepublishOnly": "rm -rf dist && npm run build",
@@ -40,7 +45,7 @@
     "react-dom": ">= 16.8"
   },
   "devDependencies": {
-    "bunchee": "^1.7.2",
+    "bunchee": "^1.8.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-overlay-trigger": "link:./",
