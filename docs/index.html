@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 <title>React Overlay Trigger</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism-tomorrow.min.css" />
 <style>
 :root {
   --theme-background: #97c8d4;
@@ -126,9 +125,15 @@ body {
 .App-code {
   display: block;
   overflow: auto;
-  white-space: pre-wrap;
-  padding: 0;
-  font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
+  padding: 15px;
+  color: #ccc;
+  font-family: monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+
 }
 
 .App-description {
@@ -152,7 +157,5 @@ body {
 <body>
   <div id="root"></div>
 </body>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.js"></script>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-javascript.min.js"></script>
 <script type="module" src="./app.jsx"></script>
 </html>
