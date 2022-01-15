@@ -11,17 +11,16 @@ export const contains = (x, y) => {
 }
 
 const oppositePlacements = {
-  top: 'bottom',
-  bottom: 'top',
-  left: 'right',
-  right: 'left',
+  'top': 'bottom',
+  'bottom': 'top',
+  'left': 'right',
+  'right': 'left',
+  'center': 'center',
 }
 
 export const getOppositePlacement = (placement) => {
   return oppositePlacements[placement]
 }
-
-export const isHorizontal = (placement) => ['left', 'right'].indexOf(placement) >= 0
 
 
 function attachRef(ref, node) {
@@ -40,32 +39,37 @@ export function combineRef(...args) {
 
 export const position = (placement, overlay, trigger, offsetParent, arrowSize = 0) => {
   const overlayBcr = overlay.getBoundingClientRect()
-  const triggertBcr = trigger.getBoundingClientRect()
+  const triggerBcr = trigger.getBoundingClientRect()
   const offsetBcr = offsetParent.getBoundingClientRect()
 
   const style = {top: 0, left: 0}
-  const offsetTop = triggertBcr.top - offsetBcr.top
-  const offsetLeft = triggertBcr.left - offsetBcr.left
+  const offsetTop = triggerBcr.top - offsetBcr.top
+  const offsetLeft = triggerBcr.left - offsetBcr.left
 
   switch (placement) {
     case 'top': {
       style.top = offsetTop - overlayBcr.height - arrowSize
-      style.left = offsetLeft + (triggertBcr.width - overlayBcr.width) / 2
+      style.left = offsetLeft + (triggerBcr.width - overlayBcr.width) / 2
       break
     }
     case 'bottom': {
-      style.top = offsetTop + triggertBcr.height + arrowSize
-      style.left = offsetLeft + (triggertBcr.width - overlayBcr.width) / 2
+      style.top = offsetTop + triggerBcr.height + arrowSize
+      style.left = offsetLeft + (triggerBcr.width - overlayBcr.width) / 2
       break
     }
     case 'left': {
-      style.top = offsetTop + (triggertBcr.height - overlayBcr.height) / 2
+      style.top = offsetTop + (triggerBcr.height - overlayBcr.height) / 2
       style.left = offsetLeft - overlayBcr.width - arrowSize
       break
     }
     case 'right': {
-      style.top = offsetTop + (triggertBcr.height - overlayBcr.height) / 2
-      style.left = offsetLeft + triggertBcr.width + arrowSize
+      style.top = offsetTop + (triggerBcr.height - overlayBcr.height) / 2
+      style.left = offsetLeft + triggerBcr.width + arrowSize
+      break
+    }
+    case 'center': {
+      style.top = offsetTop + (triggerBcr.height - overlayBcr.height) / 2
+      style.left = offsetLeft + (triggerBcr.width - overlayBcr.width) / 2
       break
     }
     default:

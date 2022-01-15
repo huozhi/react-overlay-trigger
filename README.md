@@ -46,17 +46,11 @@ npm start # then goto http://localhost:8080
 
 | props     | type     | default | description |
 | :-------: | :------: | :-----: | :---------: |
-| placement | string   | x       | placement direction: `top | right | bottom | left]` |
+| placement | string   | x       | placement direction: `top | right | bottom | left | center]` |
 | overlay   | React.ReactNode \| React.RefForwardingComponent | null    | overlay content, you can pass DOM node or react component |
 | children  | React.ReactNode \| RefForwardingComponent | x | the trigger element |
 | triggers  | array    | null    | trigger events: `[hover, click, focus]` |
 | container | HTMLElement | document.body | position will be calculated relative to this node |
-
-
-# IMPORTANT 💥
-
-**react-overlay-trigger** supports `<React.StrictMode>` 🎉, we didn't use any `findDOMNode` API inside the library. So it requires you only pass the children as ReactNode (like `<div />`) or RefForwardingComponent (like `React.forwardRef((props, ref) => ...)` component with ref accessing an actual DOM node). Then it could position the DOM nodes with correct positions and sizes.
-
 
 ## License
 
