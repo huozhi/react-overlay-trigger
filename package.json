@@ -43,6 +43,7 @@
     "bunchee": "^1.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-overlay-trigger": "link:./",
     "vite": "^2.6.5"
   }
 }

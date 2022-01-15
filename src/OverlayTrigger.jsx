@@ -101,21 +101,21 @@ class OverlayTrigger extends React.Component {
 
   getTriggerProps = () => {
     const {triggers} = this.props
-    const triggerProps = {}
+    const props = {}
     if (triggers.indexOf('hover') !== -1) {
-      triggerProps.onMouseEnter = this.handleMouseEnter
-      triggerProps.onMouseLeave = this.handleMouseLeave
-      triggerProps.onPointerEnter = this.handlePointerEnter
-      triggerProps.onPointerLeave = this.handlePointerLeave
+      props.onMouseEnter = this.handleMouseEnter
+      props.onMouseLeave = this.handleMouseLeave
+      props.onPointerEnter = this.handlePointerEnter
+      props.onPointerLeave = this.handlePointerLeave
     }
     if (triggers.indexOf('focus') !== -1) {
-      triggerProps.onFocus = this.handleFocus
-      triggerProps.onBlur = this.handleBlur
+      props.onFocus = this.handleFocus
+      props.onBlur = this.handleBlur
     }
     if (triggers.indexOf('click') !== -1) {
-      triggerProps.onClick = this.handleClick
+      props.onClick = this.handleClick
     }
-    return triggerProps
+    return props
   }
 
   open = () => {
@@ -157,6 +157,7 @@ class OverlayTrigger extends React.Component {
             placement={placement}
             getTrigger={this.getTrigger}
             ref={this.overlayRef}
+            onClose={this.close}
           >
             {overlay}
           </Overlay>

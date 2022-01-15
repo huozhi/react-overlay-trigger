@@ -68,7 +68,7 @@ class Overlay extends React.Component {
   }
 
   render() {
-    const {children} = this.props
+    const {children, onClose} = this.props
     const {container} = this.state
     if (!container || !children) return null
     return (
@@ -79,6 +79,7 @@ class Overlay extends React.Component {
         >
           {React.cloneElement(children, {
             style: {...children.props.style, ...this.getStyle()},
+            onClose
           })}
         </DomObserver>
       ),
