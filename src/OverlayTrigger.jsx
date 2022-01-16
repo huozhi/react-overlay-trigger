@@ -3,8 +3,10 @@ import Overlay from './Overlay'
 import DomObserver from './DomObserver'
 import { combineRef } from './utils'
 
-const isPointerEventSupported = !!window.PointerEvent
-const isTouchEventSupported = !!window.TouchEvent
+const isBrowser = typeof window !== 'undefined'
+const isPointerEventSupported = isBrowser ? !!window.PointerEvent : false
+const isTouchEventSupported = isBrowser ? !!window.TouchEvent : false
+const defaultContainer = isBrowser ? document.body : null
 
 const safeCall = (fn, ...args) => {
   if (typeof fn === 'function') {
@@ -138,7 +140,7 @@ class OverlayTrigger extends React.Component {
   }
 
   render() {
-    const {children, forwardRef, container, overlay, arrowProps, placement} = this.props
+    const {children, forwardRef, container = defaultContainer, overlay, arrowProps, placement} = this.props
     const child = React.Children.only(children)
 
     return (
@@ -167,9 +169,6 @@ class OverlayTrigger extends React.Component {
   }
 }
 
-OverlayTrigger.defaultProps = {
-  container: document.body,
-}
 
 export default forwardRef((props, ref) => {
   return <OverlayTrigger {...props} forwardRef={ref} />

@@ -30,7 +30,7 @@ function createObserver(node, onMeasure) {
 }
 
 const DomObserver = React.forwardRef(
-  ({children, onMeasure}, ref) => {
+  ({children, onMeasure = () => {}}, ref) => {
     const innerRef = useRef(null)
 
     useEffect(() => {
@@ -51,9 +51,5 @@ const DomObserver = React.forwardRef(
     })
   }
 )
-
-DomObserver.defaultProps = {
-  onMeasure() {},
-}
 
 export default DomObserver

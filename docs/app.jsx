@@ -29,8 +29,8 @@ const Overlay = React.forwardRef(function Overlay({style, ...props}, ref) {
       style={{
         ...style,
         padding: '2px 8px',
-        backgroundColor: 'var(--theme-background--light)',
-        color: '#535d5f',
+        backgroundColor: 'var(--theme-background--dark)',
+        color: '#ccc',
         lineHeight: 1,
         fontWeight: 500,
         borderRadius: '8px',
@@ -171,7 +171,12 @@ const App = () => {
           title={'Dialog: Open a dialog flowing over the trigger button.'}
           code={`
 const Dialog = React.forwardRef(function Dialog({style, onClose, ...props}, ref) {
-  return <div>...</div>
+  return (
+    <div>
+      <div>Dialog content....</div>
+      <button onClick={onClose}>close</button>
+    </div>
+  )
 })
 
 <OverlayTrigger

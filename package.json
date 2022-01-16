@@ -2,12 +2,12 @@
   "name": "react-overlay-trigger",
   "version": "1.1.0",
   "description": "react positioned overlay component",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
   "exports": {
-    "import": "dist/index.mjs",
-    "require": "dist/index.js",
-    "module": "dist/index.esm.js"
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js",
+    "module": "./dist/index.esm.js"
   },
   "types": "dist/type.d.ts",
   "scripts": {
