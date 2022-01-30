@@ -49,7 +49,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-overlay-trigger": "link:./",
-    "sugar-high": "^0.0.4",
+    "sugar-high": "^0.0.6",
     "vite": "^2.7.13"
   }
 }
