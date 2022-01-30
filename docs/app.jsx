@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import {render} from 'react-dom'
 import OverlayTrigger from 'react-overlay-trigger'
+import { highlight } from 'sugar-high'
 
 function Example({children, code, title}) {
+  const codeHtml = highlight(code)
   return (
     <div className='Example'>
       <div className='Example-title' tabIndex={0}>{title}</div>
@@ -11,9 +13,7 @@ function Example({children, code, title}) {
       </div>
       <div className='Example-code'>
         <pre className='language-javascript'>
-          <code className='App-code'>
-            {code}
-          </code>
+          <code className='App-code' dangerouslySetInnerHTML={{ __html: codeHtml }} />
         </pre>
       </div>
     </div>
