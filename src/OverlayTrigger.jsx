@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect} from 'react'
+import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import Overlay from './Overlay'
 import DomObserver from './DomObserver'
 import { combineRef } from './utils'
@@ -14,8 +14,8 @@ const safeCall = (fn, ...args) => {
   }
 }
 
-function DocumentClick({condition, callback}) {
-  const handleClick = e => {
+function DocumentClick({ condition, callback }) {
+  const handleClick = (e) => {
     if (condition(e)) {
       callback()
     }
@@ -29,147 +29,140 @@ function DocumentClick({condition, callback}) {
   return null
 }
 
-class OverlayTrigger extends React.Component {
-  constructor(props) {
-    super(props)
-    this.triggerRef = React.createRef()
-    this.overlayRef = React.createRef()
-    this.state = {
-      visible: false,
-    }
+function OverlayTrigger(props) {
+  const triggerRef = useRef()
+  const overlayRef = useRef()
+  const adjustOverlayRef = useRef(() => {})
+  const [visible, setVisible] = useState(false)
+
+  function getChildProps() {
+    return props.children.props
   }
 
-  getChildProps() {
-    return this.props.children.props
-  }
-
-  handleMouseEnter = (e) => {
-    safeCall(this.getChildProps().onMouseEnter, e)
+  function handleMouseEnter(e) {
+    safeCall(getChildProps().onMouseEnter, e)
     if (!isPointerEventSupported && !isTouchEventSupported) {
-      this.open()
+      open()
     }
   }
 
-  handleMouseLeave = (e) => {
-    safeCall(this.getChildProps().onMouseLeave, e)
+  function handleMouseLeave(e) {
+    safeCall(getChildProps().onMouseLeave, e)
     if (!isPointerEventSupported && !isTouchEventSupported) {
-      this.close()
+      close()
     }
   }
 
-  handlePointerEnter = (e) => {
-    safeCall(this.getChildProps().onPointerEnter, e)
+  function handlePointerEnter(e) {
+    safeCall(getChildProps().onPointerEnter, e)
     if (e.pointerType === 'mouse') {
-      this.open()
+      open()
     }
   }
 
-  handlePointerLeave = (e) => {
-    safeCall(this.getChildProps().onPointerLeave, e)
+  function handlePointerLeave(e) {
+    safeCall(getChildProps().onPointerLeave, e)
     if (e.pointerType === 'mouse') {
-      this.close()
+      close()
     }
   }
 
-  handleClick = (e) => {
-    safeCall(this.getChildProps().onClick, e)
-    if (this.state.visible) {
-      this.close()
+  function handleClick(e) {
+    safeCall(getChildProps().onClick, e)
+    if (visible) {
+      close()
     } else {
-      this.open()
+      open()
     }
   }
 
-  isClickOutside = (e) => {
+  function isClickOutside(e) {
     const { target } = e
-    const overlay = this.overlayRef.current
-    const trigger = this.triggerRef.current
+    const overlay = overlayRef.current
+    const trigger = triggerRef.current
     // outside of the trigger or overlay
     return (
-      (trigger && !trigger.contains(target)) && 
-      (overlay && overlay.overlayRef.current && !overlay.overlayRef.current.contains(target))
+      trigger &&
+      !trigger.contains(target) &&
+      overlay &&
+      !overlay.contains(target)
     )
   }
 
-  handleFocus = (e) => {
-    safeCall(this.getChildProps().onFocus, e)
-    this.open()
+  function handleFocus(e) {
+    safeCall(getChildProps().onFocus, e)
+    open()
   }
 
-  handleBlur = (e) => {
-    safeCall(this.getChildProps().onBlur, e)
-    this.close()
+  function handleBlur(e) {
+    safeCall(getChildProps().onBlur, e)
+    close()
   }
 
-  getTriggerProps = () => {
-    const {triggers} = this.props
-    const props = {}
+  function getTriggerProps() {
+    const { triggers } = props
+    const passedProps = {}
     if (triggers.indexOf('hover') !== -1) {
-      props.onMouseEnter = this.handleMouseEnter
-      props.onMouseLeave = this.handleMouseLeave
-      props.onPointerEnter = this.handlePointerEnter
-      props.onPointerLeave = this.handlePointerLeave
+      passedProps.onMouseEnter = handleMouseEnter
+      passedProps.onMouseLeave = handleMouseLeave
+      passedProps.onPointerEnter = handlePointerEnter
+      passedProps.onPointerLeave = handlePointerLeave
     }
     if (triggers.indexOf('focus') !== -1) {
-      props.onFocus = this.handleFocus
-      props.onBlur = this.handleBlur
+      passedProps.onFocus = handleFocus
+      passedProps.onBlur = handleBlur
     }
     if (triggers.indexOf('click') !== -1) {
-      props.onClick = this.handleClick
+      passedProps.onClick = handleClick
     }
-    return props
+    return passedProps
   }
 
-  open = () => {
-    this.setState({visible: true})
+  function open() {
+    setVisible(true)
   }
 
-  close = () => {
-    this.setState({visible: false})
+  function close() {
+    setVisible(false)
   }
 
-  getTrigger = () => {
-    return this.triggerRef.current
+  function getTrigger() {
+    return triggerRef.current
   }
 
-  scheduleUpdate = () => {
-    const overlayInstance = this.overlayRef.current
-    if (overlayInstance) {
-      overlayInstance.adjustPosition()
-    }
+  function scheduleUpdate() {
+    const adjustOverlay = adjustOverlayRef.current
+    adjustOverlay()
   }
 
-  render() {
-    const {children, forwardRef, container = defaultContainer, overlay, arrowProps, placement} = this.props
-    const child = React.Children.only(children)
+  const { children, container = defaultContainer, overlay, arrowProps, placement, innerRef } = props
+  const child = React.Children.only(children)
 
-    return (
-      <React.Fragment>
-        <DomObserver ref={combineRef(this.triggerRef, forwardRef)} onMeasure={this.scheduleUpdate}>
-          {(child != null && child !== false) && React.cloneElement(child, this.getTriggerProps())}
-        </DomObserver>
-        <DocumentClick
-          condition={this.isClickOutside}
-          callback={this.close}
-        />
-        {this.state.visible &&
-          <Overlay
-            arrowProps={arrowProps}
-            container={container}
-            placement={placement}
-            getTrigger={this.getTrigger}
-            ref={this.overlayRef}
-            onClose={this.close}
-          >
-            {overlay}
-          </Overlay>
-        }
-      </React.Fragment>
-    )
-  }
+  return (
+    <>
+      <DomObserver ref={combineRef(triggerRef, innerRef)} onMeasure={scheduleUpdate}>
+        {child != null && child !== false && React.cloneElement(child, getTriggerProps())}
+      </DomObserver>
+      <DocumentClick condition={isClickOutside} callback={close} />
+      {visible && (
+        <Overlay
+          onClose={close}
+          arrowProps={arrowProps}
+          container={container}
+          placement={placement}
+          getTrigger={getTrigger}
+          innerRef={overlayRef}
+          adjustOverlayRef={adjustOverlayRef}
+        >
+          {overlay}
+        </Overlay>
+      )}
+    </>
+  )
 }
 
 
+
 export default forwardRef((props, ref) => {
-  return <OverlayTrigger {...props} forwardRef={ref} />
+  return <OverlayTrigger {...props} innerRef={ref} />
 })
