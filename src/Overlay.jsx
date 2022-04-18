@@ -1,45 +1,41 @@
-import React from 'react'
+import React, { useLayoutEffect, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
-import {position} from './utils'
+import { combineRef, position } from './utils'
 import DomObserver from './DomObserver'
 
-class Overlay extends React.Component {
-  constructor(props) {
-    super(props)
-    this.overlayRef = React.createRef()
-    this.state = {
-      offsetTop: 0,
-      offsetLeft: 0,
-      container: props.container,
+function Overlay({
+  children,
+  onClose,
+  getTrigger,
+  placement,
+  innerRef,
+  container: ctr,
+  arrowProps = { size: 0 },
+  adjustOverlayRef,
+}) {
+  const overlayRef = useRef()
+  const [container, setContainer] = useState(ctr)
+  const [state, setState] = useState({
+    offsetTop: 0,
+    offsetLeft: 0,
+  })
+
+  useLayoutEffect(() => {
+    if (container !== ctr) {
+      setContainer(ctr)
     }
-  }
+  }, [ctr])
 
-  static getDerivedStateFromProps(props, state) {
-    // resolve dom node change
-    if (props.container !== state.container) {
-      return {
-        container: props.container
-      }
-    }
-    return null
-  }
+  useLayoutEffect(() => {
+    adjustPosition()
+  }, [])
 
-  componentDidMount() {
-    this.adjustPosition()
-  }
+  useLayoutEffect(() => {
+    adjustPosition()
+  }, [container, placement, arrowProps])
 
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.container !== this.state.container ||
-      prevProps.placement !== this.props.placement ||
-      prevProps.arrowProps !== this.props.arrowProps
-    ) {
-      this.adjustPosition()
-    }
-  }
-
-  getStyle = () => {
-    const {offsetTop, offsetLeft} = this.state
+  const getStyle = () => {
+    const { offsetTop, offsetLeft } = state
     const transforms = `translate3d(${offsetLeft}px, ${offsetTop}px, 0)`
 
     return {
@@ -53,45 +49,34 @@ class Overlay extends React.Component {
     }
   }
 
-  adjustPosition = () => {
-    const {container} = this.state
-    const {getTrigger, placement, arrowProps} = this.props
+  const adjustPosition = () => {
     const triggerNode = getTrigger()
-    const overlayNode = this.overlayRef.current
-    if (!triggerNode || !overlayNode || !container) { return }
+    const overlayNode = overlayRef.current
+    if (!triggerNode || !overlayNode || !container) {
+      return
+    }
     const expected = position(placement, overlayNode, triggerNode, container, arrowProps.size)
-    const {top, left} = expected.offset
-    const {offsetTop, offsetLeft} = this.state
+    const { top, left } = expected.offset
+    const { offsetTop, offsetLeft } = state
     if (top !== offsetTop || left !== offsetLeft) {
-      this.setState({offsetTop: top, offsetLeft: left})
+      setState({ offsetTop: top, offsetLeft: left })
     }
   }
 
-  render() {
-    const {children, onClose} = this.props
-    const {container} = this.state
-    if (!container || !children) return null
-    return (
-      ReactDOM.createPortal((
-        <DomObserver
-          ref={this.overlayRef}
-          onMeasure={this.adjustPosition}
-        >
-          {React.cloneElement(children, {
-            style: {...children.props.style, ...this.getStyle()},
-            onClose
-          })}
-        </DomObserver>
-      ),
-      container
-    ))
-  }
-}
+  useEffect(() => {
+    adjustOverlayRef.current = adjustPosition
+  })
 
-Overlay.defaultProps = {
-  arrowProps: {
-    size: 0,
-  },
+  if (!container || !children) return null
+  return ReactDOM.createPortal(
+    <DomObserver ref={combineRef(overlayRef, innerRef)} onMeasure={adjustPosition}>
+      {React.cloneElement(children, {
+        style: { ...children.props.style, ...getStyle() },
+        onClose,
+      })}
+    </DomObserver>,
+    container
+  )
 }
 
 export default Overlay

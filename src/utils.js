@@ -2,26 +2,20 @@ export const contains = (x, y) => {
   const xBcr = x.getBoundingClientRect()
   const yBcr = y.getBoundingClientRect()
 
-  return (
-    yBcr.top >= xBcr.top &&
-    yBcr.left >= xBcr.left &&
-    yBcr.bottom <= xBcr.bottom &&
-    yBcr.right <= xBcr.right
-  )
+  return yBcr.top >= xBcr.top && yBcr.left >= xBcr.left && yBcr.bottom <= xBcr.bottom && yBcr.right <= xBcr.right
 }
 
 const oppositePlacements = {
-  'top': 'bottom',
-  'bottom': 'top',
-  'left': 'right',
-  'right': 'left',
-  'center': 'center',
+  top: 'bottom',
+  bottom: 'top',
+  left: 'right',
+  right: 'left',
+  center: 'center',
 }
 
 export const getOppositePlacement = (placement) => {
   return oppositePlacements[placement]
 }
-
 
 function attachRef(ref, node) {
   if (typeof ref === 'function') {
@@ -33,7 +27,7 @@ function attachRef(ref, node) {
 
 export function combineRef(...args) {
   return function functionalRef(node) {
-    args.filter(arg => arg != null).forEach(ref => attachRef(ref, node))
+    args.filter((arg) => arg != null).forEach((ref) => attachRef(ref, node))
   }
 }
 
@@ -42,7 +36,7 @@ export const position = (placement, overlay, trigger, offsetParent, arrowSize = 
   const triggerBcr = trigger.getBoundingClientRect()
   const offsetBcr = offsetParent.getBoundingClientRect()
 
-  const style = {top: 0, left: 0}
+  const style = { top: 0, left: 0 }
   const offsetTop = triggerBcr.top - offsetBcr.top
   const offsetLeft = triggerBcr.left - offsetBcr.left
 
