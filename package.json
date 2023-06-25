@@ -9,13 +9,12 @@
     "require": "./dist/index.js",
     "module": "./dist/index.esm.js"
   },
-  "types": "./dist/type.d.ts",
+  "types": "./type.d.ts",
   "scripts": {
     "prepublishOnly": "rm -rf dist && npm run build",
     "build:watch": "pnpm build:lib --watch",
-    "build": "pnpm build:lib && pnpm build:types",
+    "build": "pnpm build:lib",
     "build:lib": "bunchee",
-    "build:types": "cp type.d.ts dist/type.d.ts",
     "docs:clean": "rm -rf docs/dist",
     "docs:build": "pnpm next build docs",
     "dev": "pnpm next docs"
