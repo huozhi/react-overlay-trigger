@@ -1,1 +1,1 @@
-export { default } from './OverlayTrigger'
+export { default } from './overlay-trigger'

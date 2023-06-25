@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-<title>React Overlay Trigger</title>
-<style>
 :root {
   --theme-background: #97c8d4;
   --theme-text-color: #2e8492;
@@ -91,7 +84,7 @@ body {
   outline: none;
   border-radius: 0.5em;
   background: #97c8d4;
-  box-shadow: 23px 23px 44px #5f7e86, 
+  box-shadow: 23px 23px 44px #5f7e86,
               -6px -6px 44px #cfffff;
   transition: all .2s ease;
 }
@@ -143,7 +136,7 @@ body {
 :not(pre)>code[class*=language-], pre[class*=language-] {
   background-color: #16788c;
   border-radius: 1em;
-  box-shadow: -10px -10px 50px #a2dce6, 
+  box-shadow: -10px -10px 50px #a2dce6,
               10px 10px 50px #324f54;
   transition: all .2s ease;
 }
@@ -171,11 +164,3 @@ body {
 .sh__comment {
   color: #818c9b;
 }
-
-</style>
-</head>
-<body>
-  <div id="root"></div>
-</body>
-<script type="module" src="./app.jsx"></script>
-</html>

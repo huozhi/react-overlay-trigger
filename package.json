@@ -9,19 +9,19 @@
     "require": "./dist/index.js",
     "module": "./dist/index.esm.js"
   },
-  "types": "dist/type.d.ts",
+  "types": "./type.d.ts",
   "scripts": {
     "prepublishOnly": "rm -rf dist && npm run build",
-    "dev": "yarn build:lib --watch",
-    "build": "yarn build:lib && yarn build:types",
-    "build:lib": "bunchee src/index.js --no-sourcemap",
-    "build:types": "cp type.d.ts dist/type.d.ts",
-    "docs:clean": "rm -rf docs/dist",
-    "docs:build": "yarn vite build docs",
-    "docs:dev": "yarn vite docs"
+    "build:watch": "pnpm build:lib --watch",
+    "build:lib": "bunchee",
+    "clean": "rm -rf dist",
+    "build:docs": "pnpm build:lib && pnpm next build docs",
+    "dev": "pnpm next docs"
   },
   "files": [
-    "dist"
+    "dist",
+    "type.d.ts",
+    "*.md"
   ],
   "repository": {
     "type": "git",
@@ -41,15 +41,17 @@
   },
   "homepage": "https://github.com/huozhi/react-overlay-trigger#readme",
   "peerDependencies": {
-    "react": "^16.8 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8 || ^17.0.0 || ^18.0.0"
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "bunchee": "^1.8.3",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-overlay-trigger": "link:./",
-    "sugar-high": "^0.3.1",
-    "vite": "^2.9.5"
+    "bunchee": "^3.4.1",
+    "next": "^13.4.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-overlay-trigger": "link:./"
+  },
+  "dependencies": {
+    "sugar-high": "^0.4.6"
   }
 }

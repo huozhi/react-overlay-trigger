@@ -1,7 +1,7 @@
-import React, { useLayoutEffect, useEffect, useRef, useState } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useLayoutEffect, cloneElement, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { combineRef, position } from './utils'
-import DomObserver from './DomObserver'
+import DomObserver from './dom-observer'
 
 function Overlay({
   children,
@@ -68,9 +68,9 @@ function Overlay({
   })
 
   if (!container || !children) return null
-  return ReactDOM.createPortal(
+  return createPortal(
     <DomObserver ref={combineRef(overlayRef, innerRef)} onMeasure={adjustPosition}>
-      {React.cloneElement(children, {
+      {cloneElement(children, {
         style: { ...children.props.style, ...getStyle() },
         onClose,
       })}

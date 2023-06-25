@@ -5,18 +5,6 @@ export const contains = (x, y) => {
   return yBcr.top >= xBcr.top && yBcr.left >= xBcr.left && yBcr.bottom <= xBcr.bottom && yBcr.right <= xBcr.right
 }
 
-const oppositePlacements = {
-  top: 'bottom',
-  bottom: 'top',
-  left: 'right',
-  right: 'left',
-  center: 'center',
-}
-
-export const getOppositePlacement = (placement) => {
-  return oppositePlacements[placement]
-}
-
 function attachRef(ref, node) {
   if (typeof ref === 'function') {
     ref(node)
