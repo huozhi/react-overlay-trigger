@@ -2,8 +2,6 @@
 > zero dependencies overlay positioning component for react.
 
 [![npm version](https://img.shields.io/npm/v/react-overlay-trigger.svg?style=flat-square)](https://www.npmjs.com/package/react-overlay-trigger)
-[![npm downloads](https://img.shields.io/npm/dm/react-overlay-trigger.svg?style=flat-square)](https://www.npmjs.com/package/react-overlay-trigger)
-[![size](https://badgen.net/bundlephobia/minzip/react-overlay-trigger)](https://www.npmjs.com/package/react-overlay-trigger)
 
 [react-overlay-trigger.vercel.app](https://react-overlay-trigger.vercel.app)
 ## Usage
@@ -35,11 +33,11 @@ const Demo = () => (
 )
 ```
 
-## Development 
+## Development
 
 ```sh
-npm install
-npm start # then goto http://localhost:8080
+pnpm install
+pnpm dev
 ```
 
 ## API
@@ -54,4 +52,4 @@ npm start # then goto http://localhost:8080
 
 ## License
 
-`React Overlay Trigger` is released under the MIT license.
+MIT

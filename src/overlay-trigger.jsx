@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
-import Overlay from './Overlay'
-import DomObserver from './DomObserver'
+import Overlay from './overlay'
+import DomObserver from './dom-observer'
 import { combineRef } from './utils'
 
 const isBrowser = typeof window !== 'undefined'
