@@ -42,13 +42,13 @@ pnpm dev
 
 ## API
 
-| props     | type     | default | description |
-| :-------: | :------: | :-----: | :---------: |
-| placement | string   | x       | placement direction: top, right, bottom, left, center] |
-| overlay   | React.ReactNode \| React.RefForwardingComponent | null    | overlay content, you can pass DOM node or react component |
-| children  | React.ReactNode \| RefForwardingComponent | x | the trigger element |
-| triggers  | array    | null    | trigger events: hover, click, focus |
-| container | HTMLElement | document.body | position will be calculated relative to this node |
+| props      | description |
+| :------    | :--------   |
+| placement  | placement position: `"top"` \| `"right"` \| `"bottom"` \| `"left"` \| `"center"` |
+| overlay    | overlay content, you can pass DOM node or react component |
+| children   | the trigger element |
+| triggers   | trigger events: "hover", "click", "focus" (default: `[]`) |
+| container  | parent element position will be calculated relative to this node (default: `document.body`) |
 
 ## License
 
