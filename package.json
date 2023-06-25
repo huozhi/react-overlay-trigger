@@ -14,12 +14,13 @@
     "prepublishOnly": "rm -rf dist && npm run build",
     "build:watch": "pnpm build:lib --watch",
     "build:lib": "bunchee",
-    "docs:clean": "rm -rf docs/dist",
-    "docs:build": "pnpm build:lib && pnpm next build docs",
+    "clean": "rm -rf dist",
+    "build:docs": "pnpm build:lib && pnpm next build docs",
     "dev": "pnpm next docs"
   },
   "files": [
     "dist",
+    "type.d.ts",
     "*.md"
   ],
   "repository": {
