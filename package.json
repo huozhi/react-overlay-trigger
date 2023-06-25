@@ -11,7 +11,7 @@
   },
   "types": "./type.d.ts",
   "scripts": {
-    "prepublishOnly": "rm -rf dist && npm run build",
+    "prepublishOnly": "rm -rf dist && pnpm run build",
     "build:watch": "pnpm build:lib --watch",
     "build:lib": "bunchee",
     "clean": "rm -rf dist",
