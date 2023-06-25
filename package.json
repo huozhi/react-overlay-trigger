@@ -13,10 +13,9 @@
   "scripts": {
     "prepublishOnly": "rm -rf dist && npm run build",
     "build:watch": "pnpm build:lib --watch",
-    "build": "pnpm build:lib",
     "build:lib": "bunchee",
     "docs:clean": "rm -rf docs/dist",
-    "docs:build": "pnpm next build docs",
+    "docs:build": "pnpm build:lib && pnpm next build docs",
     "dev": "pnpm next docs"
   },
   "files": [
