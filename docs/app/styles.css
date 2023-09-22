@@ -9,7 +9,6 @@
 }
 
 html, body {
-  position: relative;
   margin: 0;
   padding: 0;
 }
@@ -28,10 +27,17 @@ body {
 }
 
 .App {
-  max-width: 768px;
-  margin: auto;
+  width: 768px;
+  max-width: 100vw;
+  margin: 0 auto;
   padding: 2em 16px;
   padding-bottom: 500px;
+}
+
+@media (max-width: 768px) {
+  .App-code {
+    font-size: 14px;
+  }
 }
 
 .App-title {
@@ -48,6 +54,7 @@ body {
 .App-title small {
   font-size: 20px;
   font-weight: 300;
+  line-height: 1;
 }
 
 .App-subtitle {
@@ -64,7 +71,6 @@ body {
 .Demo {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   margin-bottom: 1em;
 }
 
@@ -145,22 +151,15 @@ body {
   box-shadow: -10px -10px 50px #a2dce6, 10px 10px 50px #44696f;
 }
 
-.sh__class {
-  color: #ddd;
-  font-weight: bold;
+:root {
+  --sh-class: #eee;
+  --sh-identifier: #eee;
+  --sh-sign: #a5b7cf;
+  --sh-string: #bcbfaf;
+  --sh-keyword: #eee;
+  --sh-comment: #818c9b;
 }
-.sh__identifier {
-  color: #eee;
-}
-.sh__sign {
-  color: #a5b7cf;
-}
-.sh__string {
-  color: #f2ffc2;
-}
-.sh__keyword {
-  color: #fff;
-}
-.sh__comment {
-  color: #818c9b;
+
+.sh__token--string {
+  font-weight: 400;
 }

@@ -27,7 +27,7 @@ export default function Page() {
       <div className="App-title">
         <h2>React Overlay Trigger</h2>
         <small>
-          <span>Positioned overlay Component for React</span>
+          <p>Positioned overlay Component for React</p>
 
           <span className="App-github">
             <a target={`_blank`} href={`https://github.com/huozhi/react-overlay-trigger`}>
@@ -59,15 +59,14 @@ export default function Page() {
       <div className="Demo">
         <Example
           title="Tooltip: click, tooltip show on bottom and right"
-          code={`
+          code={`\
 <OverlayTrigger placement='right' triggers={['click']} overlay={overlay}>
   <Button className='Trigger'>....</Button>
 </OverlayTrigger>
 
 <OverlayTrigger placement='bottom' triggers={['click']} overlay={overlay}>
   <Button className='Trigger'>....</Button>
-</OverlayTrigger>
-            `}
+</OverlayTrigger>`}
         >
           <div>
             <OverlayTrigger placement="right" triggers={['click']} overlay={overlay}>
@@ -82,16 +81,14 @@ export default function Page() {
 
         <Example
           title="Tooltip: Mouse hover and tab focus will trigger tooltips. They will show on top and left"
-          code={`
+          code={`\
 <OverlayTrigger placement='top' triggers={['hover', 'focus']} overlay={overlay}>
   <Button className='Trigger'>....</Button>
 </OverlayTrigger>
 
 <OverlayTrigger placement='right' triggers={['hover', 'focus']} overlay={overlay}>
   <Button className='Trigger'>....</Button>
-</OverlayTrigger>
-
-`}
+</OverlayTrigger>`}
         >
           <div>
             <OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={overlay}>
@@ -107,7 +104,7 @@ export default function Page() {
 
         <Example
           title={'Dialog: Open a dialog flowing over the trigger button.'}
-          code={`
+          code={`\
 const Dialog = React.forwardRef(function Dialog({style, onClose, ...props}, ref) {
   return (
     <div>
@@ -123,9 +120,7 @@ const Dialog = React.forwardRef(function Dialog({style, onClose, ...props}, ref)
   overlay={<Dialog />}
 >
   <button className='Trigger'>Open the dialog</button>
-</OverlayTrigger>
-
-`}
+</OverlayTrigger>`}
         >
           <OverlayTrigger placement="center" triggers={['click']} overlay={<Dialog />}>
             <button className="Trigger">Open the dialog</button>
