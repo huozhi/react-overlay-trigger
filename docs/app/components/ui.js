@@ -52,9 +52,9 @@ export const ReflowButton = forwardRef(({ children, vertical, onClick, ...rest }
   const [g, setG] = useState(true)
   const style = {}
   if (vertical) {
-    style.height = g ? 'auto' : 150
+    style.height = g ? 300 : 150
   } else {
-    style.width = g ? 'auto' : 300
+    style.width = g ? 160 : 300
   }
   return (
     <button

@@ -91,10 +91,10 @@ export default function Page() {
         >
           <div>
             <OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={<Overlay placement='horizontal' />}>
-              <ReflowButton className="Trigger">click to resize</ReflowButton>
+              <ReflowButton className="Trigger reflow-button">click to resize</ReflowButton>
             </OverlayTrigger>
             <OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={<Overlay placement='vertical' />}>
-              <ReflowButton vertical className="Trigger">
+              <ReflowButton vertical className="Trigger reflow-button">
                 click to resize
               </ReflowButton>
             </OverlayTrigger>

@@ -167,3 +167,7 @@ body {
 .sh__token--string {
   font-weight: 400;
 }
+
+.reflow-button {
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
