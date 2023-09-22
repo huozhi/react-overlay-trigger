@@ -21,7 +21,6 @@ function Example({ children, code, title }) {
 
 
 export default function Page() {
-  const overlay = <Overlay />
   return (
     <div className="App">
       <div className="App-title">
@@ -69,11 +68,11 @@ export default function Page() {
 </OverlayTrigger>`}
         >
           <div>
-            <OverlayTrigger placement="right" triggers={['click']} overlay={overlay}>
+            <OverlayTrigger placement="right" triggers={['click']} overlay={<Overlay placement='vertical' />}>
               <Button className="Trigger">click to toggle tips</Button>
             </OverlayTrigger>
 
-            <OverlayTrigger placement="bottom" triggers={['click']} overlay={overlay}>
+            <OverlayTrigger placement="bottom" triggers={['click']} overlay={<Overlay placement='horizontal' />}>
               <Button className="Trigger">click to toggle tips</Button>
             </OverlayTrigger>
           </div>
@@ -91,10 +90,10 @@ export default function Page() {
 </OverlayTrigger>`}
         >
           <div>
-            <OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={overlay}>
+            <OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={<Overlay placement='horizontal' />}>
               <ReflowButton className="Trigger">click to resize</ReflowButton>
             </OverlayTrigger>
-            <OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={overlay}>
+            <OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={<Overlay placement='vertical' />}>
               <ReflowButton vertical className="Trigger">
                 click to resize
               </ReflowButton>

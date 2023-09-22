@@ -5,24 +5,23 @@ import OverlayTrigger from 'react-overlay-trigger'
 
 export { OverlayTrigger }
 
-export const Overlay = forwardRef(function Overlay({ style, ...props }, ref) {
+export const Overlay = forwardRef(function Overlay({ style, placement, ...props }, ref) {
   return (
-    <span
-      {...props}
-      ref={ref}
-      className="Overlay"
-      style={{
-        ...style,
-        padding: '2px 8px',
-        backgroundColor: 'var(--theme-background--dark)',
-        color: '#ccc',
-        lineHeight: 1,
-        fontWeight: 500,
-        borderRadius: '8px',
-      }}
-    >
-      Tooltip
-    </span>
+    <div ref={ref} {...props} style={{ padding: placement === 'vertical' ? '0px 8px' : '8px 0px', ...style}}>
+      <span
+        className="Overlay"
+        style={{
+          padding: '4px 8px',
+          backgroundColor: 'var(--theme-background--dark)',
+          color: '#ccc',
+          lineHeight: 1,
+          fontWeight: 500,
+          borderRadius: '2px',
+        }}
+      >
+        Tooltip
+      </span>
+    </div>
   )
 })
 

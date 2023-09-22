@@ -78,6 +78,10 @@ body {
   margin-bottom: 50px;
 }
 
+.Example-code {
+  margin-top: 3rem;
+}
+
 .Trigger {
   display: block;
   flex-shrink: 0;
