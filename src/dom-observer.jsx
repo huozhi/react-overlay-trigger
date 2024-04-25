@@ -29,7 +29,7 @@ function createObserver(node, onMeasure) {
   }
 }
 
-function DomObserver({ children, ref, onMeasure = () => {} }) {
+function DomObserver({ children, ref, onMeasure }) {
   const innerRef = useRef(null)
 
   useEffect(() => {

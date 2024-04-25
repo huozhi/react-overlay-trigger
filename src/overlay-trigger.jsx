@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Overlay from './overlay'
 import DomObserver from './dom-observer'
 import { combineRef } from './utils'
@@ -14,19 +14,17 @@ const safeCall = (fn, ...args) => {
   }
 }
 
-function DocumentClick({ condition, callback }) {
-  const handleClick = (e) => {
+function useDocumentClick(condition, callback) {
+  const handleClick = useCallback((e) => {
     if (condition(e)) {
       callback()
     }
-  }
+  }, [condition, callback])
 
   useEffect(() => {
     document.addEventListener('click', handleClick)
     return () => document.removeEventListener('click', handleClick)
   }, [condition, callback])
-
-  return null
 }
 
 function OverlayTrigger(props) {
@@ -138,13 +136,28 @@ function OverlayTrigger(props) {
   const { children, container = defaultContainer, overlay, arrowProps, placement, ref } = props
   const child = React.Children.only(children)
 
+  // onMount
+  useEffect(() => {
+    // attach popoverTargetElement and popoverAction
+    const trigger = getTrigger()
+    const overlay = overlayRef.current
+    if (trigger && overlay) {
+      trigger.popoverTargetElement = overlay
+      trigger.popoverAction = 'toggle'
+      overlay.popover = 'auto'
+      
+      
+    }
+  }, [])
+
+  // useDocumentClick(isClickOutside, close)
+
   return (
     <>
       <DomObserver ref={combineRef(triggerRef, ref)} onMeasure={scheduleUpdate}>
         {child != null && child !== false && React.cloneElement(child, getTriggerProps())}
       </DomObserver>
-      <DocumentClick condition={isClickOutside} callback={close} />
-      {visible && (
+      {visible ? (
         <Overlay
           onClose={close}
           arrowProps={arrowProps}
@@ -156,7 +169,7 @@ function OverlayTrigger(props) {
         >
           {overlay}
         </Overlay>
-      )}
+      ) : null}
     </>
   )
 }

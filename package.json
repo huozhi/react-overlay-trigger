@@ -3,17 +3,15 @@
   "version": "2.0.1",
   "description": "react positioned overlay component",
   "main": "./dist/index.js",
-  "module": "./dist/index.esm.js",
   "exports": {
     "import": "./dist/index.mjs",
-    "require": "./dist/index.js",
-    "module": "./dist/index.esm.js"
+    "default": "./dist/index.js"
   },
   "types": "./type.d.ts",
   "scripts": {
     "prepublishOnly": "rm -rf dist && pnpm run build:lib",
     "build:watch": "pnpm build:lib --watch",
-    "build:lib": "bunchee",
+    "build": "bunchee",
     "clean": "rm -rf dist",
     "build:docs": "pnpm build:lib && pnpm next build docs",
     "dev": "pnpm next docs"
