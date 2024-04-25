@@ -26,7 +26,7 @@ export default function Page() {
       <div className="App-title">
         <h2>React Overlay Trigger</h2>
         <small>
-          <p>Positioned overlay Component for React</p>
+          <span>Positioned overlay Component for React</span>
 
           <span className="App-github">
             <a target={`_blank`} href={`https://github.com/huozhi/react-overlay-trigger`}>

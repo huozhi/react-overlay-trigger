@@ -1,6 +1,6 @@
 :root {
-  --theme-background: #97c8d4;
-  --theme-text-color: #2e8492;
+  --theme-background: #f9f7e0;
+  --theme-text-color: #8c9fa1;
   --theme-background--dark: #5c5c5c;
 }
 
@@ -93,17 +93,17 @@ body {
   color: var(--theme-text-color);
   outline: none;
   border-radius: 0.5em;
-  background: #97c8d4;
-  box-shadow: 23px 23px 44px #5f7e86,
-              -6px -6px 44px #cfffff;
+  background: #e1dbc8;
+  /* box-shadow: 23px 23px 44px #5f7e86,
+              -6px -6px 44px #bbcbcb; */
   transition: all .2s ease;
 }
 
 .Trigger:active,
 .Trigger:hover,
 .Trigger:focus {
-  background: #8ed1e2;
-  box-shadow: 15px 7px 16px 1px #86bbc7, -6px -6px 44px #d0ffff;
+  background: #e9e7d9;
+  /* box-shadow: 15px 7px 16px 1px #86bbc7, -6px -6px 44px #d0ffff; */
 }
 
 @keyframes fade {
@@ -144,21 +144,21 @@ body {
 }
 
 :not(pre)>code[class*=language-], pre[class*=language-] {
-  background-color: #16788c;
-  border-radius: 1em;
-  box-shadow: -10px -10px 50px #a2dce6,
-              10px 10px 50px #324f54;
+  background-color: #514f45;
+  border-radius: 6px;
+  /* box-shadow: -10px -10px 50px #a2dce6,
+              10px 10px 50px #324f54; */
   transition: all .2s ease;
 }
 
 :not(pre)>code[class*=language-]:hover, pre[class*=language-]:hover {
-  box-shadow: -10px -10px 50px #a2dce6, 10px 10px 50px #44696f;
+  /* box-shadow: -10px -10px 50px #a2dce6, 10px 10px 50px #44696f; */
 }
 
 :root {
   --sh-class: #eee;
   --sh-identifier: #eee;
-  --sh-sign: #a5b7cf;
+  --sh-sign: #cfc5a5;
   --sh-string: #bcbfaf;
   --sh-keyword: #eee;
   --sh-comment: #818c9b;
