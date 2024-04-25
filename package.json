@@ -9,11 +9,11 @@
   },
   "types": "./type.d.ts",
   "scripts": {
-    "prepublishOnly": "rm -rf dist && pnpm run build:lib",
-    "build:watch": "pnpm build:lib --watch",
+    "prepublishOnly": "rm -rf dist && pnpm run build",
+    "build:watch": "pnpm build --watch",
     "build": "bunchee",
     "clean": "rm -rf dist",
-    "build:docs": "pnpm build:lib && pnpm next build docs",
+    "build:docs": "pnpm build && pnpm next build docs",
     "dev": "pnpm next docs"
   },
   "files": [
