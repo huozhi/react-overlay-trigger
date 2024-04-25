@@ -12,7 +12,6 @@ function Overlay({
   container: ctr,
   arrowProps = { size: 0 },
   adjustOverlayRef,
-  visible,
 }) {
   const overlayRef = useRef()
   const [container, setContainer] = useState(ctr)

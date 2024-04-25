@@ -18,7 +18,7 @@ const Overlay = ({style, ...rest}) => <span {...rest}>{children}</span>
 
 const overlay = <Overlay>yep</Overlay>
 
-const Button = React.forwardRef((props, ref) => <div {...props} ref={ref} />)
+const Button = <div {...props} ref={ref} />
 
 const Demo = () => (
   <div>

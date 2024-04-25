@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Overlay from './overlay'
 import DomObserver from './dom-observer'
 import { combineRef } from './utils'
@@ -12,19 +12,6 @@ const safeCall = (fn, ...args) => {
   if (typeof fn === 'function') {
     fn(...args)
   }
-}
-
-function useDocumentClick(condition, callback) {
-  const handleClick = useCallback((e) => {
-    if (condition(e)) {
-      callback()
-    }
-  }, [condition, callback])
-
-  useEffect(() => {
-    document.addEventListener('click', handleClick)
-    return () => document.removeEventListener('click', handleClick)
-  }, [condition, callback])
 }
 
 function OverlayTrigger(props) {
@@ -146,11 +133,9 @@ function OverlayTrigger(props) {
       trigger.popoverAction = 'toggle'
       overlay.popover = 'auto'
       
-      
+      this.scheduleUpdate()
     }
   }, [])
-
-  // useDocumentClick(isClickOutside, close)
 
   return (
     <>
