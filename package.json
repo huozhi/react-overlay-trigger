@@ -41,14 +41,14 @@
   },
   "homepage": "https://github.com/huozhi/react-overlay-trigger#readme",
   "peerDependencies": {
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react": "^19.0.0-beta.0",
+    "react-dom": "^19.0.0-beta.0"
   },
   "devDependencies": {
-    "bunchee": "^3.8.0",
-    "next": "^13.5.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "bunchee": "^5.1.2",
+    "next": "^14.2.3",
+    "react": "^19.0.0-beta.0",
+    "react-dom": "^19.0.0-beta.0",
     "react-overlay-trigger": "link:./",
     "sugar-high": "^0.5.2"
   }

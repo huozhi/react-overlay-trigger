@@ -8,7 +8,7 @@ function Overlay({
   onClose,
   getTrigger,
   placement,
-  innerRef,
+  ref,
   container: ctr,
   arrowProps = { size: 0 },
   adjustOverlayRef,
@@ -69,7 +69,7 @@ function Overlay({
 
   if (!container || !children) return null
   return createPortal(
-    <DomObserver ref={combineRef(overlayRef, innerRef)} onMeasure={adjustPosition}>
+    <DomObserver ref={combineRef(overlayRef, ref)} onMeasure={adjustPosition}>
       {cloneElement(children, {
         style: { ...children.props.style, ...getStyle() },
         onClose,

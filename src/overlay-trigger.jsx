@@ -135,12 +135,12 @@ function OverlayTrigger(props) {
     adjustOverlay()
   }
 
-  const { children, container = defaultContainer, overlay, arrowProps, placement, innerRef } = props
+  const { children, container = defaultContainer, overlay, arrowProps, placement, ref } = props
   const child = React.Children.only(children)
 
   return (
     <>
-      <DomObserver ref={combineRef(triggerRef, innerRef)} onMeasure={scheduleUpdate}>
+      <DomObserver ref={combineRef(triggerRef, ref)} onMeasure={scheduleUpdate}>
         {child != null && child !== false && React.cloneElement(child, getTriggerProps())}
       </DomObserver>
       <DocumentClick condition={isClickOutside} callback={close} />
@@ -151,7 +151,7 @@ function OverlayTrigger(props) {
           container={container}
           placement={placement}
           getTrigger={getTrigger}
-          innerRef={overlayRef}
+          ref={overlayRef}
           adjustOverlayRef={adjustOverlayRef}
         >
           {overlay}
@@ -163,6 +163,4 @@ function OverlayTrigger(props) {
 
 
 
-export default forwardRef((props, ref) => {
-  return <OverlayTrigger {...props} innerRef={ref} />
-})
+export default OverlayTrigger

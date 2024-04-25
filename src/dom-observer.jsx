@@ -29,7 +29,7 @@ function createObserver(node, onMeasure) {
   }
 }
 
-const DomObserver = React.forwardRef(({ children, onMeasure = () => {} }, ref) => {
+function DomObserver({ children, ref, onMeasure = () => {} }) {
   const innerRef = useRef(null)
 
   useEffect(() => {
@@ -46,8 +46,8 @@ const DomObserver = React.forwardRef(({ children, onMeasure = () => {} }, ref) =
   }, [])
 
   return React.cloneElement(children, {
-    ref: combineRef(innerRef, ref, children.ref),
+    ref: combineRef(innerRef, children.ref, ref),
   })
-})
+}
 
 export default DomObserver
