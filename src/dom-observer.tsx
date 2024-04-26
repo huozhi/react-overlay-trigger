@@ -9,20 +9,23 @@ const mutationObserverOption = {
 }
 
 function createObserver(node, onMeasure) {
+  const cachedSize = { width: 0, height: 0 }
+  function handleMutate() {
+    const { width, height } = node.getBoundingClientRect()
+    if (cachedSize.width !== width || cachedSize.height !== height) {
+      cachedSize.width = width
+      cachedSize.height = height
+      onMeasure()
+    }
+  }
+  
   if (window.ResizeObserver) {
     const ro = new ResizeObserver(() => onMeasure())
     ro.observe(node)
     return ro
   } else {
-    const cachedSize = { width: 0, height: 0 }
-    function handleMutate() {
-      const { width, height } = node.getBoundingClientRect()
-      if (cachedSize.width !== width || cachedSize.height !== height) {
-        cachedSize.width = width
-        cachedSize.height = height
-        onMeasure()
-      }
-    }
+    
+    
     const mob = new MutationObserver(handleMutate)
     mob.observe(node, mutationObserverOption)
     return mob

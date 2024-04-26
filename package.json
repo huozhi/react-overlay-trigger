@@ -8,7 +8,7 @@
     "import": "./dist/index.mjs",
     "default": "./dist/index.js"
   },
-  "types": "./type.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "prepublishOnly": "rm -rf dist && pnpm run build",
     "build:watch": "pnpm build --watch",
@@ -19,7 +19,6 @@
   },
   "files": [
     "dist",
-    "type.d.ts",
     "*.md"
   ],
   "repository": {
@@ -44,11 +43,13 @@
     "react-dom": "^19.0.0-beta.0"
   },
   "devDependencies": {
+    "@types/react": "^18.3.1",
     "bunchee": "^5.1.2",
     "next": "^14.2.3",
     "react": "^19.0.0-beta.0",
     "react-dom": "^19.0.0-beta.0",
     "react-overlay-trigger": "link:./",
-    "sugar-high": "^0.5.2"
+    "sugar-high": "^0.5.2",
+    "typescript": "^5.4.5"
   }
 }
