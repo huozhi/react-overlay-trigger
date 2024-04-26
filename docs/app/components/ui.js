@@ -16,7 +16,7 @@ export const Overlay = forwardRef(function Overlay({ style, placement, ...props 
           color: '#ccc',
           lineHeight: 1,
           fontWeight: 500,
-          borderRadius: '2px',
+          borderRadius: '12px',
         }}
       >
         Tooltip
@@ -31,16 +31,16 @@ export const Dialog = forwardRef(function Dialog({ style, onClose, ...props }, r
       {...props}
       style={{
         ...style,
-        backgroundColor: '#afd8df',
+        backgroundColor: '#efefe5',
         color: 'var(theme-text-color)',
         lineHeight: 1,
         fontWeight: 500,
-        borderRadius: '8px',
+        borderRadius: '6px',
       }}
       ref={ref}
       className="Dialog"
     >
-      <h2>{`Hello world!`}</h2>
+      <h2>{`Confirmation`}</h2>
       <button className="Trigger" onClick={onClose}>
         close
       </button>
@@ -52,7 +52,7 @@ export const ReflowButton = forwardRef(({ children, vertical, onClick, ...rest }
   const [g, setG] = useState(true)
   const style = {}
   if (vertical) {
-    style.height = g ? 300 : 150
+    style.height = g ? 40 : 300 
   } else {
     style.width = g ? 160 : 300
   }

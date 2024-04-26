@@ -14,6 +14,19 @@ const safeCall = (fn, ...args) => {
   }
 }
 
+function useDocumentClick(condition, callback) {
+  const handleClick = (e) => {
+    if (condition(e)) {
+      callback()
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
+  }, [condition, callback])
+}
+
 function OverlayTrigger(props) {
   const triggerRef = useRef()
   const overlayRef = useRef()
@@ -123,19 +136,20 @@ function OverlayTrigger(props) {
   const { children, container = defaultContainer, overlay, arrowProps, placement, ref } = props
   const child = React.Children.only(children)
 
-  // onMount
+  const trigger = getTrigger()
+  const overlayNode = overlayRef.current
   useEffect(() => {
     // attach popoverTargetElement and popoverAction
-    const trigger = getTrigger()
-    const overlay = overlayRef.current
-    if (trigger && overlay) {
-      trigger.popoverTargetElement = overlay
+    if (trigger && overlayNode) {
+      trigger.popoverTargetElement = overlayNode
       trigger.popoverAction = 'toggle'
-      overlay.popover = 'auto'
-      
-      this.scheduleUpdate()
+      overlayNode.popover = 'auto'
+      scheduleUpdate()
     }
-  }, [])
+  }, [trigger, overlayNode])
+
+
+  useDocumentClick(isClickOutside, close)
 
   return (
     <>
@@ -158,7 +172,5 @@ function OverlayTrigger(props) {
     </>
   )
 }
-
-
 
 export default OverlayTrigger

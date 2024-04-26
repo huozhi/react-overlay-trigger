@@ -1,5 +1,5 @@
 :root {
-  --theme-background: #f9f7e0;
+  --theme-background: #e7e6db;
   --theme-text-color: #8c9fa1;
   --theme-background--dark: #5c5c5c;
 }
@@ -41,7 +41,6 @@ body {
 }
 
 .App-title {
-  margin: 30px 0 60px;
   font-size: 36px;
   font-weight: 500;
   letter-spacing: 1.5px;
@@ -93,17 +92,14 @@ body {
   color: var(--theme-text-color);
   outline: none;
   border-radius: 0.5em;
-  background: #e1dbc8;
-  /* box-shadow: 23px 23px 44px #5f7e86,
-              -6px -6px 44px #bbcbcb; */
+  background: #dbd9d2;
   transition: all .2s ease;
 }
 
 .Trigger:active,
 .Trigger:hover,
 .Trigger:focus {
-  background: #e9e7d9;
-  /* box-shadow: 15px 7px 16px 1px #86bbc7, -6px -6px 44px #d0ffff; */
+  background: #efe1b5;
 }
 
 @keyframes fade {
@@ -124,19 +120,24 @@ body {
   justify-content: center;
   z-index: 1;
 }
+.Dialog > button {
+  font-size: 16px;
+  padding: 4px 0;
+  min-width: 100px;
+}
 
 .App-code {
   display: block;
   overflow: auto;
   padding: 15px;
-  color: #ccc;
+  color: #494842;
   font-family: monospace;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
   word-break: normal;
   word-wrap: normal;
-
+  font-size: 14px;
 }
 
 .App-description {
@@ -144,7 +145,7 @@ body {
 }
 
 :not(pre)>code[class*=language-], pre[class*=language-] {
-  background-color: #514f45;
+  background-color: #f1efe1;
   border-radius: 6px;
   /* box-shadow: -10px -10px 50px #a2dce6,
               10px 10px 50px #324f54; */
@@ -156,11 +157,11 @@ body {
 }
 
 :root {
-  --sh-class: #eee;
-  --sh-identifier: #eee;
-  --sh-sign: #cfc5a5;
-  --sh-string: #bcbfaf;
-  --sh-keyword: #eee;
+  --sh-class: #585252;
+  --sh-identifier: #787a6f;
+  --sh-sign: #6c6551;
+  --sh-string: #9f7f46;
+  --sh-keyword: #2f2f2f;
   --sh-comment: #818c9b;
 }
 
@@ -170,4 +171,8 @@ body {
 
 .reflow-button {
   transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+.reflow-button:hover {
+  cursor: pointer;
 }

@@ -2,6 +2,23 @@ import React from 'react'
 import { highlight } from 'sugar-high'
 import { Button, ReflowButton, Dialog, Overlay, OverlayTrigger } from './components/ui'
 
+const basicExampleCode = highlight(`\
+import React from 'react'
+import OverlayTrigger from 'react-overlay-trigger'
+
+const Overlay = ({style, ...rest}) => <span {...rest}>{children}</span>
+
+const overlay = <Overlay>yep</Overlay>
+
+const Button = <div {...props} ref={ref} />
+
+const Popover = ({ children }) => (
+  <OverlayTrigger placement="right" overlay={overlay} triggers={["hover"]}>
+    <Button className="Button">{children}</Button>
+  </OverlayTrigger>
+)
+`)
+
 function Example({ children, code, title }) {
   const codeHtml = highlight(code)
   return (
@@ -53,9 +70,18 @@ export default function Page() {
         You can use it to create tooltips, popovers, and other overlays.
       </p>
 
-      <p className="App-subtitle">Examples</p>
+      <h2 className="App-subtitle">Examples</h2>
 
+      <h3>Getting Started</h3>
+      <div className="App-examples">
+        <pre className="language-javascript">
+          <code className="App-code" dangerouslySetInnerHTML={{ __html: basicExampleCode }} />
+        </pre>
+      </div>
+
+      <h2>Usage</h2>
       <div className="Demo">
+        <h3>Clickable Popover</h3>
         <Example
           title="Tooltip: click, tooltip show on bottom and right"
           code={`\
@@ -78,6 +104,7 @@ export default function Page() {
           </div>
         </Example>
 
+        <h3>Hover Popover</h3>
         <Example
           title="Tooltip: Mouse hover and tab focus will trigger tooltips. They will show on top and left"
           code={`\
@@ -91,11 +118,13 @@ export default function Page() {
         >
           <div>
             <OverlayTrigger placement="top" triggers={['hover', 'focus']} overlay={<Overlay placement='horizontal' />}>
-              <ReflowButton className="Trigger reflow-button">click to resize</ReflowButton>
+              <ReflowButton className="Trigger reflow-button">
+                horizon resize
+              </ReflowButton>
             </OverlayTrigger>
             <OverlayTrigger placement="right" triggers={['hover', 'focus']} overlay={<Overlay placement='vertical' />}>
               <ReflowButton vertical className="Trigger reflow-button">
-                click to resize
+                vertical resize
               </ReflowButton>
             </OverlayTrigger>
           </div>
@@ -118,11 +147,11 @@ const Dialog = React.forwardRef(function Dialog({style, onClose, ...props}, ref)
   triggers={['click']}
   overlay={<Dialog />}
 >
-  <button className='Trigger'>Open the dialog</button>
+  <button className='Trigger'>Confirm</button>
 </OverlayTrigger>`}
         >
           <OverlayTrigger placement="center" triggers={['click']} overlay={<Dialog />}>
-            <button className="Trigger">Open the dialog</button>
+            <button className="Trigger">Confirm</button>
           </OverlayTrigger>
         </Example>
       </div>
