@@ -31,7 +31,7 @@ body {
   max-width: 100vw;
   margin: 0 auto;
   padding: 2em 16px;
-  padding-bottom: 500px;
+  padding-bottom: 4em;
 }
 
 @media (max-width: 768px) {
