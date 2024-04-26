@@ -42,13 +42,19 @@ pnpm dev
 
 ## API
 
-| props      | description |
-| :------    | :--------   |
-| placement  | placement position: `"top"` \| `"right"` \| `"bottom"` \| `"left"` \| `"center"` |
-| overlay    | overlay content, you can pass DOM node or react component |
-| children   | the trigger element |
-| triggers   | trigger events: "hover", "click", "focus" (default: `[]`) |
-| container  | parent element position will be calculated relative to this node (default: `document.body`) |
+```tsx
+type TriggerType = 'hover' | 'click' | 'focus';
+type PlacementType = 'top' | 'bottom' | 'left' | 'right' | 'center';
+type OverlayTriggerProps = {
+  overlay?: React.ReactNode;
+  triggers: TriggerType[];
+  container?: HTMLElement;
+  placement: PlacementType;
+  arrowProps?: {
+    size: number;
+  };
+};
+```
 
 ## License
 
