@@ -3,6 +3,7 @@
   "version": "2.0.1",
   "description": "react positioned overlay component",
   "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "exports": {
     "import": "./dist/index.mjs",
     "default": "./dist/index.js"
