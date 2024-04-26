@@ -60,6 +60,9 @@ body {
   font-size: 24px;
   font-weight: 600;
 }
+.App-sample {
+  margin-bottom: 3rem;
+}
 
 .App-github {
   display: inline-block;

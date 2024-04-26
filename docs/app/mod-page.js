@@ -70,16 +70,21 @@ export default function Page() {
         You can use it to create tooltips, popovers, and other overlays.
       </p>
 
-      <h2 className="App-subtitle">Examples</h2>
+      <h2 className="App-subtitle">Getting Started</h2>
 
-      <h3>Getting Started</h3>
-      <div className="App-examples">
+      <div className="App-sample">
+        <h3>Install</h3>
+        <pre className="language-javascript">
+          <code className="App-code">
+            {`npm i -S react-overlay-trigger`}
+          </code>
+        </pre>
         <pre className="language-javascript">
           <code className="App-code" dangerouslySetInnerHTML={{ __html: basicExampleCode }} />
         </pre>
       </div>
 
-      <h2>Usage</h2>
+      <h2 className="App-subtitle">Examples</h2>
       <div className="Demo">
         <h3>Clickable Popover</h3>
         <Example
