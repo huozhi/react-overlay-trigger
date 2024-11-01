@@ -11,11 +11,11 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "prepublishOnly": "rm -rf dist && pnpm run build",
-    "build:watch": "pnpm build --watch",
+    "dev": "pnpm build --watch",
     "build": "bunchee",
     "clean": "rm -rf dist",
     "build:docs": "pnpm build && pnpm next build docs",
-    "dev": "pnpm next docs"
+    "dev:docs": "pnpm next docs"
   },
   "files": [
     "dist",
@@ -39,17 +39,23 @@
   },
   "homepage": "https://github.com/huozhi/react-overlay-trigger#readme",
   "peerDependencies": {
-    "react": "^19.0.0-beta.0",
-    "react-dom": "^19.0.0-beta.0"
+    "react": "^19.0.0-0",
+    "react-dom": "^19.0.0-0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.1",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc",
     "bunchee": "^5.1.2",
-    "next": "^14.2.3",
-    "react": "^19.0.0-beta.0",
-    "react-dom": "^19.0.0-beta.0",
+    "next": "15.0.3-canary.4",
+    "react": "19.0.0-rc-7c8e5e7a-20241101",
+    "react-dom": "19.0.0-rc-7c8e5e7a-20241101",
     "react-overlay-trigger": "link:./",
     "sugar-high": "^0.5.2",
     "typescript": "^5.4.5"
-  }
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc"
+  },
+  "packageManager": "pnpm@7.33.5+sha512.4e499f22fffe5845aa8f9463e1386b2d72c3134e0ebef9409360ad844fef0290e82b479b32eb2ec0f30e56607e1820c22167829fd62656d41a8fd0cc4a0f4267"
 }

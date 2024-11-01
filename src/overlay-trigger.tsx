@@ -1,18 +1,23 @@
-import React, { Children, useEffect, useRef, useState, cloneElement } from 'react'
-import Overlay from './overlay'
-import DomObserver from './dom-observer'
+import { useEffect, useRef, useState } from 'react'
+import { useOverlay } from './overlay'
+import { useDomObserver } from './dom-observer'
 import { combineRef } from './utils'
+
+type TriggerProps = {
+  ref: React.RefCallback<any>
+  onMouseEnter?: (e: React.MouseEvent) => void
+  onMouseLeave?: (e: React.MouseEvent) => void
+  onPointerEnter?: (e: React.PointerEvent) => void
+  onPointerLeave?: (e: React.PointerEvent) => void
+  onFocus?: (e: React.FocusEvent) => void
+  onBlur?: (e: React.FocusEvent) => void
+  onClick?: (e: React.MouseEvent) => void
+}
 
 const isBrowser = typeof window !== 'undefined'
 const isPointerEventSupported = isBrowser ? !!window.PointerEvent : false
 const isTouchEventSupported = isBrowser ? !!window.TouchEvent : false
 const defaultContainer = isBrowser ? document.body : null
-
-const safeCall = (fn, ...args) => {
-  if (typeof fn === 'function') {
-    fn(...args)
-  }
-}
 
 function useDocumentClick(condition, callback) {
   const handleClick = (e) => {
@@ -31,7 +36,7 @@ type TriggerType = 'hover' | 'click' | 'focus'
 type PlacementType = 'top' | 'bottom' | 'left' | 'right' | 'center'
 
 export type OverlayTriggerProps = {
-  overlay?: React.ReactNode
+  Overlay: React.ComponentType<any>
   triggers: TriggerType[]
   container?: HTMLElement
   placement: PlacementType
@@ -40,46 +45,38 @@ export type OverlayTriggerProps = {
 
 type Props = React.PropsWithRef<React.PropsWithChildren<OverlayTriggerProps>>
 
-function OverlayTrigger(props: Props): React.ReactNode {
-  const triggerRef = useRef<HTMLElement>()
-  const overlayRef = useRef<HTMLElement>()
+function useOverlayTrigger(props: Props) {
+  const triggerRef = useRef<HTMLElement>(null)
+  const overlayRef = useRef<HTMLElement>(null)
   const adjustOverlayRef = useRef(() => {})
   const [visible, setVisible] = useState(false)
 
-  function getChildProps() {
-    return (props.children as React.ReactElement).props
-  }
 
-  function handleMouseEnter(e) {
-    safeCall(getChildProps().onMouseEnter, e)
+  function handleMouseEnter() {
     if (!isPointerEventSupported && !isTouchEventSupported) {
       open()
     }
   }
 
-  function handleMouseLeave(e) {
-    safeCall(getChildProps().onMouseLeave, e)
+  function handleMouseLeave() {
     if (!isPointerEventSupported && !isTouchEventSupported) {
       close()
     }
   }
 
-  function handlePointerEnter(e) {
-    safeCall(getChildProps().onPointerEnter, e)
+  function handlePointerEnter(e: React.PointerEvent) {
     if (e.pointerType === 'mouse') {
       open()
     }
   }
 
   function handlePointerLeave(e) {
-    safeCall(getChildProps().onPointerLeave, e)
     if (e.pointerType === 'mouse') {
       close()
     }
   }
 
-  function handleClick(e) {
-    safeCall(getChildProps().onClick, e)
+  function handleClick(e: React.MouseEvent) {
     if (visible) {
       close()
     } else {
@@ -100,19 +97,11 @@ function OverlayTrigger(props: Props): React.ReactNode {
     )
   }
 
-  function handleFocus(e) {
-    safeCall(getChildProps().onFocus, e)
-    open()
-  }
-
-  function handleBlur(e) {
-    safeCall(getChildProps().onBlur, e)
-    close()
-  }
-
-  function getTriggerProps() {
+  function getTriggerProps(ref: React.RefCallback<any>): TriggerProps {
     const { triggers } = props
-    const passedProps: any = {}
+    const passedProps: TriggerProps = {
+      ref,
+    }
     if (triggers.indexOf('hover') !== -1) {
       passedProps.onMouseEnter = handleMouseEnter
       passedProps.onMouseLeave = handleMouseLeave
@@ -120,8 +109,8 @@ function OverlayTrigger(props: Props): React.ReactNode {
       passedProps.onPointerLeave = handlePointerLeave
     }
     if (triggers.indexOf('focus') !== -1) {
-      passedProps.onFocus = handleFocus
-      passedProps.onBlur = handleBlur
+      passedProps.onFocus = open
+      passedProps.onBlur = close
     }
     if (triggers.indexOf('click') !== -1) {
       passedProps.onClick = handleClick
@@ -147,56 +136,34 @@ function OverlayTrigger(props: Props): React.ReactNode {
   }
 
   const {
-    children, 
     container = defaultContainer,
-    overlay,
     arrowProps,
     placement,
-    // @ts-expect-error ref existed in react 19
-    ref
+    Overlay,
   } = props
-  const child = Children.only(children) as React.ReactElement
-
-  const trigger = getTrigger()
-  const overlayNode = overlayRef.current
-  useEffect(() => {
-    // attach popoverTargetElement and popoverAction
-    if (trigger && overlayNode) {
-      // @ts-expect-error `popoverTargetElement` API
-      trigger.popoverTargetElement = overlayNode
-      // @ts-expect-error `popoverAction` API
-      trigger.popoverAction = 'toggle'
-      overlayNode.popover = 'auto'
-      scheduleUpdate()
-    }
-  }, [trigger, overlayNode])
-
 
   useDocumentClick(isClickOutside, close)
 
-  return (
-    <>
-      <DomObserver ref={combineRef(triggerRef, ref)} onMeasure={scheduleUpdate}>
-        {child != null
-          ? cloneElement(child , getTriggerProps())
-          : null
-        }
-      </DomObserver>
-      {visible ? (
-        <Overlay
-          onClose={close}
-          arrowProps={arrowProps}
-          container={container}
-          placement={placement}
-          getTrigger={getTrigger}
-          ref={overlayRef}
-          adjustOverlayRef={adjustOverlayRef}
-        >
-          {overlay}
-        </Overlay>
-      ) : null}
-    </>
+  const childObserverRef = useDomObserver({ onMeasure: scheduleUpdate })  
+  const triggerProps = getTriggerProps(
+    combineRef(triggerRef, childObserverRef)
   )
+  const overlayElement = useOverlay({
+    visible,
+    container,
+    placement,
+    arrowProps,
+    getTrigger,
+    overlayRef,
+    Overlay,
+    adjustOverlayRef,
+    onClose: close,
+  })
+
+  return {
+    overlay: overlayElement,
+    triggerProps, // for passing to child
+  }
 }
 
-export default OverlayTrigger
+export { useOverlayTrigger }

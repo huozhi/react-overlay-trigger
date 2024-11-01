@@ -1,20 +1,31 @@
-import React, { useLayoutEffect, cloneElement, useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { combineRef, position } from './utils'
-import DomObserver from './dom-observer'
+import { useDomObserver } from './dom-observer'
 
-function Overlay({
-  children,
+function useOverlay({
   onClose,
   getTrigger,
   placement,
-  ref,
+  overlayRef,
+  Overlay: OverlayComponent,
   container: ctr,
   arrowProps = { size: 0 },
   adjustOverlayRef,
-}) {
-  const overlayRef = useRef()
+  visible,
+}: {
+  onClose: () => void
+  getTrigger: () => HTMLElement | null
+  placement: string
+  overlayRef: any
+  Overlay: any
+  container: HTMLElement | null
+  arrowProps?: { size: number }
+  adjustOverlayRef: any
+  visible: boolean
+}): JSX.Element | null {
   const [container, setContainer] = useState(ctr)
+
   const [state, setState] = useState({
     offsetTop: 0,
     offsetLeft: 0,
@@ -62,21 +73,25 @@ function Overlay({
       setState({ offsetTop: top, offsetLeft: left })
     }
   }
-
+  
   useEffect(() => {
     adjustOverlayRef.current = adjustPosition
   })
 
-  if (!container || !children) return null
+  const domObserverRef = useDomObserver({ onMeasure: adjustPosition })
+
+  if (!container || !OverlayComponent || !visible) return null
+  
   return createPortal(
-    <DomObserver ref={combineRef(overlayRef, ref)} onMeasure={adjustPosition}>
-      {cloneElement(children, {
-        style: { ...children.props.style, ...getStyle() },
-        onClose,
-      })}
-    </DomObserver>,
+    <OverlayComponent
+      ref={combineRef(overlayRef, domObserverRef)}
+      style={getStyle()}
+      onClose={onClose}
+    />,
     container
   )
 }
 
-export default Overlay
+export {
+  useOverlay
+}

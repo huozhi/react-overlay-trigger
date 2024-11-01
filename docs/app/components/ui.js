@@ -1,13 +1,33 @@
 'use client'
 
-import React, { useState, forwardRef } from 'react'
-import OverlayTrigger from 'react-overlay-trigger'
+import React, { useState, cloneElement } from 'react'
+import { useOverlayTrigger } from 'react-overlay-trigger'
 
-export { OverlayTrigger }
-
-export const Overlay = forwardRef(function Overlay({ style, placement, ...props }, ref) {
+export function OverlayTrigger({ children, ...props }) {
+  const {
+    overlay: overlayElement,
+    triggerProps,
+  } = useOverlayTrigger(props)
+  
   return (
-    <div ref={ref} {...props} style={{ padding: placement === 'vertical' ? '0px 8px' : '8px 0px', ...style}}>
+    <>
+      {cloneElement(children, triggerProps)}
+      {overlayElement}
+    </>
+  )
+}
+
+export function VerticalOverlay({ style, ...props }) {
+  return <Overlay placement={'vertical'} style={style} {...props} />
+}
+
+export function HorizontalOverlay({ style, ...props }) {
+  return <Overlay placement={'horizontal'} style={style} {...props} />
+}
+
+export function Overlay({ style, placement, ...props }) {
+  return (
+    <div {...props} style={{ padding: placement === 'vertical' ? '0px 8px' : '8px 0px', ...style }}>
       <span
         className="Overlay"
         style={{
@@ -23,9 +43,9 @@ export const Overlay = forwardRef(function Overlay({ style, placement, ...props 
       </span>
     </div>
   )
-})
+}
 
-export const Dialog = forwardRef(function Dialog({ style, onClose, ...props }, ref) {
+export function Dialog({ style, onClose, ...props }) {
   return (
     <div
       {...props}
@@ -37,7 +57,6 @@ export const Dialog = forwardRef(function Dialog({ style, onClose, ...props }, r
         fontWeight: 500,
         borderRadius: '6px',
       }}
-      ref={ref}
       className="Dialog"
     >
       <h2>{`Confirmation`}</h2>
@@ -46,13 +65,13 @@ export const Dialog = forwardRef(function Dialog({ style, onClose, ...props }, r
       </button>
     </div>
   )
-})
+}
 
-export const ReflowButton = forwardRef(({ children, vertical, onClick, ...rest }, ref) => {
+export const ReflowButton = (({ children, vertical, onClick, ...rest }) => {
   const [g, setG] = useState(true)
   const style = {}
   if (vertical) {
-    style.height = g ? 40 : 300 
+    style.height = g ? 40 : 300
   } else {
     style.width = g ? 160 : 300
   }
@@ -63,7 +82,6 @@ export const ReflowButton = forwardRef(({ children, vertical, onClick, ...rest }
         onClick && onClick(e)
         setG(!g)
       }}
-      ref={ref}
       style={style}
     >
       {children}
@@ -71,4 +89,4 @@ export const ReflowButton = forwardRef(({ children, vertical, onClick, ...rest }
   )
 })
 
-export const Button = forwardRef((props, ref) => <button {...props} ref={ref} />)
+export const Button = ((props, ref) => <button {...props} />)

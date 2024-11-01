@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react'
-import { combineRef } from './utils'
 
 const mutationObserverOption = {
   subtree: true,
@@ -32,10 +31,15 @@ function createObserver(node, onMeasure) {
   }
 }
 
-function DomObserver({ children, ref, onMeasure }) {
-  const innerRef = useRef(null)
+function useDomObserver({ 
+  onMeasure
+}) {
+  const innerRef: React.RefObject<HTMLElement | null> = useRef(null)
 
   useEffect(() => {
+    if (!innerRef.current) {
+      return
+    }
     const node = innerRef.current
     let observer = null
     if (node) {
@@ -46,11 +50,12 @@ function DomObserver({ children, ref, onMeasure }) {
         observer.disconnect()
       }
     }
-  }, [])
+  }, [
+    // onMeasure, 
+    // innerRef.current
+  ])
 
-  return React.cloneElement(children, {
-    ref: combineRef(innerRef, children.ref, ref),
-  })
+  return innerRef
 }
 
-export default DomObserver
+export { useDomObserver }
