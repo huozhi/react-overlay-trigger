@@ -1,6 +1,6 @@
 :root {
   --theme-background: #e7e6db;
-  --theme-text-color: #8c9fa1;
+  --theme-text-color: #5c6869;
   --theme-background--dark: #5c5c5c;
 }
 
@@ -97,6 +97,7 @@ body {
   border-radius: 0.5em;
   background: #dbd9d2;
   transition: all .2s ease;
+  cursor: pointer;
 }
 
 .Trigger:active,
@@ -145,18 +146,16 @@ body {
 
 .App-description {
   margin-bottom: 4em;
+  background-color: #494842;
+  color: #dbd9d2;
+  padding: 1em 2em;
+  border-radius: 0.5em;
 }
 
 :not(pre)>code[class*=language-], pre[class*=language-] {
   background-color: #f1efe1;
   border-radius: 6px;
-  /* box-shadow: -10px -10px 50px #a2dce6,
-              10px 10px 50px #324f54; */
   transition: all .2s ease;
-}
-
-:not(pre)>code[class*=language-]:hover, pre[class*=language-]:hover {
-  /* box-shadow: -10px -10px 50px #a2dce6, 10px 10px 50px #44696f; */
 }
 
 :root {

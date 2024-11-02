@@ -43,6 +43,7 @@
     "react-dom": "^19.0.0-0"
   },
   "devDependencies": {
+    "@types/node": "22.8.6",
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc",
     "bunchee": "^5.1.2",

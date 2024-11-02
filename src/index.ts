@@ -1,1 +1,1 @@
-export { useOverlayTrigger } from './overlay-trigger'
+export { usePopover } from './overlay-trigger'

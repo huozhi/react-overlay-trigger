@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useOverlay } from './overlay'
+import { useOverlay, type PopoverProps } from './overlay'
 import { useDomObserver } from './dom-observer'
 import { combineRef } from './utils'
 
@@ -19,8 +19,11 @@ const isPointerEventSupported = isBrowser ? !!window.PointerEvent : false
 const isTouchEventSupported = isBrowser ? !!window.TouchEvent : false
 const defaultContainer = isBrowser ? document.body : null
 
-function useDocumentClick(condition, callback) {
-  const handleClick = (e) => {
+function useDocumentClick(
+  condition: (e: MouseEvent) => boolean,
+  callback: () => void
+) {
+  const handleClick = (e: MouseEvent) => {
     if (condition(e)) {
       callback()
     }
@@ -35,17 +38,22 @@ function useDocumentClick(condition, callback) {
 type TriggerType = 'hover' | 'click' | 'focus'
 type PlacementType = 'top' | 'bottom' | 'left' | 'right' | 'center'
 
-export type OverlayTriggerProps = {
-  Overlay: React.ComponentType<any>
+export type PopoverOptions = {
   triggers: TriggerType[]
   container?: HTMLElement
   placement: PlacementType
   arrowProps?: { size: number }
 }
 
-type Props = React.PropsWithRef<React.PropsWithChildren<OverlayTriggerProps>>
-
-function useOverlayTrigger(props: Props) {
+function usePopover(
+  Popover: React.ComponentType<PopoverProps>,
+  {
+    container = defaultContainer,
+    arrowProps,
+    placement,
+    triggers,
+  }: PopoverOptions
+) {
   const triggerRef = useRef<HTMLElement>(null)
   const overlayRef = useRef<HTMLElement>(null)
   const adjustOverlayRef = useRef(() => {})
@@ -70,13 +78,13 @@ function useOverlayTrigger(props: Props) {
     }
   }
 
-  function handlePointerLeave(e) {
+  function handlePointerLeave(e: React.PointerEvent) {
     if (e.pointerType === 'mouse') {
       close()
     }
   }
 
-  function handleClick(e: React.MouseEvent) {
+  function handleClick() {
     if (visible) {
       close()
     } else {
@@ -98,7 +106,6 @@ function useOverlayTrigger(props: Props) {
   }
 
   function getTriggerProps(ref: React.RefCallback<any>): TriggerProps {
-    const { triggers } = props
     const passedProps: TriggerProps = {
       ref,
     }
@@ -135,35 +142,28 @@ function useOverlayTrigger(props: Props) {
     adjustOverlay()
   }
 
-  const {
-    container = defaultContainer,
-    arrowProps,
-    placement,
-    Overlay,
-  } = props
-
   useDocumentClick(isClickOutside, close)
 
   const childObserverRef = useDomObserver({ onMeasure: scheduleUpdate })  
   const triggerProps = getTriggerProps(
     combineRef(triggerRef, childObserverRef)
   )
-  const overlayElement = useOverlay({
+  const overlay = useOverlay({
     visible,
     container,
     placement,
     arrowProps,
     getTrigger,
     overlayRef,
-    Overlay,
+    Popover,
     adjustOverlayRef,
     onClose: close,
   })
 
   return {
-    overlay: overlayElement,
-    triggerProps, // for passing to child
+    popover: overlay,
+    triggerProps,
   }
 }
 
-export { useOverlayTrigger }
+export { usePopover }

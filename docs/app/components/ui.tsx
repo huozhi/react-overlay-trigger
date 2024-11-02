@@ -1,21 +1,4 @@
-'use client'
-
-import React, { useState, cloneElement } from 'react'
-import { useOverlayTrigger } from 'react-overlay-trigger'
-
-export function OverlayTrigger({ children, ...props }) {
-  const {
-    overlay: overlayElement,
-    triggerProps,
-  } = useOverlayTrigger(props)
-  
-  return (
-    <>
-      {cloneElement(children, triggerProps)}
-      {overlayElement}
-    </>
-  )
-}
+import React, { useState } from 'react'
 
 export function VerticalOverlay({ style, ...props }) {
   return <Overlay placement={'vertical'} style={style} {...props} />
@@ -67,9 +50,15 @@ export function Dialog({ style, onClose, ...props }) {
   )
 }
 
-export const ReflowButton = (({ children, vertical, onClick, ...rest }) => {
+export function ReflowButton({
+  vertical,
+  onClick,
+  ...rest
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  vertical?: boolean
+}): JSX.Element {
   const [g, setG] = useState(true)
-  const style = {}
+  const style: any = {}
   if (vertical) {
     style.height = g ? 40 : 300
   } else {
@@ -83,10 +72,8 @@ export const ReflowButton = (({ children, vertical, onClick, ...rest }) => {
         setG(!g)
       }}
       style={style}
-    >
-      {children}
-    </button>
+    />
   )
-})
+}
 
-export const Button = ((props, ref) => <button {...props} />)
+export const Button = (props) => <button {...props} />

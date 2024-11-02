@@ -3,12 +3,18 @@ import { createPortal } from 'react-dom'
 import { combineRef, position } from './utils'
 import { useDomObserver } from './dom-observer'
 
+export type PopoverProps = {
+  ref: React.RefCallback<HTMLElement>
+  style: React.CSSProperties
+  onClose: () => void
+}
+
 function useOverlay({
   onClose,
   getTrigger,
   placement,
   overlayRef,
-  Overlay: OverlayComponent,
+  Popover,
   container: ctr,
   arrowProps = { size: 0 },
   adjustOverlayRef,
@@ -17,8 +23,8 @@ function useOverlay({
   onClose: () => void
   getTrigger: () => HTMLElement | null
   placement: string
-  overlayRef: any
-  Overlay: any
+  overlayRef: React.RefObject<HTMLElement | null>
+  Popover: React.ComponentType<PopoverProps>
   container: HTMLElement | null
   arrowProps?: { size: number }
   adjustOverlayRef: any
@@ -45,7 +51,7 @@ function useOverlay({
     adjustPosition()
   }, [container, placement, arrowProps])
 
-  const getStyle = () => {
+  function getStyle(): React.CSSProperties {
     const { offsetTop, offsetLeft } = state
     const transforms = `translate3d(${offsetLeft}px, ${offsetTop}px, 0)`
 
@@ -80,10 +86,10 @@ function useOverlay({
 
   const domObserverRef = useDomObserver({ onMeasure: adjustPosition })
 
-  if (!container || !OverlayComponent || !visible) return null
+  if (!container || !Popover || !visible) return null
   
   return createPortal(
-    <OverlayComponent
+    <Popover
       ref={combineRef(overlayRef, domObserverRef)}
       style={getStyle()}
       onClose={onClose}
