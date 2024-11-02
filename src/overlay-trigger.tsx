@@ -44,6 +44,8 @@ export type PopoverOptions = {
   container?: HTMLElement
   placement: PlacementType
   arrowProps?: { size: number }
+  defaultOpen?: boolean
+  delayDuration?: number
 }
 
 function usePopover(
@@ -55,13 +57,24 @@ function usePopover(
     clickToggle,
     hoverToggle,
     focusToggle,
+    defaultOpen,
+    delayDuration,
   }: PopoverOptions
 ) {
   const triggerRef = useRef<HTMLElement>(null)
   const overlayRef = useRef<HTMLElement>(null)
   const adjustOverlayRef = useRef(() => {})
-  const [visible, setVisible] = useState(false)
+  const [isOpen, originSetOpen] = useState(!!defaultOpen)
 
+  function setOpen(value: boolean) {
+    const toggleOpenBasedOnDelay = delayDuration
+      ? () => setTimeout(() => {
+          originSetOpen(value)
+        }, delayDuration)
+      : () => originSetOpen(value)
+
+    toggleOpenBasedOnDelay()
+  }
 
   function handleMouseEnter() {
     if (!isPointerEventSupported && !isTouchEventSupported) {
@@ -88,7 +101,7 @@ function usePopover(
   }
 
   function handleClick() {
-    if (visible) {
+    if (isOpen) {
       close()
     } else {
       open()
@@ -129,11 +142,11 @@ function usePopover(
   }
 
   function open() {
-    setVisible(true)
+    setOpen(true)
   }
 
   function close() {
-    setVisible(false)
+    setOpen(false)
   }
 
   function getTrigger() {
@@ -160,7 +173,7 @@ function usePopover(
   }, [container])
 
   const overlay = useOverlay({
-    visible,
+    visible: isOpen,
     container,
     placement,
     arrowProps,
@@ -172,7 +185,7 @@ function usePopover(
   })
 
   return {
-    isOpen: visible,
+    isOpen: isOpen,
     popover: overlay,
     triggerProps,
   }

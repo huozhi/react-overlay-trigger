@@ -45,6 +45,8 @@ usePopover(
     container?: HTMLElement
     placement: PlacementType
     arrowProps?: { size: number }
+    defaultOpen?: boolean
+    delayDuration?: number
   }
 ): {
   popover: ReactNode
