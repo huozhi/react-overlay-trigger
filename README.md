@@ -19,9 +19,8 @@ import { usePopover } from 'react-overlay-trigger'
 
 const App = () => {
   const { popover, triggerProps } = usePopover({
-    overlay: <div>hello</div>,
-    hoverToggle: true,
     placement: 'top',
+    hoverToggle: true,
   })
 
   return (
