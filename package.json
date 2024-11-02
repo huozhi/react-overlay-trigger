@@ -39,19 +39,19 @@
   },
   "homepage": "https://github.com/huozhi/react-overlay-trigger#readme",
   "peerDependencies": {
-    "react": "^19.0.0-0",
-    "react-dom": "^19.0.0-0"
+    "react": "^18 || ^19.0.0-0",
+    "react-dom": "^18 || ^19.0.0-0"
   },
   "devDependencies": {
     "@types/node": "22.8.6",
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc",
-    "bunchee": "^5.1.2",
+    "bunchee": "^5.6.1",
     "next": "15.0.3-canary.4",
     "react": "19.0.0-rc-7c8e5e7a-20241101",
     "react-dom": "19.0.0-rc-7c8e5e7a-20241101",
     "react-overlay-trigger": "link:./",
-    "sugar-high": "^0.5.2",
+    "sugar-high": "^0.7.4",
     "typescript": "^5.4.5"
   },
   "overrides": {
