@@ -1,5 +1,5 @@
 # React Overlay Trigger
-> Small and simple popover library for React
+> Tiny and simple popover library for React
 
 [![npm version](https://img.shields.io/npm/v/react-overlay-trigger.svg?style=flat-square)](https://www.npmjs.com/package/react-overlay-trigger)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-overlay-trigger?style=flat-square)](https://bundlephobia.com/result?p=react-overlay-trigger)

@@ -14,4 +14,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
 
 export const metadata = {
   title: 'React Overlay Trigger',
+  description: 'Tiny and simple popover library for React',
+
+
 }
