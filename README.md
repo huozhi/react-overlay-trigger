@@ -48,6 +48,7 @@ usePopover(
   }
 ): {
   popover: ReactNode
+  isOpen: boolean
   triggerProps: {
     ref: RefCallback<any>
     onMouseEnter?: (e: MouseEvent) => void

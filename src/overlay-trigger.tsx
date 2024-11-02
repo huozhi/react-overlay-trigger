@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useOverlay, type PopoverProps } from './overlay'
 import { useDomObserver } from './dom-observer'
 import { combineRef } from './utils'
@@ -151,6 +151,14 @@ function usePopover(
   const triggerProps = getTriggerProps(
     combineRef(triggerRef, childObserverRef)
   )
+
+  const [lastContainer, setContainer] = useState<HTMLElement | null>(container)
+  useLayoutEffect(() => {
+    if (container !== lastContainer) {
+      setContainer(container)
+    }
+  }, [container])
+
   const overlay = useOverlay({
     visible,
     container,
@@ -164,6 +172,7 @@ function usePopover(
   })
 
   return {
+    isOpen: visible,
     popover: overlay,
     triggerProps,
   }

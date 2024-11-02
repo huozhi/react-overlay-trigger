@@ -15,7 +15,7 @@ function useOverlay({
   placement,
   overlayRef,
   Popover,
-  container: ctr,
+  container,
   arrowProps = { size: 0 },
   adjustOverlayRef,
   visible,
@@ -30,18 +30,10 @@ function useOverlay({
   adjustOverlayRef: any
   visible: boolean
 }): JSX.Element | null {
-  const [container, setContainer] = useState(ctr)
-
   const [state, setState] = useState({
     offsetTop: 0,
     offsetLeft: 0,
   })
-
-  useLayoutEffect(() => {
-    if (container !== ctr) {
-      setContainer(ctr)
-    }
-  }, [ctr])
 
   useLayoutEffect(() => {
     adjustPosition()
