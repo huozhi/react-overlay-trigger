@@ -34,7 +34,6 @@ export function Dialog({ style, onClose, ...props }) {
       {...props}
       style={{
         ...style,
-        backgroundColor: '#efefe5',
         color: 'var(theme-text-color)',
         lineHeight: 1,
         fontWeight: 500,
@@ -43,8 +42,11 @@ export function Dialog({ style, onClose, ...props }) {
       className="Dialog"
     >
       <h2>{`Confirmation`}</h2>
-      <button className="Trigger" onClick={onClose}>
-        close
+      <p>
+        Click outside the dialog to close the dialog.
+      </p>
+      <button className="Dialog__close Trigger" onClick={onClose}>
+        Yes
       </button>
     </div>
   )

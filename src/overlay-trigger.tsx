@@ -35,11 +35,12 @@ function useDocumentClick(
   }, [condition, callback])
 }
 
-type TriggerType = 'hover' | 'click' | 'focus'
 type PlacementType = 'top' | 'bottom' | 'left' | 'right' | 'center'
 
 export type PopoverOptions = {
-  triggers: TriggerType[]
+  clickToggle?: boolean
+  hoverToggle?: boolean
+  focusToggle?: boolean
   container?: HTMLElement
   placement: PlacementType
   arrowProps?: { size: number }
@@ -51,7 +52,9 @@ function usePopover(
     container = defaultContainer,
     arrowProps,
     placement,
-    triggers,
+    clickToggle,
+    hoverToggle,
+    focusToggle,
   }: PopoverOptions
 ) {
   const triggerRef = useRef<HTMLElement>(null)
@@ -109,17 +112,17 @@ function usePopover(
     const passedProps: TriggerProps = {
       ref,
     }
-    if (triggers.indexOf('hover') !== -1) {
+    if (hoverToggle) {
       passedProps.onMouseEnter = handleMouseEnter
       passedProps.onMouseLeave = handleMouseLeave
       passedProps.onPointerEnter = handlePointerEnter
       passedProps.onPointerLeave = handlePointerLeave
     }
-    if (triggers.indexOf('focus') !== -1) {
+    if (focusToggle) {
       passedProps.onFocus = open
       passedProps.onBlur = close
     }
-    if (triggers.indexOf('click') !== -1) {
+    if (clickToggle) {
       passedProps.onClick = handleClick
     }
     return passedProps

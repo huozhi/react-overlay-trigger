@@ -123,11 +123,13 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1;
+  background-color: #fffde7;
 }
-.Dialog > button {
+.Dialog__close {
   font-size: 16px;
   padding: 4px 0;
   min-width: 100px;
+  background-color: #eae6d8;
 }
 
 .App-code {

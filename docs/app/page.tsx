@@ -12,7 +12,7 @@ const Popover = ({ style, ...rest }) => <span {...rest}>{children}</span>
 
 const { popover, triggerProps } = usePopover(Popover, {
   placement: 'right',
-  triggers: ['click'],
+  clickToggle: true,
 })
 
 return (
@@ -109,7 +109,7 @@ function DemoClick() {
     triggerProps: triggerPropsRightClick
   } = usePopover(VerticalOverlay, {
     placement: 'right',
-    triggers: ['click'],
+    clickToggle: true,
   })
 
   const {
@@ -117,7 +117,7 @@ function DemoClick() {
     triggerProps: triggerPropsBottomClick
   } = usePopover(HorizontalOverlay, {
     placement: 'bottom',
-    triggers: ['click'],
+    clickToggle: true,
   })
 
   return (
@@ -128,7 +128,7 @@ function DemoClick() {
           code={`\
 const { popover, triggerProps } = usePopover(Dialog, {
   placement: 'right',
-  triggers: ['click'],
+  clickToggle: true,
 })
 
 return (
@@ -162,7 +162,8 @@ function DemoHover() {
     triggerProps: triggerPropsTop,
   } = usePopover(HorizontalOverlay, {
     placement: 'top',
-    triggers: ['focus', 'hover'],
+    focusToggle: true,
+    hoverToggle: true,
   })
 
   const {
@@ -170,7 +171,8 @@ function DemoHover() {
     triggerProps: triggerPropsRight,
   } = usePopover(VerticalOverlay, {
     placement: 'right',
-    triggers: ['focus', 'hover'],
+    focusToggle: true,
+    hoverToggle: true,
   })
 
   return (
@@ -190,7 +192,8 @@ function DemoHover() {
 
   const { popover, triggerProps } = usePopover(Dialog, {
     placement="top"
-    triggers={['hover', 'focus']}
+    toggleHover: true,
+    toggleFocus: true,
   })
 
   return (
@@ -202,12 +205,12 @@ function DemoHover() {
       >
         {popoverTop}
         <ReflowButton vertical={false} {...triggerPropsTop} className='Trigger'>
-          click to resize horizontally
+          horizontal resize
         </ReflowButton>
 
         {popoverRight}
         <ReflowButton vertical={true} {...triggerPropsRight} className='Trigger'>
-          click to resize vertically
+          vertical resize
         </ReflowButton>
       </Example>
     </>
@@ -218,7 +221,7 @@ function DemoHover() {
 function DemoConfirm() {
   const { popover, triggerProps } = usePopover(Dialog, {
     placement: 'center',
-    triggers: ['click'],
+    clickToggle: true,
   })
 
   return (
@@ -236,7 +239,7 @@ function Dialog({style, onClose, ...props}, ref) {
 
 const { popover, triggerProps } = usePopover(Dialog, {
   placement: 'center',
-  triggers: ['click'],
+  clickToggle: true,
 })
 
 return (

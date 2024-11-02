@@ -18,16 +18,16 @@ npm i -S react-overlay-trigger
 import { usePopover } from 'react-overlay-trigger'
 
 const App = () => {
-  const { overlayProps, triggerProps } = usePopover({
+  const { popover, triggerProps } = usePopover({
     overlay: <div>hello</div>,
-    triggers: ['hover'],
+    hoverToggle: true,
     placement: 'top',
   })
 
   return (
-    <div {...triggerProps}>
-      <button>hover me</button>
-      {overlayProps}
+    <div>
+      {popover}
+      <button {...triggerProps}>hover me</button>
     </div>
   )
 }
@@ -39,12 +39,26 @@ const App = () => {
 usePopover(
   popover: ReactNode,
   options: {    
-    triggers: TriggerType[]
+    clickToggle?: boolean
+    hoverToggle?: boolean
+    focusToggle?: boolean
     container?: HTMLElement
     placement: PlacementType
     arrowProps?: { size: number }
   }
-)
+): {
+  popover: ReactNode
+  triggerProps: {
+    ref: RefCallback<any>
+    onMouseEnter?: (e: MouseEvent) => void
+    onMouseLeave?: (e: MouseEvent) => void
+    onPointerEnter?: (e: PointerEvent) => void
+    onPointerLeave?: (e: PointerEvent) => void
+    onFocus?: (e: FocusEvent) => void
+    onBlur?: (e: FocusEvent) => void
+    onClick?: (e: MouseEvent) => void
+  }
+}
 ```
 
 ## License
