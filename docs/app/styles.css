@@ -1,6 +1,6 @@
 :root {
-  --theme-background: #97c8d4;
-  --theme-text-color: #2e8492;
+  --theme-background: #e7e6db;
+  --theme-text-color: #5c6869;
   --theme-background--dark: #5c5c5c;
 }
 
@@ -31,7 +31,7 @@ body {
   max-width: 100vw;
   margin: 0 auto;
   padding: 2em 16px;
-  padding-bottom: 500px;
+  padding-bottom: 4em;
 }
 
 @media (max-width: 768px) {
@@ -41,7 +41,6 @@ body {
 }
 
 .App-title {
-  margin: 30px 0 60px;
   font-size: 36px;
   font-weight: 500;
   letter-spacing: 1.5px;
@@ -60,6 +59,9 @@ body {
 .App-subtitle {
   font-size: 24px;
   font-weight: 600;
+}
+.App-sample {
+  margin-bottom: 3rem;
 }
 
 .App-github {
@@ -93,17 +95,15 @@ body {
   color: var(--theme-text-color);
   outline: none;
   border-radius: 0.5em;
-  background: #97c8d4;
-  box-shadow: 23px 23px 44px #5f7e86,
-              -6px -6px 44px #cfffff;
+  background: #dbd9d2;
   transition: all .2s ease;
+  cursor: pointer;
 }
 
 .Trigger:active,
 .Trigger:hover,
 .Trigger:focus {
-  background: #8ed1e2;
-  box-shadow: 15px 7px 16px 1px #86bbc7, -6px -6px 44px #d0ffff;
+  background: #efe1b5;
 }
 
 @keyframes fade {
@@ -123,44 +123,49 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1;
+  background-color: #fffde7;
+}
+.Dialog__close {
+  font-size: 16px;
+  padding: 4px 0;
+  min-width: 100px;
+  background-color: #eae6d8;
 }
 
 .App-code {
   display: block;
   overflow: auto;
   padding: 15px;
-  color: #ccc;
+  color: #494842;
   font-family: monospace;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
   word-break: normal;
   word-wrap: normal;
-
+  font-size: 14px;
 }
 
 .App-description {
   margin-bottom: 4em;
+  background-color: #494842;
+  color: #dbd9d2;
+  padding: 1em 2em;
+  border-radius: 0.5em;
 }
 
 :not(pre)>code[class*=language-], pre[class*=language-] {
-  background-color: #16788c;
-  border-radius: 1em;
-  box-shadow: -10px -10px 50px #a2dce6,
-              10px 10px 50px #324f54;
+  background-color: #f1efe1;
+  border-radius: 6px;
   transition: all .2s ease;
 }
 
-:not(pre)>code[class*=language-]:hover, pre[class*=language-]:hover {
-  box-shadow: -10px -10px 50px #a2dce6, 10px 10px 50px #44696f;
-}
-
 :root {
-  --sh-class: #eee;
-  --sh-identifier: #eee;
-  --sh-sign: #a5b7cf;
-  --sh-string: #bcbfaf;
-  --sh-keyword: #eee;
+  --sh-class: #585252;
+  --sh-identifier: #787a6f;
+  --sh-sign: #6c6551;
+  --sh-string: #9f7f46;
+  --sh-keyword: #2f2f2f;
   --sh-comment: #818c9b;
 }
 
@@ -170,4 +175,8 @@ body {
 
 .reflow-button {
   transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+.reflow-button:hover {
+  cursor: pointer;
 }

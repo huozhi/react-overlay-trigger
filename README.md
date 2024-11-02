@@ -1,54 +1,65 @@
 # React Overlay Trigger
-> zero dependencies overlay positioning component for react.
+> Small and simple popover library for React
 
 [![npm version](https://img.shields.io/npm/v/react-overlay-trigger.svg?style=flat-square)](https://www.npmjs.com/package/react-overlay-trigger)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-overlay-trigger?style=flat-square)](https://bundlephobia.com/result?p=react-overlay-trigger)
 
-[react-overlay-trigger.vercel.app](https://react-overlay-trigger.vercel.app)
-## Usage
+Checkout [Website](https://react-overlay-trigger.vercel.app) for more details.
+
+## Installation
 
 ```sh
 npm i -S react-overlay-trigger
 ```
 
+## Usage
+
 ```js
-import React from 'react'
-import OverlayTrigger from 'react-overlay-trigger'
+import { usePopover } from 'react-overlay-trigger'
 
-const Overlay = ({style, ...rest}) => <span {...rest}>{children}</span>
+const App = () => {
+  const { popover, triggerProps } = usePopover({
+    overlay: <div>hello</div>,
+    hoverToggle: true,
+    placement: 'top',
+  })
 
-const overlay = <Overlay>yep</Overlay>
-
-const Button = React.forwardRef((props, ref) => <div {...props} ref={ref} />)
-
-const Demo = () => (
-  <div>
-    <OverlayTrigger placement="right" overlay={overlay} triggers={["hover"]}>
-      <Button className="Button">right</Button>
-    </OverlayTrigger>
-
-    <OverlayTrigger placement="top" overlay={overlay} triggers={["click"]}>
-      <button className="Button">top</button>
-    </OverlayTrigger>
-  <div>
-)
-```
-
-## Development
-
-```sh
-pnpm install
-pnpm dev
+  return (
+    <div>
+      {popover}
+      <button {...triggerProps}>hover me</button>
+    </div>
+  )
+}
 ```
 
 ## API
 
-| props      | description |
-| :------    | :--------   |
-| placement  | placement position: `"top"` \| `"right"` \| `"bottom"` \| `"left"` \| `"center"` |
-| overlay    | overlay content, you can pass DOM node or react component |
-| children   | the trigger element |
-| triggers   | trigger events: "hover", "click", "focus" (default: `[]`) |
-| container  | parent element position will be calculated relative to this node (default: `document.body`) |
+```tsx
+usePopover(
+  popover: ReactNode,
+  options: {    
+    clickToggle?: boolean
+    hoverToggle?: boolean
+    focusToggle?: boolean
+    container?: HTMLElement
+    placement: PlacementType
+    arrowProps?: { size: number }
+  }
+): {
+  popover: ReactNode
+  triggerProps: {
+    ref: RefCallback<any>
+    onMouseEnter?: (e: MouseEvent) => void
+    onMouseLeave?: (e: MouseEvent) => void
+    onPointerEnter?: (e: PointerEvent) => void
+    onPointerLeave?: (e: PointerEvent) => void
+    onFocus?: (e: FocusEvent) => void
+    onBlur?: (e: FocusEvent) => void
+    onClick?: (e: MouseEvent) => void
+  }
+}
+```
 
 ## License
 

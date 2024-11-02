@@ -1,20 +1,37 @@
-import React, { useLayoutEffect, cloneElement, useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { combineRef, position } from './utils'
-import DomObserver from './dom-observer'
+import { useDomObserver } from './dom-observer'
 
-function Overlay({
-  children,
+export type PopoverProps = {
+  ref: React.RefCallback<HTMLElement>
+  style: React.CSSProperties
+  onClose: () => void
+}
+
+function useOverlay({
   onClose,
   getTrigger,
   placement,
-  innerRef,
+  overlayRef,
+  Popover,
   container: ctr,
   arrowProps = { size: 0 },
   adjustOverlayRef,
-}) {
-  const overlayRef = useRef()
+  visible,
+}: {
+  onClose: () => void
+  getTrigger: () => HTMLElement | null
+  placement: string
+  overlayRef: React.RefObject<HTMLElement | null>
+  Popover: React.ComponentType<PopoverProps>
+  container: HTMLElement | null
+  arrowProps?: { size: number }
+  adjustOverlayRef: any
+  visible: boolean
+}): JSX.Element | null {
   const [container, setContainer] = useState(ctr)
+
   const [state, setState] = useState({
     offsetTop: 0,
     offsetLeft: 0,
@@ -34,7 +51,7 @@ function Overlay({
     adjustPosition()
   }, [container, placement, arrowProps])
 
-  const getStyle = () => {
+  function getStyle(): React.CSSProperties {
     const { offsetTop, offsetLeft } = state
     const transforms = `translate3d(${offsetLeft}px, ${offsetTop}px, 0)`
 
@@ -62,21 +79,25 @@ function Overlay({
       setState({ offsetTop: top, offsetLeft: left })
     }
   }
-
+  
   useEffect(() => {
     adjustOverlayRef.current = adjustPosition
   })
 
-  if (!container || !children) return null
+  const domObserverRef = useDomObserver({ onMeasure: adjustPosition })
+
+  if (!container || !Popover || !visible) return null
+  
   return createPortal(
-    <DomObserver ref={combineRef(overlayRef, innerRef)} onMeasure={adjustPosition}>
-      {cloneElement(children, {
-        style: { ...children.props.style, ...getStyle() },
-        onClose,
-      })}
-    </DomObserver>,
+    <Popover
+      ref={combineRef(overlayRef, domObserverRef)}
+      style={getStyle()}
+      onClose={onClose}
+    />,
     container
   )
 }
 
-export default Overlay
+export {
+  useOverlay
+}

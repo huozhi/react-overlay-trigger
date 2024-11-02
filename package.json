@@ -1,26 +1,24 @@
 {
   "name": "react-overlay-trigger",
-  "version": "2.0.1",
+  "version": "3.0.0-beta.0",
   "description": "react positioned overlay component",
   "main": "./dist/index.js",
-  "module": "./dist/index.esm.js",
+  "module": "./dist/index.mjs",
   "exports": {
     "import": "./dist/index.mjs",
-    "require": "./dist/index.js",
-    "module": "./dist/index.esm.js"
+    "default": "./dist/index.js"
   },
-  "types": "./type.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "prepublishOnly": "rm -rf dist && pnpm run build:lib",
-    "build:watch": "pnpm build:lib --watch",
-    "build:lib": "bunchee",
+    "prepublishOnly": "rm -rf dist && pnpm run build",
+    "dev": "pnpm build --watch",
+    "build": "bunchee",
     "clean": "rm -rf dist",
-    "build:docs": "pnpm build:lib && pnpm next build docs",
-    "dev": "pnpm next docs"
+    "build:docs": "pnpm build && pnpm next build docs",
+    "dev:docs": "pnpm next docs"
   },
   "files": [
     "dist",
-    "type.d.ts",
     "*.md"
   ],
   "repository": {
@@ -41,15 +39,24 @@
   },
   "homepage": "https://github.com/huozhi/react-overlay-trigger#readme",
   "peerDependencies": {
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react": "^19.0.0-0",
+    "react-dom": "^19.0.0-0"
   },
   "devDependencies": {
-    "bunchee": "^3.8.0",
-    "next": "^13.5.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@types/node": "22.8.6",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc",
+    "bunchee": "^5.1.2",
+    "next": "15.0.3-canary.4",
+    "react": "19.0.0-rc-7c8e5e7a-20241101",
+    "react-dom": "19.0.0-rc-7c8e5e7a-20241101",
     "react-overlay-trigger": "link:./",
-    "sugar-high": "^0.5.2"
-  }
+    "sugar-high": "^0.5.2",
+    "typescript": "^5.4.5"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc"
+  },
+  "packageManager": "pnpm@7.33.5+sha512.4e499f22fffe5845aa8f9463e1386b2d72c3134e0ebef9409360ad844fef0290e82b479b32eb2ec0f30e56607e1820c22167829fd62656d41a8fd0cc4a0f4267"
 }

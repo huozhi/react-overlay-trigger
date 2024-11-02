@@ -1,6 +1,6 @@
 import './styles.css'
 
-export default function layout({ children }) {
+export default function layout({ children }: { children: React.ReactNode }) {
   return (
     <html>
       <head>
